@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>KATRESELI decorações</title>
+<meta name="description" content="Locações de Decoração Infantil · Kits disponíveis para seu evento">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23d4307a'/%3E%3Ccircle cx='16' cy='13' r='5' fill='white'/%3E%3Cpath d='M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10' fill='white'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#d4307a">
+<meta property="og:title" content="KATRESELI Decorações — Locações de Decoração Infantil">
+<meta property="og:description" content="Kits de decoração para festas infantis. Alugue e decore você mesmo!">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#d4307a;--pd:#a0235c;--pl:#fce4f3;--p2:#f472b6;
+  --txt:#1a0a14;--txt2:#6b5a72;--txt3:#9a8aa8;
+  --bg:#f7f2f6;--sur:#fff;--bdr:#f0eaf4;--bdr2:#e0d4e8;
+  --nav-h:68px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+
+/* ── Loading ── */
+#loading{position:fixed;inset:0;background:linear-gradient(135deg,#1a0a14,#3d0f2a,#6b1645);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s ease}
+#loading.oculto{opacity:0;pointer-events:none}
+.ld-ring{width:72px;height:72px;border-radius:50%;border:3px solid rgba(255,255,255,.1);border-top-color:var(--p2);animation:spin 1s linear infinite;margin-bottom:24px}
+.ld-icon{position:absolute;font-size:32px;margin-top:-4px}
+.ld-wrap{position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
+.ld-nome{color:#fff;font-size:20px;font-weight:700;letter-spacing:.5px}
+.ld-sub{color:rgba(255,255,255,.45);font-size:13px;margin-top:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Navbar ── */
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;transition:all .3s ease}
+.nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(20px);box-shadow:0 1px 32px rgba(180,60,120,.12);border-bottom:1px solid rgba(212,48,122,.08)}
+.nav.top{background:transparent}
+.nav-inner{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;gap:16px;padding:0 24px}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-logo{width:40px;height:40px;border-radius:12px;object-fit:cover;border:2px solid rgba(212,48,122,.3)}
+.nav-logo-ph{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--p),var(--pd));display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid rgba(212,48,122,.3)}
+.nav-name{font-weight:800;font-size:17px;color:var(--txt);transition:color .2s}
+.nav.top .nav-name{color:#fff}
+.nav-space{flex:1}
+.nav-actions{display:flex;align-items:center;gap:10px}
+
+.nav-btn-orc{display:inline-flex;align-items:center;gap:7px;background:var(--p);color:#fff;padding:9px 18px;border-radius:24px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s;border:none;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(212,48,122,.35)}
+.nav-btn-orc:hover{background:var(--pd);transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,48,122,.45)}
+
+.nav-btn-adm{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:24px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;border:1.5px solid;text-decoration:none}
+.nav.top .nav-btn-adm{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.8);background:rgba(255,255,255,.08)}
+.nav.top .nav-btn-adm:hover{background:rgba(255,255,255,.18);color:#fff}
+.nav.scrolled .nav-btn-adm{border-color:var(--bdr2);color:var(--txt2);background:#fff}
+.nav.scrolled .nav-btn-adm:hover{border-color:var(--p);color:var(--p)}
+
+.nav-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--p);display:none}
+
+/* ── Hero ── */
+.hero{min-height:92vh;background:linear-gradient(150deg,#1a0a14 0%,#3d0f2a 35%,#6b1645 65%,#d4307a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(var(--nav-h) + 40px) 24px 60px;position:relative;overflow:hidden}
+.hero-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hero-circle{position:absolute;border-radius:50%;opacity:.12}
+.hero-c1{width:600px;height:600px;background:radial-gradient(circle,var(--p2),transparent);top:-200px;right:-150px}
+.hero-c2{width:400px;height:400px;background:radial-gradient(circle,#f9a8d4,transparent);bottom:-150px;left:-100px}
+.hero-c3{width:200px;height:200px;background:radial-gradient(circle,#fff,transparent);top:30%;left:10%;opacity:.05}
+.hero-float{position:absolute;font-size:32px;animation:float 6s ease-in-out infinite;opacity:.18}
+.hero-f1{top:15%;left:8%;animation-delay:0s}
+.hero-f2{top:25%;right:10%;animation-delay:1.5s;font-size:24px}
+.hero-f3{bottom:20%;left:12%;animation-delay:3s;font-size:20px}
+.hero-f4{bottom:30%;right:8%;animation-delay:4.5s;font-size:28px}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-16px) rotate(5deg)}}
+
+.hero-logo-wrap{position:relative;margin-bottom:28px}
+.hero-logo{width:100px;height:100px;border-radius:28px;object-fit:cover;border:3px solid rgba(255,255,255,.35);box-shadow:0 16px 60px rgba(0,0,0,.35)}
+.hero-logo-ph{width:100px;height:100px;border-radius:28px;background:rgba(255,255,255,.12);border:3px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:0 16px 60px rgba(0,0,0,.25);backdrop-filter:blur(10px)}
+.hero-badge{position:absolute;bottom:-8px;right:-8px;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;font-size:9px;font-weight:800;padding:3px 8px;border-radius:12px;border:2px solid rgba(255,255,255,.3);letter-spacing:.5px;text-transform:uppercase}
+
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;margin-bottom:20px;letter-spacing:.5px;text-transform:uppercase}
+.hero-tag-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,72px);font-weight:800;color:#fff;line-height:1.1;margin-bottom:18px;position:relative;z-index:1}
+.hero-title span{background:linear-gradient(90deg,#f9a8d4,#fce7f3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(15px,2vw,18px);color:rgba(255,255,255,.65);margin-bottom:36px;max-width:520px;line-height:1.6;position:relative;z-index:1}
+
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;position:relative;z-index:1}
+.hero-cta-p{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--pd);padding:14px 28px;border-radius:28px;font-size:15px;font-weight:800;text-decoration:none;transition:all .2s;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.hero-cta-p:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.hero-cta-s{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:14px 28px;border-radius:28px;font-size:15px;font-weight:700;text-decoration:none;transition:all .2s}
+.hero-cta-s:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+
+.hero-stats{display:flex;gap:0;position:relative;z-index:1;background:rgba(255,255,255,.08);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.15);border-radius:20px;overflow:hidden}
+.hero-stat{padding:16px 28px;text-align:center;flex:1}
+.hero-stat+.hero-stat{border-left:1px solid rgba(255,255,255,.12)}
+.hero-stat-num{font-size:26px;font-weight:800;color:#fff;line-height:1}
+.hero-stat-lbl{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+
+.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.35);font-size:11px;letter-spacing:.5px;text-transform:uppercase;animation:scrollhint 2.5s ease-in-out infinite}
+.hero-scroll svg{animation:bounceDown 2.5s ease-in-out infinite}
+@keyframes scrollhint{0%,100%{opacity:.35}50%{opacity:.7}}
+@keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* ── Filtros ── */
+.filters{background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-bottom:1.5px solid var(--bdr2);padding:14px 24px;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.06)}
+.filters-inner{max-width:1200px;margin:0 auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search-wrap{flex:1;min-width:200px;position:relative}
+.search-wrap i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--txt3);font-size:15px;pointer-events:none}
+.search-wrap input{width:100%;padding:10px 14px 10px 38px;border-radius:14px;border:1.5px solid var(--bdr2);font-size:13px;font-family:inherit;outline:none;transition:all .15s;background:#faf8fc;color:var(--txt)}
+.search-wrap input:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(212,48,122,.08)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:7px 16px;border-radius:20px;border:1.5px solid var(--bdr2);background:#faf8fc;font-size:12px;font-weight:600;cursor:pointer;color:var(--txt2);transition:all .15s;white-space:nowrap;user-select:none}
+.chip.on,.chip:hover{background:var(--p);color:#fff;border-color:var(--p);box-shadow:0 2px 8px rgba(212,48,122,.25)}
+.toggle-disp{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--txt2);cursor:pointer;white-space:nowrap;user-select:none}
+.toggle-disp input{accent-color:var(--p);width:15px;height:15px;cursor:pointer}
+.cnt-lbl{font-size:12px;color:var(--txt3);white-space:nowrap;margin-left:auto;font-weight:500}
+
+/* ── Main ── */
+.main{max-width:1200px;margin:0 auto;padding:32px 20px 80px}
+
+/* ── Section header ── */
+.section-head{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.section-line{flex:1;height:1px;background:linear-gradient(90deg,var(--bdr2),transparent)}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--txt);white-space:nowrap}
+
+/* ── Grid ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;align-items:stretch}
+
+/* ── Card ── */
+.card{background:var(--sur);border-radius:24px;overflow:hidden;border:1px solid var(--bdr);transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column;height:100%;position:relative}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(180,60,120,.16)}
+.card-alugado{border-color:#fecdd3;opacity:.88}
+
+/* ── Imagem + overlay ── */
+.card-img-wrap{position:relative;height:260px;background:var(--pl);overflow:hidden;flex-shrink:0}
+.galeria{width:100%;height:100%;position:relative;overflow:hidden}
+.gal-slides{display:flex;height:100%;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.gal-slide{min-width:100%;height:100%}
+.gal-slide img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.card:hover .gal-slide img{transform:scale(1.04)}
+.gal-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:72px;opacity:.25;background:linear-gradient(135deg,var(--pl),#fff)}
+.gal-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.45);color:#fff;border:none;width:34px;height:34px;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;z-index:4;backdrop-filter:blur(4px)}
+.gal-btn:hover{background:rgba(0,0,0,.7)}
+.gal-prev{left:10px}.gal-next{right:10px}
+.gal-dots{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:4}
+.gal-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:all .2s}
+.gal-dot.on{background:#fff;width:16px;border-radius:3px}
+
+/* ── Overlay CTA na imagem ── */
+.card-img-overlay{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:20px;background:linear-gradient(to top,rgba(26,10,20,.85) 0%,rgba(26,10,20,.3) 50%,transparent 100%);opacity:0;transition:opacity .3s ease}
+.card:hover .card-img-overlay{opacity:1}
+.card-overlay-cta{display:inline-flex;align-items:center;gap:8px;background:var(--p);color:#fff;padding:11px 22px;border-radius:20px;font-size:13px;font-weight:800;text-decoration:none;transition:all .2s;box-shadow:0 4px 20px rgba(212,48,122,.5);margin-bottom:8px;width:100%;justify-content:center;max-width:240px}
+.card-overlay-cta:hover{background:#fff;color:var(--pd);transform:scale(1.03)}
+.card-overlay-sub{color:rgba(255,255,255,.7);font-size:11px;text-align:center}
+
+.badge{position:absolute;top:12px;font-size:10px;font-weight:700;padding:4px 10px;border-radius:8px;z-index:5;letter-spacing:.3px}
+.badge-status{left:12px}
+.badge-status.livre{background:#dcfce7;color:#166534}
+.badge-status.alugado{background:#fee2e2;color:#991b1b}
+.badge-desc{right:12px;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;box-shadow:0 2px 8px rgba(239,68,68,.4)}
+
+/* ── Card Body ── */
+.card-body{padding:18px;display:flex;flex-direction:column;flex:1;min-height:0}
+.card-tema{font-size:10px;font-weight:800;color:var(--p);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;display:flex;align-items:center;gap:4px}
+.card-nome{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--txt);margin-bottom:7px;line-height:1.3}
+.card-descricao{font-size:12px;color:var(--txt2);margin-bottom:12px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-itens{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px}
+.kit-item{font-size:10px;padding:3px 9px;border-radius:6px;background:var(--pl);color:var(--pd);font-weight:600}
+.kit-mais{background:#f0edf4;color:#9a7ab8}
+
+/* ── Disponibilidade ── */
+.disp-wrap{background:#faf8fc;border-radius:12px;padding:12px;margin-bottom:8px;border:1px solid var(--bdr)}
+.disp-title{font-size:10px;font-weight:700;color:var(--txt2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px}
+.disp-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;margin-bottom:7px}
+.disp-dia{aspect-ratio:1;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700;cursor:default}
+.disp-dia.livre{background:#dcfce7;color:#166534}
+.disp-dia.ocupado{background:#fee2e2;color:#991b1b;text-decoration:line-through}
+.disp-dia.hoje{outline:2px solid var(--p);outline-offset:1px}
+.disp-leg{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--txt3)}
+.leg{display:inline-block;width:10px;height:10px;border-radius:3px}
+.leg.livre{background:#dcfce7}.leg.ocupado{background:#fee2e2}
+.periodos-wrap{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px}
+.periodo-tag{font-size:10px;padding:2px 7px;border-radius:5px;background:#fee2e2;color:#991b1b;border:1px solid #fecdd3}
+
+/* ── Footer do card ── */
+.card-footer{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:auto;padding-top:14px;border-top:1px solid var(--bdr)}
+.card-preco-cheio{font-size:11px;color:#bbb;text-decoration:line-through;margin-bottom:2px}
+.card-preco-val{font-size:22px;font-weight:800;color:var(--p);line-height:1;font-family:'DM Sans',sans-serif}
+.card-preco-leg{font-size:10px;color:var(--txt3);margin-top:2px}
+.btn-orc{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:10px 16px;border-radius:14px;font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;white-space:nowrap;flex-shrink:0;box-shadow:0 3px 12px rgba(22,163,74,.3)}
+.btn-orc:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(22,163,74,.4);opacity:.92}
+.btn-alugar{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;padding:10px 16px;border-radius:14px;font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;white-space:nowrap;flex-shrink:0;box-shadow:0 3px 12px rgba(212,48,122,.3)}
+.btn-alugar:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(212,48,122,.45)}
+.card-btns{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+
+/* ── Vazio ── */
+.empty{text-align:center;padding:80px 20px;color:var(--txt3);display:none}
+.empty-ico{font-size:56px;margin-bottom:16px;display:block}
+.empty p{font-size:16px}
+
+/* ── CTA Banner ── */
+.cta-banner{background:linear-gradient(135deg,var(--pd),var(--p),#f472b6);border-radius:28px;padding:48px 36px;text-align:center;margin:40px 0;position:relative;overflow:hidden}
+.cta-banner::before{content:'🎀';position:absolute;font-size:200px;opacity:.06;right:-30px;top:-40px;line-height:1}
+.cta-banner h2{font-family:'Playfair Display',serif;font-size:28px;color:#fff;margin-bottom:10px;position:relative;z-index:1}
+.cta-banner p{color:rgba(255,255,255,.75);font-size:15px;margin-bottom:24px;position:relative;z-index:1}
+.cta-banner-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.cta-btn-w{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--pd);padding:13px 28px;border-radius:24px;font-size:14px;font-weight:800;text-decoration:none;transition:all .2s;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.cta-btn-w:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.cta-btn-t{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1.5px solid rgba(255,255,255,.35);color:#fff;padding:13px 28px;border-radius:24px;font-size:14px;font-weight:700;text-decoration:none;transition:all .2s}
+.cta-btn-t:hover{background:rgba(255,255,255,.25);transform:translateY(-2px)}
+
+/* ── Footer ── */
+.ft{background:linear-gradient(160deg,#1a0a14,#2d1020);color:#cbb8c8;text-align:center;padding:48px 24px 24px;margin-top:auto}
+.ft-logo{font-size:36px;margin-bottom:8px}
+.ft-nome{color:#fff;font-size:20px;font-weight:800;margin-bottom:4px;font-family:'Playfair Display',serif}
+.ft-slogan{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px}
+.ft-sep{width:40px;height:2px;background:linear-gradient(90deg,var(--p),var(--p2));margin:0 auto 24px;border-radius:2px}
+.ft-info-row{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:6px}
+.ft-wpp-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:13px 28px;border-radius:24px;font-weight:700;text-decoration:none;margin-top:24px;font-size:14px;transition:all .2s;box-shadow:0 4px 16px rgba(22,163,74,.35)}
+.ft-wpp-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(22,163,74,.45)}
+.ft-copy{font-size:11px;color:rgba(255,255,255,.2);margin-top:32px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)}
+
+/* ── Admin bar no footer ── */
+.admin-bar{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:24px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap}
+.btn-admin{display:none;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);font-size:11px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s}
+.btn-admin:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)}
+.btn-logout{display:none;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);font-size:11px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s}
+.btn-logout:hover{background:rgba(220,38,38,.15);color:#fca5a5;border-color:#fca5a5}
+.link-admin{display:none;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;background:var(--p);color:#fff;font-size:11px;font-weight:700;text-decoration:none;transition:opacity .15s}
+.link-admin:hover{opacity:.85}
+
+/* ── Responsivo ── */
+@media(max-width:640px){
+  .hero{min-height:100svh;padding-top:calc(var(--nav-h) + 20px)}
+  .hero-stats{flex-direction:column;gap:0;border-radius:16px}
+  .hero-stat+.hero-stat{border-left:none;border-top:1px solid rgba(255,255,255,.12)}
+  .hero-stat{padding:12px 20px}
+  .hero-ctas{flex-direction:column;align-items:center}
+  .hero-cta-p,.hero-cta-s{width:100%;max-width:300px;justify-content:center}
+  .grid{grid-template-columns:1fr;gap:16px}
+  .card-img-wrap{height:220px}
+  .main{padding:24px 14px 60px}
+  .nav-inner{padding:0 16px}
+  .nav-btn-adm span{display:none}
+  .cta-banner{padding:32px 20px;border-radius:20px}
+  .cta-banner h2{font-size:22px}
+}
+@media(min-width:641px) and (max-width:960px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* WhatsApp flutuante */
+.wpp-float{position:fixed;bottom:24px;right:24px;z-index:9000;display:flex;align-items:center;gap:10px;background:#25d366;color:#fff;padding:13px 20px 13px 16px;border-radius:30px;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:all .22s;font-family:'DM Sans',sans-serif}
+.wpp-float:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(37,211,102,.55);background:#20c95e}
+@media(max-width:480px){.wpp-float span{display:none}.wpp-float{padding:14px;border-radius:50%;width:56px;height:56px;justify-content:center}}
+
+/* ═══ Card disponibilidade por data ═══════════════════════════════════════════ */
+.card-data-check {
+  padding: 10px 0 0;
+}
+.card-data-check input[type=date]::-webkit-calendar-picker-indicator {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+/* ═══ FAQ ════════════════════════════════════════════════════════════════════ */
+#faq-sec { background: #1a0a25; padding: 60px 24px; }
+.faq-item { border-bottom: 1px solid rgba(255,255,255,.12); overflow: hidden; }
+.faq-item:last-child { border-bottom: none; }
+.faq-q {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 0; cursor: pointer; font-size: 16px; font-weight: 600;
+  color: #ffffff; gap: 12px; line-height: 1.4; background: none; border: none;
+  width: 100%; text-align: left; font-family: 'DM Sans', sans-serif;
+}
+.faq-q:hover { color: #f472b6; }
+.faq-ico {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(255,255,255,.1); display: flex; align-items: center;
+  justify-content: center; font-size: 16px; color: #f472b6;
+  transition: transform .25s, background .2s;
+}
+.faq-item.open .faq-ico { transform: rotate(45deg); background: rgba(212,48,122,.3); }
+.faq-a {
+  max-height: 0; overflow: hidden; transition: max-height .35s ease;
+  font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.75;
+}
+.faq-item.open .faq-a { max-height: 300px; padding-bottom: 20px; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVIDADE EXTRA — index.html
+   ══════════════════════════════════════════ */
+@media(max-width:480px){
+  /* Filtros com scroll horizontal */
+  .filters-inner{flex-wrap:wrap !important;gap:8px !important}
+  .filters-inner .search-wrap{flex:1 1 100% !important;min-width:0 !important;order:-1 !important}
+  .filters-inner .chips{flex:1 1 100% !important;display:flex !important;flex-wrap:nowrap !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch !important;scrollbar-width:none !important;padding-bottom:2px !important;gap:6px !important}
+  .filters-inner .chips::-webkit-scrollbar{display:none !important}
+  .filters-inner .toggle-disp{order:10 !important;font-size:12px !important}
+  .chips{flex-wrap:nowrap !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch !important;scrollbar-width:none !important}
+  .chips::-webkit-scrollbar{display:none}
+  /* Search full width */
+  .search-wrap{min-width:0 !important;width:100% !important}
+  /* Grid 1 col */
+  .grid{grid-template-columns:1fr !important}
+  /* Nav compacto */
+  .nav-inner{padding:0 12px !important;gap:8px !important}
+  /* Inputs maiores */
+  input,select{font-size:16px !important}
+  /* Banner CTA */
+  .cta-banner{padding:24px 16px !important;border-radius:16px !important}
+  .cta-banner h2{font-size:20px !important}
+}
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<!-- Banner de promoção -->
+<div id="promo-banner" style="display:none;background:var(--p);color:#fff;text-align:center;padding:10px 16px;font-size:13px;font-weight:600;position:relative;z-index:100">
+  <span id="promo-banner-txt"></span>
+  <button onclick="document.getElementById('promo-banner').style.display='none'" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:18px;line-height:1">×</button>
+</div>
+
+<div id="loading">
+  <div class="ld-wrap">
+    <div class="ld-ring"></div>
+    <div class="ld-icon">🎀</div>
+  </div>
+  <div class="ld-nome" id="ld-nome">Katreseli</div>
+  <div class="ld-sub">Preparando o catálogo...</div>
+</div>
+
+<!-- Navbar -->
+<nav class="nav top" id="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#">
+      <div class="nav-logo-ph" id="nav-logo-ph">🎀</div>
+      <span class="nav-name" id="nav-name">Katreseli</span>
+    </a>
+    <div class="nav-space"></div>
+    <div class="nav-actions">
+      <a href="cliente.html" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:20px;border:1.5px solid rgba(255,255,255,.3);color:rgba(255,255,255,.9);font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif;white-space:nowrap" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='none'">
+          <i class="ti ti-user-circle" style="font-size:16px"></i> Minha área
+        </a>
+
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero" style="display:none">
+  <div class="hero-particles">
+    <div class="hero-circle hero-c1"></div>
+    <div class="hero-circle hero-c2"></div>
+    <div class="hero-circle hero-c3"></div>
+  </div>
+  <span class="hero-float hero-f1">🎀</span>
+  <span class="hero-float hero-f2">✨</span>
+  <span class="hero-float hero-f3">🌸</span>
+  <span class="hero-float hero-f4">🎊</span>
+
+  <div class="hero-logo-wrap">
+    <div id="hero-logo-wrap">
+      <div class="hero-logo-ph">🎀</div>
+    </div>
+    <span class="hero-badge" id="hero-badge">● Online</span>
+  </div>
+
+  <div class="hero-tag">
+    <div class="hero-tag-dot"></div>
+    <span id="hero-tag-txt">Kits disponíveis agora</span>
+  </div>
+
+  <h1 class="hero-title" id="hero-title-main">
+    KATRESELI<br><span id="hero-title-span" style="font-size:clamp(22px,4vw,42px);font-weight:600;letter-spacing:2px">DECORAÇÕES</span>
+  </h1>
+  <p class="hero-sub" id="hero-sub">Cada detalhe pensado com amor para transformar sua festa em uma memória que dura para sempre. ✨</p>
+
+  <div class="hero-ctas">
+    <a class="hero-cta-p" href="#catalogo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Ver catálogo
+    </a>
+    <a class="hero-cta-s" href="solicitar.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Solicitar orçamento
+    </a>
+  </div>
+
+  <div class="hero-stats" id="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num" id="hs-total">—</div><div class="hero-stat-lbl">Kits no catálogo</div></div>
+    <div class="hero-stat"><div class="hero-stat-num" id="hs-disp">—</div><div class="hero-stat-lbl">Disponíveis hoje</div></div>
+    <div class="hero-stat"><div class="hero-stat-num" id="hs-temas">—</div><div class="hero-stat-lbl">Temas diferentes</div></div>
+  </div>
+
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg>
+    Role para ver
+  </div>
+</section>
+
+<!-- Filtros -->
+<div class="filters" id="filtros" style="display:none">
+  <div class="filters-inner">
+    <div class="search-wrap">
+      <i class="ti ti-search"></i>
+      <input type="text" id="busca" placeholder="Buscar kit ou tema..." oninput="filtrar()">
+    </div>
+    <div class="chips" id="chips-tema">
+      <span class="chip on" data-tema="" onclick="setTema(this)">Todos</span>
+    </div>
+    <label class="toggle-disp">
+      <input type="checkbox" id="chk-disp" onchange="filtrar()"> Só disponíveis
+    </label>
+    <span class="cnt-lbl" id="cnt"></span>
+  </div>
+</div>
+
+<!-- Grid -->
+<main class="main" id="main" style="display:none">
+  <div id="catalogo" class="section-head">
+    <div class="section-line"></div>
+    <div class="section-title">✨ Nossos Kits</div>
+    <div class="section-line"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <!-- Botão ver todos -->
+  <div id="ver-todos-wrap" style="text-align:center;margin-top:24px;display:none">
+    <button onclick="mostrarTodosKits()" style="padding:12px 32px;border-radius:20px;background:linear-gradient(135deg,var(--p,#d4307a),var(--pd,#8b1a5c));color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 16px rgba(212,48,122,.3);transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+      Ver todos os kits <i class="ti ti-arrow-down" style="font-size:14px;margin-left:4px"></i>
+    </button>
+  </div>
+  <div class="empty" id="empty">
+    <span class="empty-ico">🔍</span>
+    <p>Nenhum kit encontrado com esse filtro</p>
+  </div>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner" id="cta-banner" style="display:none">
+    <h2>Pronta para reservar?</h2>
+    <p id="cta-sub">Solicite seu orçamento e garanta a data do seu evento!</p>
+    <div class="cta-banner-btns">
+      <a class="cta-btn-w" href="solicitar.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Preencher formulário
+      </a>
+      <a class="cta-btn-t" id="cta-wpp" href="#" target="_blank" style="display:none">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.133 1.527 5.887L.057 23.996l6.304-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.856 9.856 0 012.118 12C2.118 6.533 6.533 2.118 12 2.118S21.882 6.533 21.882 12 17.467 21.882 12 21.882z"/></svg>
+        Chamar no WhatsApp
+      </a>
+    </div>
+  </div>
+</main>
+
+<!-- Mapa de localização -->
+<section id="mapa-sec" style="display:none">
+  <div id="mapa-container" style="width:100%;height:280px;background:#1a0a25"></div>
+</section>
+
+<!-- Horário de atendimento -->
+<section id="horario-sec" style="display:none;background:linear-gradient(135deg,rgba(212,48,122,.12),rgba(94,28,160,.12));padding:28px 24px;text-align:center;border-top:1px solid rgba(255,255,255,.06)">
+  <div style="max-width:600px;margin:0 auto">
+    <div style="font-size:20px;margin-bottom:8px">🕐</div>
+    <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:4px">Horário de atendimento</div>
+    <div id="horario-txt" style="font-size:13px;color:rgba(255,255,255,.6);line-height:1.7"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq-sec" style="background:#1a0a25;padding:60px 24px">
+  <div style="max-width:700px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:36px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--p);margin-bottom:8px">Dúvidas frequentes</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:28px;color:#fff;font-weight:700">Perguntas & Respostas</h2>
+    </div>
+    <div id="faq-lista">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Como funciona a retirada e devolução?<i class="ti ti-plus faq-ico"></i></div><div class="faq-a"><div>A retirada é feita no nosso endereço na data combinada. A devolução deve ser feita até as 18h do dia acordado. Para entregas e retiradas em domicílio, consulte os valores de frete.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">O que acontece se eu danificar ou perder um item?<i class="ti ti-plus faq-ico"></i></div><div class="faq-a"><div>Itens danificados ou perdidos são cobrados pelo valor de reposição. Por isso, recomendamos cuidado no transporte e montagem. Tudo fica descrito no contrato.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Quais formas de pagamento são aceitas?<i class="ti ti-plus faq-ico"></i></div><div class="faq-a"><div>Aceitamos Pix, dinheiro e cartão. O sinal de reserva deve ser pago para confirmar a data. O restante pode ser pago na entrega/retirada dos itens.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Posso cancelar ou alterar a data?<i class="ti ti-plus faq-ico"></i></div><div class="faq-a"><div>Alterações de data estão sujeitas à disponibilidade. Cancelamentos não têm reembolso do sinal/entrada, conforme contrato assinado.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Vocês fazem a montagem da decoração?<i class="ti ti-plus faq-ico"></i></div><div class="faq-a"><div>Sim! Oferecemos serviço de montagem e desmontagem com custo adicional. Solicite no formulário de orçamento e informaremos os valores.</div></div></div>
+      <div class="faq-item" style="border:none"><div class="faq-q" onclick="toggleFaq(this)">Como reservo um kit para a minha data?<i class="ti ti-plus faq-ico"></i></div><div class="faq-a"><div>Clique em "Solicitar orçamento", preencha o formulário ou nos chame no WhatsApp. Após confirmar disponibilidade, enviamos o contrato e você garante a data com o pagamento do sinal.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Depoimentos -->
+<section id="depoimentos" style="background:var(--bg);padding:60px 24px;display:none">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:36px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--p);margin-bottom:8px">O que dizem nossas clientes</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:28px;color:var(--txt);font-weight:700">Depoimentos</h2>
+    </div>
+    <div id="depoimentos-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px"></div>
+  </div>
+</section>
+
+<!-- Área de cobertura -->
+<section id="cobertura-sec" style="background:linear-gradient(135deg,var(--p),var(--pd));padding:48px 24px;display:none">
+  <div style="max-width:800px;margin:0 auto;text-align:center">
+    <div style="font-size:26px;margin-bottom:12px">📍</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:26px;color:#fff;font-weight:700;margin-bottom:8px">Área de atendimento</h2>
+    <p style="color:rgba(255,255,255,.8);margin-bottom:24px;font-size:15px" id="cobertura-desc">Atendemos com entrega e retirada nas cidades abaixo:</p>
+    <div id="cobertura-cidades" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="ft" id="ft" style="display:none">
+  <div class="ft-logo">🎀</div>
+  <div class="ft-nome" id="ft-nome">Katreseli</div>
+  <div class="ft-slogan" id="ft-slogan">Locações de Decoração Infantil</div>
+  <div class="ft-sep"></div>
+  <div class="ft-info-row" id="ft-end"></div>
+  <div class="ft-info-row" id="ft-cnpj"></div>
+  <div id="ft-wpp"></div>
+  <div id="ft-social" style="display:flex;gap:12px;justify-content:center;margin-top:18px"></div>
+  <div class="ft-copy">© <span id="ft-year"></span> <span id="ft-nome2">Katreseli</span> · Todos os direitos reservados</div>
+
+  <!-- Admin bar discreta -->
+  <div class="admin-bar">
+    <button class="btn-admin" id="btn-admin" onclick="loginAdmin()">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Área administrativa
+    </button>
+    <a class="link-admin" id="link-admin" href="adm.html">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Ir para o sistema
+    </a>
+    <button class="btn-logout" id="btn-logout" onclick="logoutAdmin()">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sair
+    </button>
+  </div>
+</footer>
+
+<script type="module">
+import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, doc, onSnapshot }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const fbConfig = {
+  apiKey:            "AIzaSyAZCaUFsBdm_Eu38TcxYfKVfnP4fBlOClw",
+  authDomain:        "katreseli.firebaseapp.com",
+  projectId:         "katreseli",
+  storageBucket:     "katreseli.firebasestorage.app",
+  messagingSenderId: "70788726473",
+  appId:             "1:70788726473:web:da67bdf6b9d4861fed1718"
+};
+
+const app  = initializeApp(fbConfig);
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+let _kits = [], _locacoes = [], _cfg = {}, _tema = "";
+let _carregou = { kits:false, loc:false, cfg:false };
+const hoje = new Date().toISOString().split("T")[0];
+
+const fmtV = v => "R\u00a0" + (parseFloat(v)||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtD = ds => { if(!ds)return"?"; const[y,m,d]=ds.split("-"); return`${d}/${m}/${y}`; };
+
+// Navbar scroll effect
+window.addEventListener("scroll", () => {
+  const nav = document.getElementById("nav");
+  if (!nav) return;
+  if (window.scrollY > 80) nav.className = "nav scrolled";
+  else nav.className = "nav top";
+}, {passive:true});
+
+// Listeners só iniciam após autenticação (Firebase Rules exigem auth)
+let _unsubs = [];
+function iniciarListeners() {
+  if (_unsubs.length) return; // já iniciado
+  _unsubs.push(onSnapshot(collection(db,"decoracoes"), snap => {
+    _kits = snap.docs.map(d=>({id:d.id,...d.data()})).filter(k=>k.status!=="inativo"&&k.status!=="Em manutencao");
+    _carregou.kits = true; tentarRenderizar();
+  }));
+  _unsubs.push(onSnapshot(collection(db,"disponibilidade"), snap => {
+    _locacoes = snap.docs.map(d=>({id:d.id,...d.data()}));
+    _carregou.loc = true; tentarRenderizar();
+  }, () => {
+    _locacoes = [];
+    _carregou.loc = true; tentarRenderizar();
+  }));
+  _unsubs.push(onSnapshot(doc(db,"config","app"), snap => {
+    if (snap.exists()) _cfg = snap.data();
+    _carregou.cfg = true; tentarRenderizar();
+  }));
+}
+
+let _jaRenderizou = false;
+function tentarRenderizar() {
+  if (!_carregou.kits||!_carregou.loc||!_carregou.cfg) return;
+  aplicarCor(); renderNav(); renderHero(); renderChipsTema(); renderGrid(); renderFooter();
+  renderBanner(); renderHorario(); renderContadorFestas(); injetarGA4(); renderMapa();
+  if (!_jaRenderizou) { _jaRenderizou=true; setTimeout(esconderLoading,350); }
+  else renderGrid();
+}
+
+function esconderLoading() {
+  document.getElementById("loading").classList.add("oculto");
+  document.getElementById("hero").style.display = "";
+  document.getElementById("filtros").style.display = "";
+  document.getElementById("main").style.display = "";
+  document.getElementById("ft").style.display = "";
+  document.getElementById("nav").style.display = "";
+}
+
+function updateFavicon(src) {
+  if (!src) return;
+  const existing = document.querySelector("link[rel='icon']");
+  const link = existing || document.createElement("link");
+  link.rel  = "icon";
+  link.type = "image/png";
+  link.href = src;
+  if (!existing) document.head.appendChild(link);
+}
+
+function aplicarCor() {
+  const r = document.documentElement;
+  if (_cfg.cor)  r.style.setProperty("--p",  _cfg.cor);
+  if (_cfg.corD) r.style.setProperty("--pd", _cfg.corD);
+  if (_cfg.corL) r.style.setProperty("--pl", _cfg.corL);
+  if (_cfg.logo) updateFavicon(_cfg.logo);
+  const ld = document.getElementById("ld-nome");
+  if (ld) ld.textContent = _cfg.nome||"Katreseli";
+}
+
+function renderNav() {
+  const nome = _cfg.nome||"Katreseli";
+  const logo = _cfg.logo||"";
+  const n = document.getElementById("nav-name"); if(n) n.textContent = nome;
+  const ph = document.getElementById("nav-logo-ph");
+  if (ph && logo) { ph.outerHTML = `<img class="nav-logo" src="${logo}" alt="${nome}" id="nav-logo-ph-2">`; }
+}
+
+function renderHero() {
+  const nome   = _cfg.nome   || "Katreseli";
+  const slogan = _cfg.slogan || "Locações de Decoração Infantil";
+  const logo   = _cfg.logo   || "";
+  const telWpp = obterTel();
+  const dispHoje = _kits.filter(k => !estaAlugado(k.id, hoje)).length;
+  const temas  = [...new Set(_kits.map(k=>k.tema||"Geral"))];
+
+  // Logo hero
+  const hw = document.getElementById("hero-logo-wrap");
+  if (hw) hw.innerHTML = logo
+    ? `<img src="${logo}" class="hero-logo" alt="${nome}">`
+    : `<div class="hero-logo-ph">🎀</div>`;
+
+  // Tag
+  const tag = document.getElementById("hero-tag-txt");
+  if (tag) tag.textContent = `${dispHoje} ${dispHoje===1?"kit disponível":"kits disponíveis"} agora`;
+
+  // Título fixo — não sobrescrever
+
+  // Sub — frase fixa, não usa slogan do Firestore
+  const sub = document.getElementById("hero-sub");
+  if (sub) sub.innerHTML = "Cada detalhe pensado com amor para transformar sua festa em uma memória que dura para sempre. ✨";
+
+  // Stats
+  const hsTotal = document.getElementById("hs-total");
+  const hsDisp  = document.getElementById("hs-disp");
+  const hsTemas = document.getElementById("hs-temas");
+  if (hsTotal) hsTotal.textContent = _kits.length;
+  if (hsDisp)  hsDisp.textContent  = dispHoje;
+  if (hsTemas) hsTemas.textContent = temas.length;
+
+  // CTA banner
+  const banner = document.getElementById("cta-banner");
+  if (banner) banner.style.display = "";
+  const ctaSub = document.getElementById("cta-sub");
+  if (ctaSub) ctaSub.textContent = `Solicite seu orçamento para ${nome} e garanta a data!`;
+  if (telWpp) {
+    const ctaWpp = document.getElementById("cta-wpp");
+    if (ctaWpp) {
+      const msg = `Olá, ${nome}! 🎀 Gostaria de solicitar um orçamento para locação de kit de decoração.`;
+      ctaWpp.href = `https://wa.me/55${telWpp}?text=${encodeURIComponent(msg)}`;
+      ctaWpp.style.display = "inline-flex";
+    }
+  }
+}
+
+function renderChipsTema() {
+  const temas = [...new Set(_kits.map(k=>k.tema||"Geral"))].sort();
+  const wrap  = document.getElementById("chips-tema");
+  wrap.innerHTML = `<span class="chip on" data-tema="" onclick="window.setTema(this)">Todos</span>` +
+    temas.map(t=>`<span class="chip" data-tema="${t}" onclick="window.setTema(this)">${t}</span>`).join("");
+}
+
+let _mostrarTodos = false;
+
+function renderGrid() {
+  const q      = (document.getElementById("busca")||{}).value?.toLowerCase()||"";
+  const soDisp = (document.getElementById("chk-disp")||{}).checked;
+  const kitsVis = _kits.filter(k=>{
+    const matchTema = !_tema||(k.tema||"Geral")===_tema;
+    const matchQ    = !q||(k.nome||"").toLowerCase().includes(q)||(k.tema||"").toLowerCase().includes(q)||(k.desc||"").toLowerCase().includes(q);
+    const matchDisp = !soDisp||!estaAlugado(k.id,hoje);
+    return matchTema&&matchQ&&matchDisp;
+  });
+  const grid  = document.getElementById("grid");
+  const empty = document.getElementById("empty");
+  const cnt   = document.getElementById("cnt");
+  const verTodosWrap = document.getElementById("ver-todos-wrap");
+  cnt.textContent = `${kitsVis.length} kit${kitsVis.length!==1?"s":""}`;
+  empty.style.display = kitsVis.length===0?"":"none";
+  grid.style.display  = kitsVis.length===0?"none":"";
+
+  // Mostrar só 4 kits se não houver busca ativa e não clicou em "ver todos"
+  const temFiltro = q || soDisp || _tema;
+  const limite = (!temFiltro && !_mostrarTodos) ? 4 : kitsVis.length;
+  const kitsExibidos = kitsVis.slice(0, limite);
+
+  grid.innerHTML = kitsExibidos.map((k,ki)=>renderCard(k,ki)).join("");
+
+  // Botão ver todos: só aparece quando tem mais de 4 e sem filtro ativo
+  if (verTodosWrap) {
+    verTodosWrap.style.display = (!temFiltro && !_mostrarTodos && kitsVis.length > 4) ? "" : "none";
+  }
+}
+
+window.mostrarTodosKits = function() {
+  _mostrarTodos = true;
+  renderGrid();
+  // Scroll para o grid
+  document.getElementById("grid")?.scrollIntoView({behavior:"smooth", block:"start"});
+};
+
+function renderCard(k, ki) {
+  const temDesc = (k.desconto||0)>0;
+  const alugado = estaAlugado(k.id,hoje);
+  const fotos   = (k.fotos&&k.fotos.length)?k.fotos:(k.foto?[k.foto]:[]);
+  const telWpp  = obterTel();
+  const nome    = _cfg.nome||"Katreseli";
+  const msg     = `Olá, ${nome}! 🎀 Tenho interesse no kit: *${k.nome}* (${fmtV(k.valorTotal)}). Poderia verificar a disponibilidade?`;
+  const wppUrl  = telWpp?`https://wa.me/55${telWpp}?text=${encodeURIComponent(msg)}`:"#";
+
+  const galId = `g${ki}`;
+  const galHtml = fotos.length>0?`
+    <div class="galeria" id="${galId}">
+      <div class="gal-slides">
+        ${fotos.map((f,i)=>`<div class="gal-slide"${i>0?' style="display:none"':''}><img src="${f}" alt="${k.nome}" loading="lazy"></div>`).join("")}
+      </div>
+      ${fotos.length>1?`
+        <button class="gal-btn gal-prev" onclick="event.stopPropagation();window.galNav('${galId}',-1)">&#8249;</button>
+        <button class="gal-btn gal-next" onclick="event.stopPropagation();window.galNav('${galId}',1)">&#8250;</button>
+        <div class="gal-dots">${fotos.map((_,i)=>`<span class="gal-dot${i===0?" on":""}" onclick="event.stopPropagation();window.galIr('${galId}',${i})"></span>`).join("")}</div>`:""}
+    </div>`:`<div class="galeria"><div class="gal-ph">🎀</div></div>`;
+
+  const dias = gerarDias(k.id);
+  const periodos = periodosProximos(k.id);
+  const dispHtml = `
+    <div class="disp-wrap">
+      <div class="disp-title"><i class="ti ti-calendar"></i> Próximos 30 dias</div>
+      <div class="disp-grid">${dias.map(d=>`<div class="disp-dia ${d.ocupado?"ocupado":"livre"}${d.iso===hoje?" hoje":""}" title="${fmtD(d.iso)}">${d.num}</div>`).join("")}</div>
+      <div class="disp-leg"><span class="leg livre"></span>Livre <span class="leg ocupado"></span>Ocupado</div>
+    </div>
+    <div style="height:32px;overflow:hidden;margin-bottom:2px">
+      ${periodos.length?`<div class="periodos-wrap" style="margin:0">${periodos.map(p=>`<span class="periodo-tag">🔒 ${fmtD(p.ret)} → ${fmtD(p.dev)}</span>`).join("")}</div>`:""}
+    </div>`;
+
+  const its = (k.itensInclusos||[]).filter(i=>i.tipo!=="kit");
+  const itHtml = its.slice(0,5).map(i=>`<span class="kit-item">${i.nome}</span>`).join("")+(its.length>5?`<span class="kit-item kit-mais">+${its.length-5}</span>`:"");
+
+  const wppIconSvg = `<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.133 1.527 5.887L.057 23.996l6.304-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.856 9.856 0 012.118 12C2.118 6.533 6.533 2.118 12 2.118S21.882 6.533 21.882 12 17.467 21.882 12 21.882z"/></svg>`;
+
+  return `
+  <div class="card${alugado?" card-alugado":""}" data-tema="${(k.tema||"Geral").replace(/"/g,"")}" data-nome="${(k.nome||"").toLowerCase()}">
+    <div class="card-img-wrap">
+      ${galHtml}
+      <!-- Overlay com CTA na imagem -->
+      <div class="card-img-overlay">
+        <a class="card-overlay-cta" href="solicitar.html?kit=${encodeURIComponent(k.id)}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+          Solicitar locação
+        </a>
+        ${telWpp&&!alugado?`<div class="card-overlay-sub" style="margin-top:0">ou <a href="${wppUrl}" target="_blank" style="color:rgba(255,255,255,.9);font-weight:700">chamar no WhatsApp</a></div>`:""}
+      </div>
+      <span class="badge badge-status ${alugado?"alugado":"livre"}">${alugado?"🔒 Alugado hoje":"✅ Disponível"}</span>
+      ${temDesc?`<span class="badge badge-desc">−${fmtV(k.desconto)} OFF</span>`:""}
+    </div>
+    <div class="card-body">
+      <div class="card-tema">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        ${k.tema||"Geral"}
+      </div>
+      <div class="card-nome">${k.nome}</div>
+      ${k.desc?`<div class="card-descricao">${k.desc}</div>`:""}
+      ${itHtml?`<div class="card-itens">${itHtml}</div>`:""}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:0">
+        ${dispHtml}
+      <!-- Verificar data específica -->
+      <div class="card-data-check" style="padding:0 0 10px">
+        <div style="background:#f9f5fc;border-radius:12px;padding:10px 12px;border:1px solid #f0e8f5">
+          <div style="font-size:10px;font-weight:700;color:#b09aaa;text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;display:flex;align-items:center;gap:4px">
+            <i class="ti ti-calendar-search" style="font-size:11px"></i> Verificar data
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="date" class="card-date-inp"
+              onchange="verificarDataKit('${k.id}',this.value,this)"
+              style="flex:1;padding:7px 10px;border-radius:8px;border:1.5px solid #e8d5f0;background:#fff;font-size:13px;font-family:inherit;color:#150810;cursor:pointer;outline:none;min-width:0"
+              onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#e8d5f0'">
+            <div id="check-res-${k.id}" style="font-size:12px;font-weight:700;white-space:nowrap;min-width:64px;text-align:center;padding:6px 8px;border-radius:8px;background:#fff;border:1.5px solid #e8d5f0;color:#b09aaa">—</div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div>
+          ${temDesc?`<div class="card-preco-cheio">${fmtV(k.valorCheio)}</div>`:""}
+          <div class="card-preco-val">${fmtV(k.valorTotal)}</div>
+          <div class="card-preco-leg">/locação</div>
+        </div>
+        <div class="card-btns">
+          <a class="btn-alugar" href="solicitar.html?kit=${encodeURIComponent(k.id)}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+            Alugar
+          </a>
+          ${telWpp?`<a class="btn-orc" href="${wppUrl}" target="_blank">${wppIconSvg} Orçamento</a>`:""}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderFooter() {
+  const nome   = _cfg.nome||"Katreseli";
+  const slogan = _cfg.slogan||"Locações de Decoração Infantil";
+  const telWpp = obterTel();
+  const ftNome = document.getElementById("ft-nome"); if(ftNome) ftNome.textContent = nome;
+  const ftNome2 = document.getElementById("ft-nome2"); if(ftNome2) ftNome2.textContent = nome;
+  const ftSlogan = document.getElementById("ft-slogan"); if(ftSlogan) ftSlogan.textContent = slogan;
+  const ftEnd  = document.getElementById("ft-end");
+  if (ftEnd && _cfg.endEmpresa) { ftEnd.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ${_cfg.endEmpresa}`; }
+  const ftCnpj = document.getElementById("ft-cnpj");
+  if (ftCnpj && _cfg.cnpj) { ftCnpj.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> CNPJ: ${_cfg.cnpj}`; }
+  const ftWpp = document.getElementById("ft-wpp");
+  if (ftWpp) ftWpp.innerHTML = telWpp
+    ? `<a class="ft-wpp-btn" href="https://wa.me/55${telWpp}?text=${encodeURIComponent(`Olá, ${nome}! 🎀 Gostaria de solicitar um orçamento.`)}" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.133 1.527 5.887L.057 23.996l6.304-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.856 9.856 0 012.118 12C2.118 6.533 6.533 2.118 12 2.118S21.882 6.533 21.882 12 17.467 21.882 12 21.882z"/></svg>
+        Solicitar orçamento pelo WhatsApp
+      </a>` : "";
+  const ftYear = document.getElementById("ft-year"); if(ftYear) ftYear.textContent = new Date().getFullYear();
+  const ftSocial = document.getElementById("ft-social");
+  if (ftSocial) {
+    let socHtml = "";
+    if (_cfg.instagram) socHtml += `<a href="https://instagram.com/${_cfg.instagram.replace('@','')}" target="_blank" style="color:rgba(255,255,255,.55);font-size:22px;transition:color .2s" title="Instagram"><i class="ti ti-brand-instagram"></i></a>`;
+    if (_cfg.facebook)  socHtml += `<a href="https://facebook.com/${_cfg.facebook}" target="_blank" style="color:rgba(255,255,255,.55);font-size:22px;transition:color .2s" title="Facebook"><i class="ti ti-brand-facebook"></i></a>`;
+    if (_cfg.tiktok)    socHtml += `<a href="https://tiktok.com/${_cfg.tiktok.replace('@','@')}" target="_blank" style="color:rgba(255,255,255,.55);font-size:22px;transition:color .2s" title="TikTok"><i class="ti ti-brand-tiktok"></i></a>`;
+    ftSocial.innerHTML = socHtml;
+    ftSocial.style.display = socHtml ? "flex" : "none";
+  }
+  const wppFloat = document.getElementById("wpp-float-btn");
+  if (wppFloat) {
+    const tel = obterTel();
+    if (tel) {
+      const msg = encodeURIComponent("Olá! 🎀 Gostaria de solicitar um orçamento de decoração.");
+      wppFloat.href = `https://wa.me/55${tel}?text=${msg}`;
+    }
+    wppFloat.style.display = "flex";
+  }
+
+  // Depoimentos
+  const depGrid = document.getElementById("depoimentos-grid");
+  const depSec  = document.getElementById("depoimentos");
+  const deps = _cfg.depoimentos || [];
+  if (depGrid && deps.length) {
+    depGrid.innerHTML = deps.map(d => `
+      <div style="background:#fff;border-radius:14px;padding:20px;border:1px solid var(--bdr)">
+        <div style="color:#f59e0b;font-size:18px;margin-bottom:8px">${"⭐".repeat(d.nota||5)}</div>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.6;margin-bottom:12px;font-style:italic">"${d.texto}"</p>
+        <div style="font-size:13px;font-weight:700;color:var(--txt)">${d.nome}</div>
+        ${d.evento ? `<div style="font-size:11px;color:var(--txt3)">${d.evento}</div>` : ""}
+      </div>`).join("");
+    if (depSec) depSec.style.display = "";
+  }
+
+  // Área de cobertura
+  const cobSec    = document.getElementById("cobertura-sec");
+  const cobCids   = document.getElementById("cobertura-cidades");
+  const cobDesc   = document.getElementById("cobertura-desc");
+  const cidades   = _cfg.cidades || [];
+  if (cobCids && cidades.length) {
+    if (cobDesc && _cfg.coberturaDesc) cobDesc.textContent = _cfg.coberturaDesc;
+    cobCids.innerHTML = cidades.map(cidade =>
+      `<span style="background:rgba(255,255,255,.15);color:#fff;padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;border:1px solid rgba(255,255,255,.25)">${cidade}</span>`
+    ).join("");
+    if (cobSec) cobSec.style.display = "";
+  }
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function obterTel() { return (_cfg.wppEmpresa||_cfg.rodAluguel||"").replace(/\D/g,"").slice(-11); }
+function estaAlugado(kitId,data) {
+  return _locacoes.some(l=>(l.status==="ativo"||l.status==="orcamento")&&(l.itens||[]).some(i=>i.tipo==="kit"&&i.id===kitId)&&l.retirada<=data&&l.devolucao>=data);
+}
+function gerarDias(kitId) {
+  const dias=[];
+  for(let d=0;d<30;d++){const dt=new Date(Date.now()+d*864e5);const iso=dt.toISOString().split("T")[0];dias.push({iso,num:dt.getDate(),ocupado:estaAlugado(kitId,iso)});}
+  return dias;
+}
+function periodosProximos(kitId) {
+  const em30=new Date(Date.now()+30*864e5).toISOString().split("T")[0];
+  return _locacoes.filter(l=>(l.status==="ativo"||l.status==="orcamento")&&(l.itens||[]).some(i=>i.tipo==="kit"&&i.id===kitId)&&l.devolucao>=hoje&&l.retirada<=em30).map(l=>({ret:l.retirada,dev:l.devolucao})).sort((a,b)=>a.ret.localeCompare(b.ret));
+}
+
+// ── Auth admin ────────────────────────────────────────────────────────────────
+onAuthStateChanged(auth, user => {
+  // Navbar
+  const navLogin = document.getElementById("nav-btn-login");
+  const navAdm   = document.getElementById("nav-link-adm");
+  const navAv    = document.getElementById("nav-avatar");
+  // Footer
+  const btnAdmin = document.getElementById("btn-admin");
+  const btnLogout = document.getElementById("btn-logout");
+  const linkAdmin = document.getElementById("link-admin");
+
+  if (user) {
+    if(navLogin)  navLogin.style.display  = "none";
+    if(navAdm)    navAdm.style.display    = "inline-flex";
+    if(navAv)   { navAv.src = user.photoURL||""; navAv.style.display = user.photoURL?"block":"none"; }
+    if(btnAdmin)  btnAdmin.style.display  = "none";
+    if(btnLogout) btnLogout.style.display = "inline-flex";
+    if(linkAdmin) linkAdmin.style.display = "inline-flex";
+    iniciarListeners(); // só carrega dados após login
+  } else {
+    if(navLogin)  navLogin.style.display  = "inline-flex";
+    if(navAdm)    navAdm.style.display    = "none";
+    if(navAv)     navAv.style.display     = "none";
+    if(btnAdmin)  btnAdmin.style.display  = "inline-flex";
+    if(btnLogout) btnLogout.style.display = "none";
+    if(linkAdmin) linkAdmin.style.display = "none";
+    // Catálogo é público — carrega diretamente sem autenticação
+    iniciarListeners();
+  }
+});
+
+window.loginAdmin = async function() {
+  const btn = document.getElementById("nav-btn-login");
+  if (btn) { btn.disabled=true; btn.textContent="Entrando..."; }
+  try {
+    await signInWithPopup(auth, new GoogleAuthProvider());
+    window.location.href = "adm.html";
+  } catch(e) {
+    if(btn){ btn.disabled=false; btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Área ADM</span>'; }
+    if(e.code!=="auth/popup-closed-by-user") alert("Erro ao entrar: "+e.message);
+  }
+};
+
+window.logoutAdmin = async function() {
+  const { signOut } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+  await signOut(auth);
+};
+
+window.filtrar = function() { renderGrid(); };
+// ── Compartilhar kit ─────────────────────────────────────────────────────────
+window.compartilharKit = function(id, nome) {
+  const url = window.location.origin + window.location.pathname + "?kit=" + id;
+  if (navigator.share) {
+    navigator.share({ title: nome, url }).catch(() => {});
+  } else {
+    navigator.clipboard?.writeText(url).then(() => {
+      const toast = document.createElement("div");
+      toast.textContent = "Link copiado!";
+      toast.style.cssText = "position:fixed;bottom:90px;right:24px;background:#1a0a25;color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.3)";
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2200);
+    });
+  }
+};
+
+// ── Favoritos (localStorage) ──────────────────────────────────────────────────
+let _favs = JSON.parse(localStorage.getItem("k_favs") || "[]");
+window.toggleFav = function(id) {
+  const idx = _favs.indexOf(id);
+  if (idx >= 0) _favs.splice(idx, 1);
+  else _favs.push(id);
+  localStorage.setItem("k_favs", JSON.stringify(_favs));
+  _atualizarFavBtns();
+};
+function _atualizarFavBtns() {
+  document.querySelectorAll("[id^='fav-']").forEach(btn => {
+    const id = btn.id.replace("fav-","");
+    btn.textContent = _favs.includes(id) ? "♥" : "♡";
+    btn.style.color = _favs.includes(id) ? "#d4307a" : "#9a7aaa";
+  });
+}
+// Atualizar após renderizar catálogo
+const _origGrid = window.renderGrid;
+window.renderGrid = function(...args) {
+  const r = _origGrid?.(...args);
+  setTimeout(_atualizarFavBtns, 100);
+  return r;
+};
+
+// ── Google Analytics GA4 ─────────────────────────────────────────────────────
+let _ga4Injetado = false;
+function injetarGA4() {
+  if (_ga4Injetado || !_cfg.ga4Id) return;
+  _ga4Injetado = true;
+  const s1 = document.createElement("script");
+  s1.async = true;
+  s1.src = "https://www.googletagmanager.com/gtag/js?id=" + _cfg.ga4Id;
+  document.head.appendChild(s1);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag("js", new Date());
+  gtag("config", _cfg.ga4Id);
+}
+
+// ── Banner de promoção ───────────────────────────────────────────────────────
+function renderBanner() {
+  const banner = document.getElementById("promo-banner");
+  const txt    = document.getElementById("promo-banner-txt");
+  if (!banner || !txt) return;
+  if (_cfg.promoBanner && _cfg.promoBannerTxt) {
+    txt.textContent = _cfg.promoBannerTxt;
+    banner.style.display = "";
+    banner.style.background = _cfg.cor || "#d4307a";
+  }
+}
+
+// ── Mapa de localização ──────────────────────────────────────────────────────
+function renderMapa() {
+  const sec = document.getElementById("mapa-sec");
+  if (!sec || !_cfg.endereco) return;
+  const iframe = document.createElement("iframe");
+  iframe.style.cssText = "width:100%;height:280px;border:none;filter:grayscale(.3) contrast(1.1)";
+  iframe.loading = "lazy";
+  iframe.allowFullscreen = true;
+  iframe.referrerPolicy = "no-referrer-when-downgrade";
+  iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(_cfg.endereco)}&output=embed&z=15`;
+  document.getElementById("mapa-container").appendChild(iframe);
+  sec.style.display = "";
+}
+
+// ── Horário de atendimento ────────────────────────────────────────────────────
+function renderHorario() {
+  const sec = document.getElementById("horario-sec");
+  if (!sec) return;
+  if (_cfg.horario) {
+    document.getElementById("horario-txt").textContent = _cfg.horario;
+    sec.style.display = "";
+  }
+}
+
+// ── Contador de festas realizadas ─────────────────────────────────────────────
+function renderContadorFestas() {
+  const el2 = document.getElementById("hs-festas");
+  if (!el2) return;
+  const total = _locacoes.filter(l => l.status === "devolvido").length;
+  el2.textContent = total > 0 ? (total < 10 ? total : Math.floor(total/5)*5 + "+") : "0";
+}
+
+// ── Verificar disponibilidade de data por kit ────────────────────────────────
+window.verificarDataKit = function(kitId, data, inp) {
+  const res = document.getElementById("check-res-" + kitId);
+  if (!data || !res) return;
+  if (!_carregou.loc) { res.textContent = "..."; return; }
+
+  const ocupado = estaAlugado(kitId, data);
+  if (ocupado) {
+    res.innerHTML = `<span style="display:flex;align-items:center;justify-content:center;gap:4px;color:#dc2626"><i class="ti ti-lock" style="font-size:12px"></i>Ocupado</span>`;
+    res.style.borderColor = "#fca5a5";
+    res.style.background = "#fff1f2";
+    res.style.color = "#dc2626";
+    if (inp) inp.style.borderColor = "#fca5a5";
+  } else {
+    res.innerHTML = `<span style="display:flex;align-items:center;justify-content:center;gap:4px;color:#059669"><i class="ti ti-check" style="font-size:12px"></i>Livre!</span>`;
+    res.style.borderColor = "#6ee7b7";
+    res.style.background = "#f0fdf4";
+    res.style.color = "#059669";
+    if (inp) inp.style.borderColor = "#6ee7b7";
+  }
+};
+
+// ── FAQ toggle ───────────────────────────────────────────────────────────────
+window.toggleFaq = function(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains("open");
+  document.querySelectorAll(".faq-item.open").forEach(i => i.classList.remove("open"));
+  if (!isOpen) item.classList.add("open");
+};
+
+// ── Verificar disponibilidade por data ───────────────────────────────────────
+window.verificarDisp = function() {
+  const data = document.getElementById("disp-data")?.value;
+  const res  = document.getElementById("disp-res");
+  if (!data || !res) return;
+  if (!_carregou.kits || !_carregou.loc) { res.textContent = "Carregando..."; return; }
+  const disp = _kits.filter(k => !estaAlugado(k.id, data)).length;
+  const total = _kits.length;
+  if (total === 0) { res.textContent = ""; return; }
+  if (disp === 0) {
+    res.innerHTML = `<span style="color:#f87171">Sem kits disponíveis nessa data</span>`;
+  } else {
+    res.innerHTML = `<span style="color:#4ade80">${disp} de ${total} ${disp===1?"kit disponível":"kits disponíveis"} ✓</span>`;
+    // Scroll até o catálogo e filtra por data
+    document.getElementById("filtros")?.scrollIntoView({behavior:"smooth"});
+  }
+};
+
+window.setTema = function(chip) {
+  document.querySelectorAll("#chips-tema .chip").forEach(c=>c.classList.remove("on"));
+  chip.classList.add("on");
+  _tema = chip.dataset.tema;
+  filtrar();
+};
+window.galNav = function(id,dir) {
+  const gal=document.getElementById(id); if(!gal)return;
+  const slides=gal.querySelectorAll(".gal-slide");
+  const dots=gal.querySelectorAll(".gal-dot");
+  let cur=Array.from(slides).findIndex(s=>s.style.display!=="none");
+  slides[cur].style.display="none"; dots[cur]?.classList.remove("on");
+  cur=(cur+dir+slides.length)%slides.length;
+  slides[cur].style.display=""; dots[cur]?.classList.add("on");
+};
+window.galIr = function(id,idx) {
+  const gal=document.getElementById(id); if(!gal)return;
+  gal.querySelectorAll(".gal-slide").forEach((s,i)=>s.style.display=i===idx?"":"none");
+  gal.querySelectorAll(".gal-dot").forEach((d,i)=>d.classList.toggle("on",i===idx));
+};
+</script>
+<!-- WhatsApp flutuante -->
+<a id="wpp-float-btn" class="wpp-float" href="#" target="_blank" style="display:none">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.827L.057 23.854c-.068.258.157.49.418.438l6.204-1.428A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.948 0-3.773-.527-5.337-1.447l-.383-.227-3.966.912.942-3.867-.25-.396A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+  <span>Fale no WhatsApp</span>
+</a>
+</body>
+</html>

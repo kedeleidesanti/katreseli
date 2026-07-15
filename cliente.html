@@ -1,0 +1,3387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Minha Área — KATRESELI</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--p:#d4307a;--pd:#a0235c;--pl:#fce4f3;--bg:#f9f5f8;--sur:#fff;--txt:#150810;--txt2:#6b4060;--txt3:#b09aaa;--bdr:rgba(180,80,130,.12);--bdr2:rgba(180,80,130,.22);--r:14px;--ok:#059669;--warn:#b45309}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+
+/* ── LOGIN / CADASTRO ── */
+#tela-auth{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0e0518,#250845,#4e1038);padding:16px}
+.auth-card{background:rgba(255,255,255,.07);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.13);border-radius:24px;padding:36px 32px;width:min(420px,100%);text-align:center}
+.auth-logo{width:72px;height:72px;border-radius:50%;border:3px solid rgba(255,255,255,.3);object-fit:cover;margin-bottom:12px}
+.auth-logo-ph{width:72px;height:72px;border-radius:50%;border:3px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:12px}
+.auth-title{font-family:'Playfair Display',serif;font-size:26px;color:#fff;font-weight:700;margin-bottom:4px}
+.auth-sub{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:28px}
+.auth-div{width:36px;height:2px;background:linear-gradient(90deg,var(--p),#f472b6);margin:0 auto 24px;border-radius:2px}
+.auth-tabs{display:flex;background:rgba(255,255,255,.08);border-radius:12px;padding:3px;margin-bottom:20px;gap:3px}
+.auth-tab{flex:1;padding:9px;border-radius:9px;border:none;background:none;color:rgba(255,255,255,.55);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.auth-tab.on{background:var(--p);color:#fff;box-shadow:0 2px 10px rgba(212,48,122,.4)}
+.auth-fg{margin-bottom:12px;text-align:left}
+.auth-fg label{display:block;font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.auth-fg input{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#fff;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s}
+.auth-fg input::placeholder{color:rgba(255,255,255,.3)}
+.auth-fg input:focus{border-color:rgba(212,48,122,.6);background:rgba(255,255,255,.1)}
+.auth-btn{width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;transition:all .2s}
+.auth-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,48,122,.4)}
+.auth-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.auth-msg{font-size:12px;margin-top:10px;padding:8px 12px;border-radius:8px;text-align:left}
+.auth-msg.err{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+.auth-msg.ok{background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(16,185,129,.3)}
+.auth-link{color:rgba(255,255,255,.45);font-size:12px;margin-top:14px;cursor:pointer;text-decoration:underline}
+.auth-link:hover{color:rgba(255,255,255,.7)}
+.auth-sep{display:flex;align-items:center;gap:10px;margin:14px 0;color:rgba(255,255,255,.2);font-size:12px}
+.auth-sep::before,.auth-sep::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
+
+/* ── APP PRINCIPAL ── */
+.topbar{background:linear-gradient(135deg,var(--p),var(--pd));padding:0 16px;height:58px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(164,48,112,.25);box-sizing:border-box;width:100%;overflow:hidden}
+.topbar-logo{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.4);flex-shrink:0}
+.topbar-logo-ph{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:17px;border:2px solid rgba(255,255,255,.35);flex-shrink:0}
+.topbar-nome{font-size:15px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-sub{font-size:10px;color:rgba(255,255,255,.7);white-space:nowrap}
+.topbar-btn{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);color:#fff;font-size:16px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;padding:0}
+.topbar-btn:hover{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.5)}
+.topbar-user-avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;overflow:hidden}
+
+/* ── ABAS ── */
+.tabs-nav{display:flex;gap:4px;padding:16px 20px 0;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--bdr)}
+.tabs-nav::-webkit-scrollbar{display:none}
+.tab-btn{padding:10px 18px;border:none;background:none;color:var(--txt3);font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .15s;display:flex;align-items:center;gap:6px}
+.tab-btn.on{color:var(--p);border-bottom-color:var(--p)}
+.tab-btn:hover:not(.on){color:var(--txt2)}
+.tab-body{display:none;padding:20px;animation:fadeIn .2s ease}
+.tab-body.on{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+
+/* ═══════════════════════════════════════════════════════
+   ÁREA DO CLIENTE — CSS REFATORADO
+═══════════════════════════════════════════════════════ */
+
+/* ── Status badges ── */
+.s-orcamento{background:#fef3c7;color:#92400e}
+.s-ativo{background:#d1fae5;color:#065f46}
+.s-aguardando_entrada{background:#eff6ff;color:#1d4ed8}
+.s-devolvido{background:#dbeafe;color:#1e3a8a}
+.s-cancelado{background:#fee2e2;color:#991b1b}
+.s-pendente{background:#fef9c3;color:#b45309}
+.s-aprovado{background:#eff6ff;color:#1d4ed8}
+.s-convertido{background:#d1fae5;color:#065f46}
+
+/* ── App layout ── */
+.app-main{max-width:960px;margin:0 auto;padding:24px 20px 90px;min-height:100vh;box-sizing:border-box;width:100%;overflow-x:hidden}
+@media(min-width:768px){
+  .app-main{padding:32px 32px 40px}
+  .bottom-nav{display:none}
+  .topbar{padding:0 32px;height:62px}
+  .desktop-tabs{display:flex!important}
+}
+.desktop-tabs{display:none;gap:2px;padding:0 32px;background:#fff;border-bottom:1px solid var(--bdr);position:sticky;top:57px;z-index:99}
+.dtab-btn{padding:14px 20px;border:none;background:none;color:var(--txt3);font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;font-family:inherit;white-space:nowrap;transition:all .15s;display:flex;align-items:center;gap:7px}
+.dtab-btn.on{color:var(--p);border-bottom-color:var(--p)}
+.dtab-btn:hover:not(.on){color:var(--txt2)}
+@media(min-width:768px){
+  .stats-grid{grid-template-columns:repeat(3,1fr)}
+  .quick-grid{grid-template-columns:repeat(3,1fr)}
+  .quick-card-cta{grid-column:span 1}
+  .hero-grad{text-align:left;padding:32px 32px 28px;display:flex;align-items:center;gap:20px}
+  .hero-avatar{margin:0;width:72px;height:72px;font-size:32px;flex-shrink:0}
+  .hero-nome{font-size:28px}
+}
+.tab-body{display:none;animation:fadeUp .25s ease}
+.tab-body.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── Hero ── */
+.hero-grad{background:linear-gradient(135deg,var(--p),var(--pd));border-radius:20px;padding:28px 24px 24px;color:#fff;margin-bottom:18px;text-align:center;position:relative;overflow:hidden}
+.hero-grad::after{content:"🎀";position:absolute;right:-12px;bottom:-16px;font-size:90px;opacity:.08;pointer-events:none}
+.hero-avatar{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 12px;border:3px solid rgba(255,255,255,.35)}
+.hero-nome{font-size:22px;font-weight:800;margin-bottom:4px}
+.hero-sub{font-size:13px;opacity:.75}
+
+/* ── Stats ── */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;width:100%;box-sizing:border-box}
+.stat-pill{background:#fff;border-radius:14px;padding:12px 10px;display:flex;align-items:center;gap:8px;border:1px solid var(--bdr);box-shadow:0 1px 4px rgba(164,48,112,.06);min-width:0;overflow:hidden}
+.stat-ico{font-size:20px;flex-shrink:0}
+.stat-num{font-size:18px;font-weight:800;color:var(--txt);line-height:1;white-space:nowrap}
+.stat-lbl{font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ── Quick grid ── */
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.quick-card{background:#fff;border:1px solid var(--bdr);border-radius:16px;padding:18px 14px;text-align:left;cursor:pointer;font-family:inherit;transition:all .18s;text-decoration:none;display:block}
+.quick-card:hover{border-color:var(--p);box-shadow:0 4px 16px rgba(212,48,122,.12);transform:translateY(-2px)}
+.quick-card-cta{background:linear-gradient(135deg,var(--p),var(--pd));border-color:transparent;grid-column:span 2}
+.quick-label{font-size:13px;font-weight:700;color:var(--txt);margin-top:8px}
+.quick-sub{font-size:11px;color:var(--txt3);margin-top:2px}
+.quick-card-cta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,48,122,.3)}
+
+/* ── Section titles ── */
+.sec-title{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:12px;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.4px}
+.sec-sub{font-size:12px;color:var(--txt3);margin-top:-8px;margin-bottom:14px}
+.ver-mais-btn{font-size:12px;color:var(--p);background:none;border:none;cursor:pointer;font-family:inherit;font-weight:600;padding:4px 0;margin-top:4px}
+
+/* ── Cards de locação ── */
+.loc-card{background:#fff;border-radius:18px;border:1px solid var(--bdr);overflow:hidden;margin-bottom:14px;box-shadow:0 1px 6px rgba(164,48,112,.06);transition:box-shadow .2s}
+.loc-card:hover{box-shadow:0 4px 20px rgba(164,48,112,.1)}
+.loc-card-header{padding:14px 16px 12px;display:flex;align-items:flex-start;gap:10px;border-bottom:1px solid var(--bdr)}
+.loc-card-body{padding:12px 16px}
+.loc-status-badge{font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;flex-shrink:0}
+.loc-info-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--bdr);font-size:13px}
+.loc-info-row:last-child{border:none}
+.loc-info-lbl{color:var(--txt3);font-size:12px}
+.loc-info-val{color:var(--txt);font-weight:500}
+
+/* ── Barra de progresso ── */
+.progress-steps{padding:14px 0 6px;margin-bottom:8px;border-bottom:1px solid var(--bdr)}
+.progress-steps-row{display:flex;align-items:flex-start;position:relative}
+.pstep{display:flex;flex-direction:column;align-items:center;flex:1;position:relative;z-index:1}
+.pstep-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .3s;flex-shrink:0}
+.pstep-label{font-size:9px;font-weight:600;margin-top:5px;text-align:center;line-height:1.3;max-width:56px}
+.pstep-line{position:absolute;top:14px;left:50%;width:100%;height:2px;z-index:0}
+
+/* ── Banners de solicitação ── */
+.sol-banner{border-radius:14px;padding:14px 16px;margin:12px 16px 0;border:1.5px solid}
+.sol-banner-pendente{background:#fffbeb;border-color:#fde68a}
+.sol-banner-aprovado{background:#eff6ff;border-color:#bfdbfe}
+
+/* ── Bottom nav ── */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bdr);display:flex;z-index:200;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -2px 16px rgba(164,48,112,.08)}
+.bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 8px;border:none;background:none;color:var(--txt3);font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;gap:3px;transition:color .15s;position:relative}
+.bnav-btn i{font-size:22px}
+.bnav-btn.on{color:var(--p)}
+.bnav-btn.on i{filter:drop-shadow(0 0 4px rgba(212,48,122,.3))}
+.bnav-badge{position:absolute;top:6px;right:calc(50% - 18px);background:#dc2626;color:#fff;font-size:8px;font-weight:700;border-radius:8px;padding:0 4px;min-width:14px;text-align:center;line-height:14px}
+
+/* ── Perfil ── */
+.perfil-hero{background:linear-gradient(135deg,var(--p),var(--pd));border-radius:20px;padding:28px 20px 24px;text-align:center;color:#fff;margin-bottom:14px}
+.perfil-avatar-wrap{margin-bottom:12px}
+.perfil-avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);display:inline-flex;align-items:center;justify-content:center;font-size:30px;border:3px solid rgba(255,255,255,.35)}
+.perfil-nome-txt{font-size:20px;font-weight:700;margin-bottom:4px}
+.perfil-tag{font-size:12px;opacity:.7;background:rgba(255,255,255,.15);display:inline-block;padding:3px 12px;border-radius:20px;margin-top:4px}
+
+/* ── Card section ── */
+.card-section{background:#fff;border-radius:18px;border:1px solid var(--bdr);padding:0;margin-bottom:14px;overflow:hidden;box-shadow:0 1px 6px rgba(164,48,112,.05)}
+.card-section-header{padding:14px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.5px}
+.btn-edit{display:flex;align-items:center;gap:4px;padding:5px 12px;border-radius:8px;border:1.5px solid #f9a8d4;background:#fdf2f8;color:var(--p);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
+.btn-edit:hover{background:var(--p);color:#fff;border-color:var(--p)}
+
+/* ── Perfil dados grid ── */
+@keyframes spin{to{transform:rotate(360deg)}}
+.perfil-dados-grid{display:grid;grid-template-columns:1fr 1fr;padding:16px;gap:14px 24px}
+.pdado{display:flex;flex-direction:column;gap:3px}
+.pdado-lbl{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+.pdado-val{font-size:13px;font-weight:600;color:var(--txt)}
+.pdado-val.vazio{color:var(--txt3);font-style:italic;font-weight:400;font-size:12px}
+.pdado.full{grid-column:span 2}
+.pdado-sec{grid-column:span 2;padding:8px 0 6px;font-size:10px;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--bdr);margin-top:4px}
+.pdado-sec:first-child{margin-top:0}
+.pdado-alerta{grid-column:span 2;margin-top:4px;padding:10px 14px;background:#fffbeb;border-radius:10px;border:1px solid #fde68a;display:flex;align-items:center;gap:10px;font-size:12px;color:#92400e;line-height:1.5}
+.pdado-alerta i{color:#d97706;font-size:17px;flex-shrink:0}
+
+/* ── Upload ── */
+.upload-area{border:2px dashed #f9a8d4;border-radius:14px;padding:24px 20px;text-align:center;cursor:pointer;transition:all .2s;background:#fdf2f8;margin:0 16px 16px}
+.upload-area.drag,.upload-area:hover{border-color:var(--p);background:#fce4f3}
+
+/* ── Botões ── */
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,48,122,.35)}
+.btn-logout{width:100%;margin-top:4px;margin-bottom:16px;padding:13px;border-radius:12px;border:1.5px solid #fee2e2;background:none;color:#dc2626;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit;transition:all .15s}
+.btn-logout:hover{background:#fee2e2}
+
+/* ── Botões documento ── */
+.btn-doc{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--bdr2);background:#fff;color:var(--txt2);font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s;font-family:inherit}
+.btn-doc:hover{border-color:var(--p);color:var(--p)}
+.btn-doc.primary{background:var(--p);color:#fff;border-color:var(--p)}
+
+/* ── Empty state ── */
+.empty-state{text-align:center;padding:40px 20px;color:var(--txt3)}
+.empty-state i{font-size:48px;display:block;margin-bottom:12px;opacity:.4}
+.empty-state p{font-size:14px;line-height:1.6}
+
+/* ── Pagamento card ── */
+.pag-card{background:#fff;border-radius:16px;border:1.5px solid var(--bdr);padding:16px;margin-bottom:12px;box-shadow:0 1px 6px rgba(164,48,112,.06)}
+
+/* ── Doc item ── */
+.doc-item{display:flex;align-items:center;gap:14px;padding:14px;background:#fff;border-radius:14px;border:1px solid var(--bdr);margin-bottom:8px;cursor:pointer;transition:all .15s}
+.doc-item:hover{border-color:var(--p);box-shadow:0 2px 12px rgba(212,48,122,.1)}
+.doc-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.doc-ico.contrato{background:#ede9fe;color:#7c3aed}
+.doc-ico.recibo{background:#d1fae5;color:#059669}
+.doc-ico.comprovante{background:#fef3c7;color:#d97706}
+.doc-name{font-size:13px;font-weight:600;color:var(--txt)}
+.doc-date{font-size:11px;color:var(--txt3);margin-top:2px}
+.doc-arrow{margin-left:auto;color:var(--txt3);font-size:18px;flex-shrink:0}
+
+/* ── Footer ── */
+.cli-footer{text-align:center;padding:20px;font-size:11px;color:var(--txt3);margin-bottom:70px}
+
+/* Topbar link catálogo - ocultar texto em mobile */
+@media(max-width:380px){.hide-xs{display:none}}
+
+/* ── HERO (legado) ── */
+.hero-cli{background:linear-gradient(135deg,var(--p),var(--pd));border-radius:20px;padding:24px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden}
+.hero-cli::before{content:'🎀';position:absolute;right:-10px;bottom:-10px;font-size:100px;opacity:.07}
+.hero-cli-nome{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:4px}
+.hero-cli-sub{font-size:13px;opacity:.75}
+.hero-cli-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hero-badge{background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px}
+
+/* ── CARDS STAT ── */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px}
+.stat-card{background:var(--sur);border-radius:14px;padding:16px;border:1px solid var(--bdr);text-align:center}
+.stat-val{font-size:26px;font-weight:800;color:var(--p)}
+.stat-lbl{font-size:11px;color:var(--txt3);margin-top:3px;text-transform:uppercase;letter-spacing:.4px}
+
+/* ── LOCAÇÕES ── */
+.loc-card{background:var(--sur);border-radius:16px;border:1px solid var(--bdr);overflow:hidden;margin-bottom:12px;transition:box-shadow .2s}
+.loc-card:hover{box-shadow:0 4px 20px rgba(164,48,112,.1)}
+.loc-card-header{padding:14px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--bdr)}
+.loc-status{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px}
+.s-orcamento{background:#fef3c7;color:#92400e}
+.s-ativo{background:#d1fae5;color:#065f46}
+.s-devolvido{background:#dbeafe;color:#1e3a8a}
+.s-cancelado{background:#fee2e2;color:#991b1b}
+.s-pendente{background:#fef9c3;color:#b45309}
+.s-aprovado{background:#eff6ff;color:#1d4ed8}
+.s-convertido{background:#d1fae5;color:#065f46}
+
+/* ── BANNER STATUS SOLICITAÇÃO ── */
+.sol-banner{border-radius:12px;padding:14px 16px;margin:12px 16px 0;border:1.5px solid}
+.sol-banner-pendente{background:#fffbeb;border-color:#fde68a}
+.sol-banner-aprovado{background:#eff6ff;border-color:#bfdbfe}
+.loc-card-body{padding:14px 16px}
+.loc-info-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--bdr);font-size:13px}
+.loc-info-row:last-child{border:none}
+.loc-info-lbl{color:var(--txt3);font-size:12px}
+.loc-info-val{color:var(--txt);font-weight:500}
+.loc-card-footer{padding:10px 16px;background:var(--bg);display:flex;gap:8px;flex-wrap:wrap}
+.btn-doc{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--bdr2);background:#fff;color:var(--txt2);font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s;font-family:'DM Sans',sans-serif}
+.btn-doc:hover{border-color:var(--p);color:var(--p)}
+.btn-doc.primary{background:var(--p);border-color:var(--p);color:#fff}
+.btn-doc.primary:hover{background:var(--pd)}
+
+/* ── DOCUMENTOS ── */
+.doc-section{background:var(--sur);border-radius:16px;border:1px solid var(--bdr);padding:20px;margin-bottom:16px}
+.doc-section-title{font-size:13px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:14px;display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--bdr)}
+.doc-section-title i{font-size:16px;color:var(--p)}
+.doc-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;border:1px solid var(--bdr);margin-bottom:8px;cursor:pointer;transition:all .15s}
+.doc-item:hover{border-color:var(--p);background:var(--pl)}
+.doc-item:last-child{margin-bottom:0}
+.doc-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.doc-ico.contrato{background:#ede9fe;color:#7c3aed}
+.doc-ico.recibo{background:#d1fae5;color:#059669}
+.doc-ico.comprovante{background:#dbeafe;color:#1d4ed8}
+.doc-name{font-size:13px;font-weight:600;color:var(--txt)}
+.doc-date{font-size:11px;color:var(--txt3)}
+.doc-arrow{margin-left:auto;color:var(--txt3);font-size:16px}
+
+/* ── PERFIL ── */
+.perfil-section{background:var(--sur);border-radius:16px;border:1px solid var(--bdr);overflow:hidden;margin-bottom:16px}
+.perfil-header{background:linear-gradient(135deg,var(--p),var(--pd));padding:24px;text-align:center;color:#fff}
+.perfil-avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 10px;border:3px solid rgba(255,255,255,.3)}
+.perfil-body{padding:16px}
+.perfil-field{padding:12px 0;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:12px}
+.perfil-field:last-child{border:none}
+.perfil-field-ico{width:34px;height:34px;border-radius:8px;background:var(--pl);display:flex;align-items:center;justify-content:center;color:var(--p);font-size:16px;flex-shrink:0}
+.perfil-field-lbl{font-size:11px;color:var(--txt3);margin-bottom:2px}
+.perfil-field-val{font-size:13px;font-weight:500;color:var(--txt)}
+
+/* ── SENHA ── */
+.senha-form{background:var(--sur);border-radius:16px;border:1px solid var(--bdr);padding:20px}
+.senha-form .auth-fg label{color:var(--txt2)}
+.senha-form .auth-fg input{background:var(--bg);border-color:var(--bdr2);color:var(--txt)}
+.senha-form .auth-fg input:focus{border-color:var(--p)}
+.senha-form .auth-fg input::placeholder{color:var(--txt3)}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:48px 20px;color:var(--txt3)}
+.empty i{font-size:44px;display:block;margin-bottom:12px;opacity:.35}
+.empty p{font-size:14px;margin-bottom:16px}
+
+/* ── FOOTER ── */
+.cli-footer{text-align:center;padding:24px;font-size:12px;color:var(--txt3);border-top:1px solid var(--bdr);margin-top:32px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:480px){
+  .auth-card{padding:28px 20px}
+  .tab-btn span{display:none}
+  .tab-btn{padding:10px 12px}
+}
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVIDADE COMPLETA — cliente.html
+   ══════════════════════════════════════════════════════ */
+@media(max-width:768px){
+  /* App main padding */
+  .app-main{padding:16px 14px 90px !important}
+
+  /* Topbar compacto */
+  .topbar{padding:0 14px !important;height:54px !important}
+
+  /* Stats grid auto */
+  .stats-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:8px !important}
+  .quick-grid{grid-template-columns:1fr 1fr !important;gap:8px !important}
+
+  /* Cards de pagamento */
+  [style*="grid-template-columns:1fr 1fr"]{
+    grid-template-columns:1fr !important;
+  }
+
+  /* Data de nascimento — 3 selects menores */
+  [style*="grid-template-columns:80px 1fr 100px"]{
+    grid-template-columns:80px 1fr 80px !important;
+    gap:6px !important;
+  }
+
+  /* Formulário de perfil */
+  [style*="grid-template-columns:1fr 1fr;gap:10px"]{
+    grid-template-columns:1fr !important;
+  }
+
+  /* Modais bottom-sheet */
+  [style*="position:fixed"][style*="border-radius:20px"]{
+    bottom:0 !important;
+    left:0 !important;
+    right:0 !important;
+    border-radius:20px 20px 0 0 !important;
+    max-height:94dvh !important;
+    overflow-y:auto !important;
+  }
+
+  /* Cards de locação */
+  .loc-card-row{flex-wrap:wrap !important;gap:6px !important}
+
+  /* Inputs maiores no mobile (evita zoom no iOS) */
+  input,select,textarea{font-size:16px !important}
+
+  /* Bottom nav safe area */
+  .bottom-nav{
+    padding-bottom:env(safe-area-inset-bottom,0px) !important;
+    height:calc(60px + env(safe-area-inset-bottom,0px)) !important;
+  }
+}
+
+@media(max-width:480px){
+  /* Hero compacto */
+  .hero-grad { padding: 20px 16px 18px !important; border-radius: 16px !important; margin-bottom: 12px !important; }
+  .hero-avatar { width: 48px !important; height: 48px !important; font-size: 22px !important; margin-bottom: 8px !important; }
+  .hero-nome { font-size: 18px !important; }
+  .hero-sub { font-size: 12px !important; }
+
+  /* Stats: 3 colunas compactas que não estouram */
+  .stats-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; gap: 6px !important; margin-bottom: 12px !important; }
+  .stat-pill { padding: 10px 8px !important; gap: 6px !important; border-radius: 12px !important; flex-direction: column !important; align-items: flex-start !important; }
+  .stat-ico { font-size: 17px !important; }
+  .stat-num { font-size: 16px !important; }
+  .stat-lbl { font-size: 9px !important; letter-spacing: 0 !important; }
+
+  /* Quick grid */
+  .quick-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+  .quick-card { padding: 14px 10px !important; border-radius: 14px !important; }
+  .quick-card-cta { grid-column: span 2 !important; padding: 14px !important; }
+  .quick-label { font-size: 12px !important; margin-top: 6px !important; }
+  .quick-sub { font-size: 10px !important; }
+
+  /* App main */
+  .app-main { padding: 12px 12px 80px !important; }
+  .sec-title { font-size: 11px !important; }
+}
+
+@media(max-width:380px){
+  .stats-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:4px !important}
+  .app-main{padding:12px 10px 80px !important}
+}
+@keyframes pulse-assinar{0%,100%{box-shadow:0 0 0 0 rgba(234,179,8,.4)}50%{box-shadow:0 0 0 6px rgba(234,179,8,0)}}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+</style>
+</head>
+<body>
+
+<!-- TELA DE AUTH -->
+<div id="tela-auth" style="display:flex">
+  <div class="auth-card">
+    <div id="auth-logo-ph" class="auth-logo-ph">🎀</div>
+    <img id="auth-logo-img" class="auth-logo" style="display:none">
+    <div class="auth-title" id="auth-empresa-nome">KATRESELI</div>
+    <div class="auth-div"></div>
+    <div class="auth-sub" id="auth-sub-txt">Acesse sua área para acompanhar suas locações</div>
+    <div id="auth-msg-boas-vindas" style="display:none;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#6ee7b7;text-align:left">
+      <i class="ti ti-check-circle" style="font-size:14px"></i>
+      Sua solicitação foi enviada! Faça login para acessar sua área.
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab on" onclick="mostrarAba('login',this)">Entrar</button>
+      <button class="auth-tab" onclick="mostrarAba('cadastro',this)">Criar conta</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="form-login">
+      <div class="auth-fg"><label>E-mail</label><input id="login-email" type="email" placeholder="seu@email.com" autocomplete="email" enterkeyhint="next"></div>
+      <div class="auth-fg"><label>Senha</label><input id="login-senha" type="password" placeholder="••••••••" autocomplete="current-password" enterkeyhint="done" onkeydown="if(event.key==='Enter')fazerLogin()"></div>
+      <div id="login-msg"></div>
+      <button class="auth-btn" id="btn-login" onclick="fazerLogin()">Entrar</button>
+      <div class="auth-link" onclick="mostrarRecuperarSenha()">Esqueceu a senha?</div>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);text-align:center">
+        <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.55);font-size:12px;text-decoration:none;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.9)'" onmouseout="this.style.color='rgba(255,255,255,.55)'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Ver catálogo de decorações
+        </a>
+      </div>
+    </div>
+
+    <!-- CADASTRO -->
+    <div id="form-cadastro" style="display:none">
+      <div class="auth-fg"><label>Nome completo *</label><input id="cad-nome" placeholder="Maria da Silva" autocomplete="name" autocapitalize="words" enterkeyhint="next"></div>
+      <div class="auth-fg"><label>E-mail *</label><input id="cad-email" type="email" placeholder="seu@email.com" autocomplete="email" autocapitalize="none" enterkeyhint="next"></div>
+      <div class="auth-fg"><label>WhatsApp</label><input id="cad-tel" placeholder="(41) 99999-9999" inputmode="tel" enterkeyhint="next"></div>
+      <div class="auth-fg"><label>Senha *</label><input id="cad-senha" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" enterkeyhint="done"></div>
+      <div id="cad-msg"></div>
+      <button class="auth-btn" id="btn-cad" onclick="fazerCadastro()">Criar minha conta</button>
+    </div>
+  </div>
+</div>
+
+<!-- TELA DEFINIR SENHA (novo cadastro) -->
+<div id="tela-nova-senha" style="display:none;position:fixed;inset:0;z-index:998;background:linear-gradient(135deg,#0e0518,#250845,#4e1038);display:none;align-items:center;justify-content:center;padding:16px">
+  <div class="auth-card" style="max-width:420px">
+    <div style="font-size:48px;margin-bottom:12px">🎀</div>
+    <div class="auth-title" style="font-size:22px">Bem-vinda!</div>
+    <div class="auth-sub">Sua solicitação foi enviada! Agora crie uma senha para acessar sua área sempre que quiser.</div>
+    <div class="auth-div"></div>
+
+    <div style="background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);border-radius:12px;padding:12px 14px;margin-bottom:20px;text-align:left">
+      <div style="font-size:12px;color:#6ee7b7;line-height:1.6">
+        <i class="ti ti-check-circle" style="font-size:14px"></i>
+        Sua conta foi criada automaticamente com o e-mail informado.<br>
+        <strong id="ns-email-display" style="color:#a7f3d0"></strong>
+      </div>
+    </div>
+
+    <div class="auth-fg">
+      <label>Nova senha</label>
+      <input id="ns-nova" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" enterkeyhint="next">
+    </div>
+    <div class="auth-fg">
+      <label>Confirmar senha</label>
+      <input id="ns-conf" type="password" placeholder="Repita a senha" autocomplete="new-password" enterkeyhint="done" onkeydown="if(event.key==='Enter')salvarSenhaNova()">
+    </div>
+    <div id="ns-msg"></div>
+    <button class="auth-btn" id="ns-btn" onclick="salvarSenhaNova()">
+      <i class="ti ti-lock-check"></i> Salvar senha e entrar
+    </button>
+    <div class="auth-link" onclick="pularSenhaNova()">Pular por agora — entrar direto</div>
+  </div>
+</div>
+
+<!-- APP PRINCIPAL -->
+<div id="app" style="display:none">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-logo-ph" id="app-logo">🎀</div>
+    <div style="flex:1;min-width:0">
+      <div class="topbar-nome" id="app-empresa">KATRESELI</div>
+      <div class="topbar-sub">Minha área</div>
+    </div>
+    <div class="topbar-user-avatar" id="topbar-avatar" style="display:none"></div>
+    <a href="index.html" class="topbar-btn" style="display:none" id="btn-catalogo" title="Catálogo"><i class="ti ti-arrow-left"></i></a>
+    <button class="topbar-btn" onclick="fazerLogout()" title="Sair"><i class="ti ti-logout"></i></button>
+  </header>
+
+  <!-- TABS DESKTOP -->
+  <nav class="desktop-tabs" id="desktop-tabs">
+    <button class="dtab-btn on" onclick="mudarAba('inicio',this)" data-aba="inicio"><i class="ti ti-home-2"></i> Início</button>
+    <button class="dtab-btn" onclick="mudarAba('locacoes',this)" data-aba="locacoes"><i class="ti ti-calendar-event"></i> Minhas locações</button>
+    <button class="dtab-btn" onclick="mudarAba('pagamentos',this)" data-aba="pagamentos" id="tab-btn-pagamentos"><i class="ti ti-credit-card"></i> Pagamentos</button>
+    <button class="dtab-btn" onclick="mudarAba('documentos',this)" data-aba="documentos"><i class="ti ti-file-text"></i> Documentos</button>
+    <button class="dtab-btn" onclick="mudarAba('perfil',this)" data-aba="perfil"><i class="ti ti-user-circle"></i> Meu perfil</button>
+  </nav>
+
+  <!-- NAVEGAÇÃO BOTTOM (mobile-first) -->
+  <nav class="bottom-nav" id="bottom-nav">
+    <button class="bnav-btn on" onclick="mudarAba('inicio',this)" data-aba="inicio">
+      <i class="ti ti-home-2"></i><span>Início</span>
+    </button>
+    <button class="bnav-btn" onclick="mudarAba('locacoes',this)" data-aba="locacoes">
+      <i class="ti ti-calendar-event"></i><span>Locações</span>
+    </button>
+    <button class="bnav-btn" onclick="mudarAba('pagamentos',this)" data-aba="pagamentos" id="tab-btn-pagamentos">
+      <i class="ti ti-credit-card"></i><span>Pagamentos</span>
+    </button>
+    <button class="bnav-btn" onclick="mudarAba('documentos',this)" data-aba="documentos">
+      <i class="ti ti-file-text"></i><span>Documentos</span>
+    </button>
+    <button class="bnav-btn" onclick="mudarAba('perfil',this)" data-aba="perfil">
+      <i class="ti ti-user-circle"></i><span>Perfil</span>
+    </button>
+  </nav>
+
+  <!-- CONTEÚDO -->
+  <main class="app-main">
+
+    <!-- ══ ABA INÍCIO ══════════════════════════════════════════════════ -->
+    <section class="tab-body on" id="tab-inicio">
+
+      <!-- Hero -->
+      <div class="hero-grad">
+        <div class="hero-avatar" id="hero-avatar-ico">🎀</div>
+        <div class="hero-nome">Olá, <span id="cli-primeiro-nome">cliente</span>! 👋</div>
+        <div class="hero-sub">Acompanhe suas locações aqui</div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-pill">
+          <i class="ti ti-calendar-event stat-ico" style="color:var(--p)"></i>
+          <div>
+            <div class="stat-num" id="stat-total">0</div>
+            <div class="stat-lbl">Locações</div>
+          </div>
+        </div>
+        <div class="stat-pill">
+          <i class="ti ti-circle-check stat-ico" style="color:#059669"></i>
+          <div>
+            <div class="stat-num" id="stat-ativas" style="color:#059669">0</div>
+            <div class="stat-lbl">Ativas</div>
+          </div>
+        </div>
+        <div class="stat-pill">
+          <i class="ti ti-file-text stat-ico" style="color:#7c3aed"></i>
+          <div>
+            <div class="stat-num" id="stat-docs">0</div>
+            <div class="stat-lbl">Documentos</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Locação pendente/ativa em destaque -->
+      <div id="destaque-sec" style="display:none;margin-bottom:16px"></div>
+
+      <!-- Acesso rápido -->
+      <div class="quick-grid">
+        <button class="quick-card" onclick="mudarAbaBtn('locacoes')">
+          <div style="width:44px;height:44px;border-radius:12px;background:#fce4f3;display:flex;align-items:center;justify-content:center;margin-bottom:10px">
+            <i class="ti ti-calendar-event" style="font-size:22px;color:var(--p)"></i>
+          </div>
+          <div class="quick-label">Minhas locações</div>
+          <div class="quick-sub">Ver todas</div>
+        </button>
+        <button class="quick-card" onclick="mudarAbaBtn('pagamentos')">
+          <div style="width:44px;height:44px;border-radius:12px;background:#e0f2fe;display:flex;align-items:center;justify-content:center;margin-bottom:10px">
+            <i class="ti ti-credit-card" style="font-size:22px;color:#0891b2"></i>
+          </div>
+          <div class="quick-label">Pagamentos</div>
+          <div class="quick-sub">Saldos e recibos</div>
+        </button>
+        <a href="solicitar.html?from=cliente" class="quick-card quick-card-cta" style="display:flex;align-items:center;gap:14px;text-decoration:none">
+          <div style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <i class="ti ti-plus" style="font-size:26px;color:#fff"></i>
+          </div>
+          <div>
+            <div class="quick-label" style="color:#fff;font-size:15px">Solicitar locação</div>
+            <div class="quick-sub" style="color:rgba(255,255,255,.75)">Ver catálogo de decorações</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Pagamento pendente no início -->
+      <div id="pag-pendentes-sec" style="display:none;margin-top:8px">
+        <div class="sec-title" style="color:#dc2626"><i class="ti ti-alert-circle"></i> Pagamento pendente</div>
+        <div id="pag-pendentes-lista"></div>
+        <button onclick="mudarAbaBtn('pagamentos')" class="ver-mais-btn">Ver todos os pagamentos →</button>
+      </div>
+
+    </section>
+
+    <!-- ══ ABA LOCAÇÕES ════════════════════════════════════════════════ -->
+    <section class="tab-body" id="tab-locacoes">
+      <div class="sec-title"><i class="ti ti-calendar-event"></i> Minhas locações</div>
+      <div id="lista-locacoes">
+        <div class="empty-state"><i class="ti ti-calendar-off"></i><p>Nenhuma locação ainda</p></div>
+      </div>
+    </section>
+
+    <!-- ══ ABA PAGAMENTOS ══════════════════════════════════════════════ -->
+    <section class="tab-body" id="tab-pagamentos">
+      <div class="sec-title"><i class="ti ti-credit-card"></i> Meus pagamentos</div>
+      <div class="sec-sub">Valores pendentes e histórico de pagamentos</div>
+      <div id="lista-pagamentos">
+        <div class="empty-state"><i class="ti ti-credit-card"></i><p>Nenhum pagamento pendente</p></div>
+      </div>
+    </section>
+
+    <!-- ══ ABA DOCUMENTOS ══════════════════════════════════════════════ -->
+    <section class="tab-body" id="tab-documentos">
+      <div class="sec-title"><i class="ti ti-file-text"></i> Meus documentos</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:16px">
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--bdr);padding:14px;text-align:center">
+          <div style="width:36px;height:36px;border-radius:10px;background:#ede9fe;display:inline-flex;align-items:center;justify-content:center;margin-bottom:8px"><i class="ti ti-file-text" style="color:#7c3aed;font-size:18px"></i></div>
+          <div id="cnt-contratos" style="font-size:20px;font-weight:800;color:#7c3aed">0</div>
+          <div style="font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.4px">Contratos</div>
+        </div>
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--bdr);padding:14px;text-align:center">
+          <div style="width:36px;height:36px;border-radius:10px;background:#d1fae5;display:inline-flex;align-items:center;justify-content:center;margin-bottom:8px"><i class="ti ti-receipt" style="color:#059669;font-size:18px"></i></div>
+          <div id="cnt-recibos" style="font-size:20px;font-weight:800;color:#059669">0</div>
+          <div style="font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.4px">Recibos</div>
+        </div>
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--bdr);padding:14px;text-align:center">
+          <div style="width:36px;height:36px;border-radius:10px;background:#fef3c7;display:inline-flex;align-items:center;justify-content:center;margin-bottom:8px"><i class="ti ti-id-badge" style="color:#d97706;font-size:18px"></i></div>
+          <div id="cnt-comprovantes" style="font-size:20px;font-weight:800;color:#d97706">0</div>
+          <div style="font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.4px">Comprovantes</div>
+        </div>
+      </div>
+      <div id="lista-documentos">
+        <div class="empty-state"><i class="ti ti-file-off"></i><p>Nenhum documento disponível</p></div>
+      </div>
+      <div style="background:#fff;border-radius:14px;border:1px solid var(--bdr);padding:16px;margin-top:12px;display:flex;align-items:center;gap:12px">
+        <div style="width:40px;height:40px;border-radius:10px;background:#fce4f3;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-brand-whatsapp" style="color:var(--p);font-size:20px"></i></div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--txt)">Precisa de um documento?</div>
+          <div style="font-size:11px;color:var(--txt3);margin-top:2px">Solicite 2ª via de contrato ou recibo pela nossa equipe</div>
+        </div>
+        <button onclick="falarWhatsApp('documento')" style="padding:8px 14px;background:var(--p);color:#fff;border:none;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap">
+          <i class="ti ti-message"></i> Solicitar
+        </button>
+      </div>
+    </section>
+
+    <!-- ══ ABA PERFIL ══════════════════════════════════════════════════ -->
+    <section class="tab-body" id="tab-perfil">
+
+      <!-- Avatar + nome -->
+      <div class="perfil-hero">
+        <div class="perfil-avatar-wrap">
+          <div class="perfil-avatar" id="perfil-avatar">👤</div>
+        </div>
+        <div id="perfil-nome" class="perfil-nome-txt">—</div>
+        <div class="perfil-tag">Cliente KATRESELI</div>
+      </div>
+
+      <!-- Dados -->
+      <div class="card-section">
+        <div class="card-section-header">
+          <span><i class="ti ti-user" style="color:var(--p)"></i> Dados pessoais</span>
+          <button class="btn-edit" onclick="abrirEditarPerfil()"><i class="ti ti-edit"></i> Editar</button>
+        </div>
+        <div id="perfil-dados" class="perfil-dados-grid"></div>
+      </div>
+
+      <!-- Comprovante -->
+      <div class="card-section">
+        <div class="card-section-header">
+          <span><i class="ti ti-file-certificate" style="color:var(--p)"></i> Comprovante de residência</span>
+        </div>
+        <div id="comp-status-atual" style="margin-bottom:12px"></div>
+        <div id="comp-upload-area" class="upload-area"
+          onclick="document.getElementById('comp-file-input').click()"
+          ondragover="event.preventDefault();this.classList.add('drag')"
+          ondragleave="this.classList.remove('drag')"
+          ondrop="event.preventDefault();this.classList.remove('drag');handleCompFile(event.dataTransfer.files[0])">
+          <i class="ti ti-cloud-upload" style="font-size:32px;color:var(--p);display:block;margin-bottom:8px"></i>
+          <div style="font-size:14px;font-weight:600;color:var(--pd)">Clique ou arraste aqui</div>
+          <div style="font-size:11px;color:var(--txt3);margin-top:4px">JPG, PNG ou PDF • máx. 5MB</div>
+          <div style="font-size:11px;color:var(--txt3)">Conta de água, luz, telefone ou RG/CNH</div>
+        </div>
+        <input type="file" id="comp-file-input" accept="image/*,application/pdf" style="display:none" onchange="handleCompFile(this.files[0])">
+        <div id="comp-preview" style="display:none;margin-top:12px"></div>
+        <div id="comp-msg" style="font-size:12px;margin-top:8px;display:none;padding:8px 12px;border-radius:8px"></div>
+        <button id="comp-btn-enviar" onclick="enviarComprovante()" class="btn-primary" style="display:none;width:100%;margin-top:12px">
+          <i class="ti ti-upload"></i> Enviar comprovante
+        </button>
+      </div>
+
+      <!-- Alterar senha -->
+      <div class="card-section">
+        <div class="card-section-header">
+          <span><i class="ti ti-lock" style="color:var(--p)"></i> Alterar senha</span>
+        </div>
+        <div class="auth-fg" style="margin-bottom:10px">
+          <label style="color:var(--txt2)">Nova senha</label>
+          <input id="nova-senha" type="password" placeholder="Mínimo 6 caracteres" style="background:var(--bg);border-color:var(--bdr2);color:var(--txt)">
+        </div>
+        <div class="auth-fg" style="margin-bottom:14px">
+          <label style="color:var(--txt2)">Confirmar senha</label>
+          <input id="conf-senha" type="password" placeholder="Repita a senha" style="background:var(--bg);border-color:var(--bdr2);color:var(--txt)">
+        </div>
+        <div id="senha-msg"></div>
+        <button class="btn-primary" style="width:100%" onclick="alterarSenha()">Salvar nova senha</button>
+      </div>
+
+      <!-- Limpar registros orphãos -->
+      <div class="card-section" id="sec-orfaos" style="display:none">
+        <div class="card-section-header">
+          <span><i class="ti ti-trash" style="color:#dc2626"></i> Registros antigos</span>
+        </div>
+        <div style="padding:14px 16px">
+          <div style="font-size:13px;color:var(--txt2);margin-bottom:12px;line-height:1.6">Pedidos que aparecem aqui mas foram deletados no sistema administrativo podem ser removidos da sua área.</div>
+          <div id="lista-orfaos" style="margin-bottom:12px"></div>
+          <button onclick="limparOrfaos()" class="btn-primary" style="width:100%;background:#dc2626">
+            <i class="ti ti-trash"></i> Limpar registros antigos
+          </button>
+        </div>
+      </div>
+
+      <!-- Logout -->
+      <button onclick="fazerLogout()" class="btn-logout">
+        <i class="ti ti-logout"></i> Sair da minha conta
+      </button>
+
+    </section>
+
+  </main>
+
+  <div class="cli-footer">KATRESELI decorações · <a href="index.html" style="color:var(--p)">Ver catálogo</a> · <a href="solicitar.html?from=cliente" style="color:var(--p)">Solicitar locação</a></div>
+</div>
+
+<!-- Modal editar perfil -->
+<div id="modal-editar-perfil" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,2,22,.6);backdrop-filter:blur(8px);align-items:flex-end;justify-content:center;padding:0">
+  <div style="background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:600px;max-height:92dvh;overflow-y:auto;padding:0 0 24px">
+    <!-- Handle -->
+    <div style="width:40px;height:4px;background:#e5e7eb;border-radius:2px;margin:12px auto 0"></div>
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;border-bottom:1px solid #f0eaf4;position:sticky;top:0;background:#fff;z-index:1">
+      <div style="font-size:16px;font-weight:700;color:#150810;display:flex;align-items:center;gap:8px"><i class="ti ti-user-edit" style="color:#d4307a"></i> Editar meus dados</div>
+      <button onclick="fecharEditarPerfil()" style="width:32px;height:32px;border-radius:50%;border:none;background:#f0eaf4;color:#6b4060;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px">×</button>
+    </div>
+    <!-- Body -->
+    <div style="padding:16px 20px">
+
+      <div style="font-size:11px;font-weight:700;color:#d4307a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;margin-top:4px">Dados pessoais</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="grid-column:span 2">
+          <label style="font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px">Nome completo *</label>
+          <input id="ep-nome" placeholder="Maria da Silva" autocomplete="name" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px">CPF / CNPJ</label>
+          <input id="ep-cpf" placeholder="000.000.000-00" inputmode="numeric" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px">WhatsApp</label>
+          <input id="ep-tel" placeholder="(41) 99999-9999" inputmode="tel" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'">
+        </div>
+        <div style="grid-column:span 2">
+          <label style="font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px">Data de nascimento</label>
+          <div style="display:grid;grid-template-columns:80px 1fr 100px;gap:8px">
+            <div style="position:relative">
+              <select id="ep-nasc-dia" style="width:100%;padding:10px 10px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810;background:#fff;appearance:none;cursor:pointer" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'" onchange="syncEpNasc()">
+                <option value="">Dia</option>
+              </select>
+              <svg style="position:absolute;right:7px;top:50%;transform:translateY(-50%);pointer-events:none;color:#9a8aa8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div style="position:relative">
+              <select id="ep-nasc-mes" style="width:100%;padding:10px 10px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810;background:#fff;appearance:none;cursor:pointer" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'" onchange="syncEpNasc()">
+                <option value="">Mês</option>
+                <option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option>
+                <option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option>
+                <option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option>
+                <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
+              </select>
+              <svg style="position:absolute;right:7px;top:50%;transform:translateY(-50%);pointer-events:none;color:#9a8aa8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div style="position:relative">
+              <select id="ep-nasc-ano" style="width:100%;padding:10px 10px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810;background:#fff;appearance:none;cursor:pointer" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'" onchange="syncEpNasc()">
+                <option value="">Ano</option>
+              </select>
+              <svg style="position:absolute;right:7px;top:50%;transform:translateY(-50%);pointer-events:none;color:#9a8aa8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+          <input type="hidden" id="ep-nasc">
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;color:#d4307a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;margin-top:16px">Endereço</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div>
+          <label style="font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px">CEP</label>
+          <input id="ep-cep" placeholder="00000-000" inputmode="numeric" maxlength="9" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'" oninput="buscarCepPerfil(this.value)">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px">UF</label>
+          <input id="ep-uf" placeholder="PR" maxlength="2" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810;text-transform:uppercase" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'">
+        </div>
+        <div style="grid-column:span 2">
+          <label style="font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px">Rua / Logradouro</label>
+          <input id="ep-rua" placeholder="Rua das Flores" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px">Número</label>
+          <input id="ep-num" placeholder="248" inputmode="numeric" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px">Bairro</label>
+          <input id="ep-bairro" placeholder="Jardim Primavera" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px">Cidade</label>
+          <input id="ep-cidade" placeholder="Piraquara" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px">Complemento</label>
+          <input id="ep-comp" placeholder="Apto, casa, bloco..." style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#150810" onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'">
+        </div>
+      </div>
+
+      <div id="ep-msg" style="font-size:12px;margin-top:12px;display:none;padding:8px 12px;border-radius:8px;background:#d1fae5"></div>
+      <button id="ep-btn-salvar" onclick="salvarPerfil()" style="width:100%;margin-top:16px;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,#d4307a,#a0235c);color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">
+        Salvar dados
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  signOut, onAuthStateChanged, sendPasswordResetEmail, updatePassword }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, updateDoc,
+  query, where, orderBy, onSnapshot, serverTimestamp, addDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const fbConfig = {
+  apiKey:"AIzaSyAZCaUFsBdm_Eu38TcxYfKVfnP4fBlOClw",
+  authDomain:"katreseli.firebaseapp.com",
+  projectId:"katreseli",
+  storageBucket:"katreseli.firebasestorage.app",
+  messagingSenderId:"70788726473",
+  appId:"1:70788726473:web:da67bdf6b9d4861fed1718"
+};
+const fbApp = initializeApp(fbConfig);
+const auth  = getAuth(fbApp);
+const db    = getFirestore(fbApp);
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const el  = id => document.getElementById(id);
+const gv  = id => el(id)?.value || "";
+const fmtD = s => s ? new Date(s+"T12:00:00").toLocaleDateString("pt-BR") : "—";
+const fmtR = v => "R$ " + (v||0).toFixed(2).replace(".",",");
+
+// ── Estado ────────────────────────────────────────────────────────────────────
+let _user = null, _clienteData = null, _locacoes = [], _cfg = {};
+window._locacoes = _locacoes; // exposto p/ handlers inline (onclick)
+
+// ── Carregar config do Firestore ──────────────────────────────────────────────
+async function loadCfg() {
+  try {
+    const snap = await getDoc(doc(db,"config","app"));
+    if (snap.exists()) {
+      _cfg = snap.data();
+      // Carregar credenciais de pagamento
+      try {
+        const snapPriv = await getDoc(doc(db,"config","pagamento_privado"));
+        if (snapPriv.exists()) Object.assign(_cfg, snapPriv.data());
+      } catch(_) {}
+      const nome = _cfg.nome || "KATRESELI";
+      el("auth-empresa-nome").textContent = nome;
+      el("app-empresa").textContent = nome;
+      if (_cfg.logo) {
+        el("auth-logo-ph").style.display = "none";
+        el("auth-logo-img").src = _cfg.logo;
+        el("auth-logo-img").style.display = "";
+        el("app-logo").innerHTML = `<img src="${_cfg.logo}" style="width:38px;height:38px;border-radius:50%;object-fit:cover">`;
+      }
+    }
+  } catch(_) {}
+}
+loadCfg();
+
+// ── Autenticação ──────────────────────────────────────────────────────────────
+window.mostrarAba = function(aba, btn) {
+  el("form-login").style.display    = aba === "login"    ? "" : "none";
+  el("form-cadastro").style.display = aba === "cadastro" ? "" : "none";
+  document.querySelectorAll(".auth-tab").forEach(t => t.classList.remove("on"));
+  btn.classList.add("on");
+};
+
+window.fazerLogin = async function() {
+  const email = gv("login-email").trim().toLowerCase();
+  const senha = gv("login-senha");
+  const msg   = el("login-msg");
+  const btn   = el("btn-login");
+  if (!email || !senha) { showMsg(msg,"Preencha e-mail e senha","err"); return; }
+  btn.disabled = true; btn.textContent = "Entrando...";
+  try {
+    await signInWithEmailAndPassword(auth, email, senha);
+  } catch(e) {
+    const erros = {
+      "auth/user-not-found":       "E-mail não cadastrado",
+      "auth/wrong-password":       "Senha incorreta",
+      "auth/invalid-credential":   "Senha incorreta. Use 'Esqueceu a senha?' para redefinir.",
+      "auth/invalid-email":        "E-mail inválido",
+      "auth/too-many-requests":    "Muitas tentativas. Aguarde alguns minutos.",
+      "auth/user-disabled":        "Conta desativada. Entre em contato."
+    };
+    const msgTxt = erros[e.code] || ("Erro ao entrar: " + (e.code || e.message));
+    showMsg(msg, msgTxt, "err");
+    // Mostrar link de recuperação quando senha errada
+    if (e.code === "auth/wrong-password" || e.code === "auth/invalid-credential") {
+      const rec = el("login-msg");
+      if (rec) rec.innerHTML = msgTxt +
+        ' <span onclick="mostrarRecuperarSenha()" style="text-decoration:underline;cursor:pointer;color:#fca5a5">Redefinir agora →</span>';
+    }
+    btn.disabled = false; btn.textContent = "Entrar";
+  }
+};
+
+window.fazerCadastro = async function() {
+  const nome  = gv("cad-nome").trim();
+  const email = gv("cad-email").trim().toLowerCase();
+  const tel   = gv("cad-tel").trim();
+  const senha = gv("cad-senha");
+  const msg   = el("cad-msg");
+  const btn   = el("btn-cad");
+  if (!nome)  { showMsg(msg,"Informe seu nome","err"); return; }
+  if (!email) { showMsg(msg,"Informe seu e-mail","err"); return; }
+  if (senha.length < 6) { showMsg(msg,"Senha deve ter no mínimo 6 caracteres","err"); return; }
+  btn.disabled = true; btn.textContent = "Criando conta...";
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, senha);
+    // Salvar no Firestore como usuário cliente
+    await setDoc(doc(db,"usuarios",cred.user.uid), {
+      nome, email, tel, perfil:"cliente", ativo:true, criadoEm: serverTimestamp()
+    });
+    // Salvar dados do cliente
+    await setDoc(doc(db,"clientes_portal",cred.user.uid), {
+      nome, email, tel, uid: cred.user.uid, criadoEm: serverTimestamp()
+    });
+    showMsg(msg,"Conta criada com sucesso! 🎉","ok");
+  } catch(e) {
+    const erros = { "auth/email-already-in-use":"E-mail já cadastrado. Faça login.","auth/invalid-email":"E-mail inválido","auth/weak-password":"Senha muito fraca" };
+    showMsg(msg, erros[e.code] || "Erro ao criar conta", "err");
+    btn.disabled = false; btn.textContent = "Criar minha conta";
+  }
+};
+
+window.fazerLogout = async function() {
+  await signOut(auth);
+};
+
+window.mostrarRecuperarSenha = async function() {
+  const email = gv("login-email").trim() || prompt("Informe seu e-mail:");
+  if (!email) return;
+  try {
+    await sendPasswordResetEmail(auth, email);
+    showMsg(el("login-msg"),"E-mail de recuperação enviado! Verifique sua caixa de entrada.","ok");
+  } catch(_) {
+    showMsg(el("login-msg"),"Erro ao enviar. Verifique o e-mail.","err");
+  }
+};
+
+// ── Detectar e limpar registros órfãos ────────────────────────────────────────
+// ── Recarregar documentos com getDoc individual (garante campo 'contrato') ──────
+async function _recarregarDocumentos() {
+  // Usar _locacoes (global) filtrando só locações reais (não solicitações)
+  const locsReais = _locacoes.filter(l => !l._tipo);
+  if (!locsReais.length) { renderDocumentos(); return; }
+  try {
+    const promises = locsReais.map(l => getDoc(doc(db,"locacoes",l.id)));
+    const snaps = await Promise.all(promises);
+    snaps.forEach((snap) => {
+      if (snap.exists()) {
+        const idx = _locacoes.findIndex(l => l.id === snap.id);
+        if (idx >= 0) _locacoes[idx] = { ..._locacoes[idx], ...snap.data(), id: snap.id };
+      }
+    });
+    renderDocumentos();
+  } catch(e) {
+    renderDocumentos();
+  }
+}
+
+function detectarOrfaos() {
+  try {
+    const chave = "k_pedidos_" + (_user?.email||"").toLowerCase();
+    const lista = JSON.parse(localStorage.getItem(chave)||"[]");
+    if (!lista.length) { el("sec-orfaos").style.display="none"; return; }
+
+    // Registros que não aparecem em _locacoes nem _solicitacoes do Firestore
+    const idsFirestore = new Set([
+      ..._locacoes.map(l=>l.id),
+      ..._locacoes.map(l=>l.solicitacaoId).filter(Boolean)
+    ]);
+    const orfaos = lista.filter(p => !idsFirestore.has(p.id) && p.status === "convertido");
+
+    if (orfaos.length > 0) {
+      el("sec-orfaos").style.display = "";
+      el("lista-orfaos").innerHTML = orfaos.map(p =>
+        `<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:8px 12px;margin-bottom:6px;font-size:12px;color:#991b1b">
+          <strong>${p.tipoEvento||'Locação'}</strong> — ${p.kitNome||''}<br>
+          <span style="opacity:.7">Retirada: ${p.retirada||'—'} | Status: ${p.status}</span>
+        </div>`
+      ).join("");
+    } else {
+      el("sec-orfaos").style.display = "none";
+    }
+  } catch(_) {}
+}
+
+window.limparOrfaos = function() {
+  if (!confirm("Remover registros antigos da sua área? Isso não afeta o sistema da KATRESELI.")) return;
+  try {
+    const chave = "k_pedidos_" + (_user?.email||"").toLowerCase();
+    const lista = JSON.parse(localStorage.getItem(chave)||"[]");
+    const idsFirestore = new Set(_locacoes.map(l=>l.id));
+    // Manter só os que ainda estão no Firestore ou são recentes (pendente/aprovado)
+    const mantidos = lista.filter(p => idsFirestore.has(p.id) || p.status === "pendente" || p.status === "aprovado");
+    localStorage.setItem(chave, JSON.stringify(mantidos));
+    alert(`✅ Removidos ${lista.length - mantidos.length} registro(s) antigos.`);
+    detectarOrfaos();
+  } catch(e) { alert("Erro: "+e.message); }
+};
+
+window.alterarSenha = async function() {
+  const nova = gv("nova-senha");
+  const conf = gv("conf-senha");
+  const msg  = el("senha-msg");
+  if (nova.length < 6) { showMsg(msg,"Mínimo 6 caracteres","err"); return; }
+  if (nova !== conf)   { showMsg(msg,"As senhas não coincidem","err"); return; }
+  try {
+    await updatePassword(auth.currentUser, nova);
+    showMsg(msg,"Senha alterada com sucesso!","ok");
+    el("nova-senha").value = ""; el("conf-senha").value = "";
+  } catch(e) {
+    showMsg(msg, e.code === "auth/requires-recent-login" ? "Faça login novamente para alterar a senha" : "Erro ao alterar senha","err");
+  }
+};
+
+function showMsg(el2, txt, tipo) {
+  if (!el2) return;
+  el2.className = "auth-msg " + tipo;
+  el2.textContent = txt;
+  el2.style.display = "";
+}
+
+// ── Flags vindas do solicitar.html (localStorage persiste entre páginas) ─────
+const _novaConta = localStorage.getItem("k_cli_nova_conta") === "1";
+const _cliEmail  = localStorage.getItem("k_cli_email") || "";
+
+// Fallback: se Firebase não responder em 6s, mostrar tela de login
+const _fbTimeout = setTimeout(() => {
+  if (el("tela-auth").style.display === "flex" ||
+      el("tela-auth").style.display === "") return; // já visível
+  el("tela-auth").style.display = "flex";
+  el("app").style.display = "none";
+}, 6000);
+
+onAuthStateChanged(auth, async user => {
+  clearTimeout(_fbTimeout);
+  _user = user;
+
+  if (!user) {
+    // Não autenticado — mostrar tela de login
+    el("tela-auth").style.display = "flex";
+    el("app").style.display = "none";
+    el("tela-nova-senha").style.display = "none";
+    // Pré-preencher e-mail se veio do solicitar.html
+    if (_cliEmail) {
+      const inp = el("login-email");
+      if (inp) inp.value = _cliEmail;
+      const bvMsg = el("auth-msg-boas-vindas");
+      if (bvMsg) bvMsg.style.display = "";
+      // Limpar só o email (não a flag nova conta ainda)
+      localStorage.removeItem("k_cli_email");
+    }
+    return;
+  }
+
+  // Usuário autenticado
+  el("tela-auth").style.display = "none";
+
+  if (_novaConta) {
+    // Nova conta: limpar flag e mostrar tela de criar senha
+    localStorage.removeItem("k_cli_nova_conta");
+    localStorage.removeItem("k_cli_email");
+    el("app").style.display = "none";
+    el("tela-nova-senha").style.display = "flex";
+    const disp = el("ns-email-display");
+    if (disp) disp.textContent = user.email;
+  } else {
+    // Conta existente: ir direto para área
+    localStorage.removeItem("k_cli_nova_conta");
+    localStorage.removeItem("k_cli_email");
+    el("app").style.display = "";
+  }
+
+  await carregarDadosCliente(user);
+  carregarLocacoes(user.email);
+
+  // ── Detectar retorno do checkout Infinite Pay ──────────────────────
+  const urlParams = new URLSearchParams(location.search);
+  if (urlParams.get("pag") === "ok") {
+    const locId = urlParams.get("loc");
+    const tipo  = urlParams.get("tipo") || "total";
+    const nsu   = urlParams.get("nsu")  || "";
+    history.replaceState({}, "", location.pathname); // limpar URL
+
+    if (locId) {
+      // Aguardar locações carregarem
+      const tentarConfirmar = async (tentativas = 0) => {
+        const loc = _locacoes?.find(l => l.id === locId);
+        if (loc) {
+          const valor = tipo === "entrada" ? (loc.total||0) * 0.5 : (loc.saldo || loc.total || 0);
+          await _confirmarPagamentoLocal(loc, valor, tipo, nsu);
+        } else if (tentativas < 5) {
+          setTimeout(() => tentarConfirmar(tentativas + 1), 800);
+        }
+      };
+      setTimeout(() => tentarConfirmar(), 1000);
+    }
+  }
+});
+
+// ── Salvar nova senha ─────────────────────────────────────────────────────────
+window.salvarSenhaNova = async function() {
+  const nova = el("ns-nova")?.value || "";
+  const conf = el("ns-conf")?.value || "";
+  const msg  = el("ns-msg");
+  const btn  = el("ns-btn");
+
+  function showM(txt, tipo) {
+    if (!msg) return;
+    msg.className = "auth-msg " + tipo;
+    msg.textContent = txt;
+  }
+
+  if (nova.length < 6) { showM("Senha deve ter no mínimo 6 caracteres","err"); return; }
+  if (nova !== conf)   { showM("As senhas não coincidem","err"); return; }
+
+  btn.disabled = true;
+  btn.textContent = "Salvando...";
+
+  try {
+    await updatePassword(auth.currentUser, nova);
+    showM("Senha salva! Abrindo sua área... 🎀","ok");
+    setTimeout(() => {
+      el("tela-nova-senha").style.display = "none";
+      el("app").style.display = "";
+    }, 1000);
+  } catch(e) {
+    // requer login recente - já está logado, então funciona
+    showM("Erro ao salvar senha. Tente novamente.","err");
+    btn.disabled = false;
+    btn.textContent = "Salvar senha e entrar";
+  }
+};
+
+window.pularSenhaNova = function() {
+  el("tela-nova-senha").style.display = "none";
+  el("app").style.display = "";
+};
+
+// ── Carregar dados do cliente ─────────────────────────────────────────────────
+async function carregarDadosCliente(user) {
+  try {
+    // 1. clientes_portal (próprio do cliente)
+    let portalData = {};
+    try {
+      const snapPortal = await getDoc(doc(db,"clientes_portal",user.uid));
+      if (snapPortal.exists()) portalData = snapPortal.data();
+    } catch(_) {}
+
+    // 2. solicitacoes (fallback — dados do formulário de pedido)
+    let solData = {};
+    try {
+      const qSol = query(collection(db,"solicitacoes"), where("email","==",user.email));
+      const solSnap = await getDocs(qSol);
+      if (!solSnap.empty) {
+        const docs2 = solSnap.docs.map(d=>d.data()).sort((a,b)=>(b.criadoEm?.seconds||0)-(a.criadoEm?.seconds||0));
+        const s = docs2[0];
+        solData = { nome:s.nomeCliente||"", email:s.email||"", tel:s.tel||"",
+          cpf:s.cpf||"", nasc:s.nasc||"", cep:s.cep||"", rua:s.rua||"",
+          num:s.numero||"", bairro:s.bairro||"", cidade:s.cidade||"", uf:s.uf||"", comp:s.complemento||"" };
+        // Auto-popular clientes_portal se vazio
+        if (!portalData.rua && solData.rua) {
+          const perfilRef = doc(db,"clientes_portal", user.uid);
+          const payload = {};
+          for (const [k,v] of Object.entries(solData)) { if (v) payload[k]=v; }
+          payload.atualizadoEm = serverTimestamp();
+          setDoc(perfilRef, payload, {merge:true}).catch(()=>{});
+          Object.assign(portalData, payload);
+        }
+      }
+    } catch(_) {}
+
+    // 3. clientes (admin) — somente se ainda faltar dados
+    let adminData = {};
+    try {
+      const qAdmin = query(collection(db,"clientes"), where("email","==",user.email));
+      const qSnap  = await getDocs(qAdmin);
+      if (!qSnap.empty) adminData = qSnap.docs[0].data();
+    } catch(_) {}
+
+    // Garantir que os dados carregados são do usuário correto
+    // Se o email do portal não bate com o auth, ignorar portal e usar apenas auth
+    if (portalData.email && portalData.email.toLowerCase() !== user.email.toLowerCase()) {
+      console.warn("clientes_portal email mismatch — ignorando dados do portal");
+      portalData = {};
+    }
+    const pick = (...vals) => vals.find(v => v && String(v).trim() !== "") || "";
+    _clienteData = {
+      nome:   pick(portalData.nome,   solData.nome,   adminData.nome,   user.email.split("@")[0]),
+      email:  pick(portalData.email,  solData.email,  adminData.email,  user.email),
+      tel:    pick(portalData.tel,    solData.tel,    adminData.tel,    adminData.wpp),
+      cpf:    pick(portalData.cpf,    solData.cpf,    adminData.cpf),
+      nasc:   pick(portalData.nasc,   solData.nasc,   adminData.nasc,   adminData.nascimento),
+      cep:    pick(portalData.cep,    solData.cep,    adminData.cep),
+      rua:    pick(portalData.rua,    solData.rua,    adminData.rua,    adminData.end),
+      num:    pick(portalData.num,    solData.num,    adminData.num),
+      bairro: pick(portalData.bairro, solData.bairro, adminData.bairro),
+      cidade: pick(portalData.cidade, solData.cidade, adminData.cidade),
+      uf:     pick(portalData.uf,     solData.uf,     adminData.uf),
+      comp:   pick(portalData.comp,   solData.comp,   adminData.comp,   adminData.complemento),
+      comprovante:     pick(portalData.comprovante,    adminData.comprovante),
+      comprovanteNome: pick(portalData.comprovanteNome,adminData.comprovanteNome),
+      comprovanteTipo: pick(portalData.comprovanteTipo,adminData.comprovanteTipo),
+      _portalUid: user.uid,
+    };
+
+    renderPerfil();
+    renderStatusComprovante();
+    const primeiro = (_clienteData.nome||"").split(" ")[0];
+    el("cli-primeiro-nome").textContent = primeiro;
+    // Avatar no topbar: iniciais do cliente
+    const topbarAv = el("topbar-avatar");
+    if (topbarAv && _clienteData.nome) {
+      const inic = _clienteData.nome.split(" ").slice(0,2).map(w=>w[0]).join("").toUpperCase();
+      topbarAv.textContent = inic;
+      topbarAv.style.display = "flex";
+    }
+  } catch(e) {
+    _clienteData = { nome: user.email.split("@")[0], email: user.email };
+    renderPerfil();
+  }
+}
+
+// ── Carregar locações do cliente ──────────────────────────────────────────────
+function carregarLocacoes(email) {
+  // Estado interno dos dois listeners
+  let _locReal = [];
+  let _solicitacoes = [];
+
+  // ── Carregar pedidos salvos no localStorage (fallback offline/sem permissão) ──
+  function _pedidosLocais() {
+    try {
+      const chave = "k_pedidos_" + (email || "").toLowerCase();
+      return JSON.parse(localStorage.getItem(chave) || "[]");
+    } catch(_) { return []; }
+  }
+
+  // Atualizar status de um pedido local quando Firestore confirmar
+  function _syncStatusLocal(id, novoStatus) {
+    try {
+      const chave = "k_pedidos_" + (email || "").toLowerCase();
+      const lista = JSON.parse(localStorage.getItem(chave) || "[]");
+      const idx = lista.findIndex(p => p.id === id);
+      if (idx !== -1) { lista[idx].status = novoStatus; localStorage.setItem(chave, JSON.stringify(lista)); }
+    } catch(_) {}
+  }
+
+  function _mergeERenderizar() {
+    // IDs de solicitações já convertidas em locação real (pelo campo solicitacaoId)
+    const locIds = new Set(_locReal.map(l => l.solicitacaoId).filter(Boolean));
+
+    // Também detectar duplicatas por retirada+kit (locações sem solicitacaoId ainda)
+    const locChaves = new Set(_locReal.map(l => [l.retirada, l.devolucao, l.emailCliente||l.email].join("|")));
+
+    function _ehDuplicata(s) {
+      // Sem locações reais (Firestore bloqueado) → nunca duplicata
+      if (_locReal.length === 0) return false;
+      // Locação real aponta diretamente para esta solicitação
+      if (locIds.has(s.id)) return true;
+      // Solicitação convertida → SEMPRE remover quando há locações reais visíveis
+      // (a locação real é a fonte de verdade)
+      if (s.status === "convertido") return true;
+      // Solicitação com mesma data+email de uma locação real
+      const chave = [s.retirada, s.devolucao, s.email].join("|");
+      if (chave !== "||" && locChaves.has(chave)) return true;
+      return false;
+    }
+
+    // Solicitações do Firestore (se tiver permissão) — excluir duplicatas
+    const solsFirestore = _solicitacoes.filter(s => !_ehDuplicata(s));
+
+    // Pedidos do localStorage — excluir duplicatas e o que já está no Firestore
+    const pedidosLocais = _pedidosLocais().filter(p => {
+      const jaNoFirestore = solsFirestore.some(s => s.id === p.id);
+      return !jaNoFirestore && !_ehDuplicata(p);
+    });
+
+    // Mesclar: Firestore tem prioridade, localStorage como fallback
+    const todasSols = [...solsFirestore, ...pedidosLocais];
+
+    const tudo = [...todasSols, ..._locReal].sort((a, b) => {
+      const ta = a.criadoEm?.seconds || 0;
+      const tb = b.criadoEm?.seconds || 0;
+      return tb - ta;
+    });
+    _locacoes = tudo;
+    window._locacoes = _locacoes; // manter referência global atualizada
+    renderLocacoes();
+    renderDocumentos();
+    renderStats();
+    renderPagamentos();
+  }
+
+  // Listener 1 — locações reais por emailCliente
+  const qLoc = query(collection(db,"locacoes"), where("emailCliente","==",email));
+  onSnapshot(qLoc, snap => {
+    _firestoreRespondeu = true; // Firestore respondeu — podemos confiar na lista
+    const porEmailCliente = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+    // snap.docs reflete estado atual incluindo deleções
+    // Buscar também por campo "email"
+    getDocs(query(collection(db,"locacoes"), where("email","==",email)))
+      .then(snap2 => {
+        const ids = new Set(porEmailCliente.map(l => l.id));
+        const porEmail = snap2.docs.filter(d => !ids.has(d.id)).map(d => ({ id:d.id, ...d.data() }));
+        _locReal = [...porEmailCliente, ...porEmail];
+        // Limpar localStorage de pedidos que já existem como locação real
+        _limparLocalStorageConvertidos();
+        _mergeERenderizar();
+      })
+      .catch(() => {
+        _locReal = porEmailCliente;
+        _limparLocalStorageConvertidos();
+        _mergeERenderizar();
+      });
+  }, () => {
+    getDocs(query(collection(db,"locacoes"), where("email","==",email)))
+      .then(snap2 => {
+        _locReal = snap2.docs.map(d => ({ id:d.id, ...d.data() }));
+        _limparLocalStorageConvertidos();
+        _mergeERenderizar();
+      })
+      .catch(() => {
+        _locReal = [];
+        _mergeERenderizar();
+      });
+  });
+
+  // _firestoreRespondeu = true quando o Firestore respondeu (mesmo com zero docs)
+  // Isso distingue "Firestore bloqueado" de "todas as locações foram deletadas"
+  let _firestoreRespondeu = false;
+
+  function _limparLocalStorageConvertidos() {
+    // Só limpar se o Firestore efetivamente respondeu (não bloqueado)
+    if (!_firestoreRespondeu) return;
+    try {
+      const chave = "k_pedidos_" + (email || "").toLowerCase();
+      const pedidos = JSON.parse(localStorage.getItem(chave) || "[]");
+      const locIds     = new Set(_locReal.map(l => l.solicitacaoId).filter(Boolean));
+      const locChaves  = new Set(_locReal.map(l => [l.retirada, l.devolucao, l.emailCliente||l.email].join("|")));
+
+      const mantidos = pedidos.filter(p => {
+        // Pedido ainda pendente (não aprovado/convertido): manter sempre
+        if (p.status === "pendente") return true;
+        // Se há locações reais, verificar correspondência
+        if (_locReal.length > 0) {
+          if (locIds.has(p.id)) return true;
+          const chaveP = [p.retirada, p.devolucao, p.email].join("|");
+          if (locChaves.has(chaveP)) return true;
+          return false; // locação deletada no ADM
+        }
+        // _locReal vazio mas Firestore respondeu = todas as locações foram deletadas
+        return false;
+      });
+
+      if (mantidos.length !== pedidos.length) {
+        localStorage.setItem(chave, JSON.stringify(mantidos));
+      }
+    } catch(e) {}
+  }
+
+  // Listener 2 — solicitações do cliente em tempo real
+  const qSol = query(collection(db,"solicitacoes"), where("email","==",email));
+  onSnapshot(qSol, snap => {
+    _solicitacoes = snap.docs.map(d => ({ id:d.id, ...d.data(), _tipo:"solicitacao" }));
+    // Sincronizar status no localStorage com o que veio do Firestore
+    _solicitacoes.forEach(s => _syncStatusLocal(s.id, s.status));
+    _mergeERenderizar();
+  }, () => {
+    // Sem permissão no Firestore (regras ainda não atualizadas)
+    // Iniciar polling a cada 20s para pegar atualizações de status
+    _solicitacoes = [];
+    _mergeERenderizar();
+    _iniciarPolling(email);
+  });
+
+  // Renderizar imediatamente com dados locais (sem esperar Firestore)
+  _mergeERenderizar();
+}
+
+// ── Polling periódico para buscar status atualizado das solicitações ──────────
+// Usa getDocs já importado no topo do módulo — funciona local e online
+let _pollingTimer = null;
+function _iniciarPolling(email) {
+  if (_pollingTimer) return; // já rodando
+  async function _poll() {
+    try {
+      const qs = query(collection(db, "solicitacoes"), where("email", "==", email));
+      const ss = await getDocs(qs);
+      if (!ss.empty) {
+        const fromFirestore = ss.docs.map(d => ({ id:d.id, ...d.data(), _tipo:"solicitacao" }));
+        // Sincronizar status no localStorage
+        fromFirestore.forEach(s => {
+          try {
+            const chave = "k_pedidos_" + email.toLowerCase();
+            const lista = JSON.parse(localStorage.getItem(chave) || "[]");
+            const idx = lista.findIndex(p => p.id === s.id);
+            if (idx !== -1 && lista[idx].status !== s.status) {
+              lista[idx].status = s.status;
+              localStorage.setItem(chave, JSON.stringify(lista));
+            }
+          } catch(_) {}
+        });
+        _solicitacoes = fromFirestore;
+        _mergeERenderizar();
+        const temPendente = fromFirestore.some(s => s.status === "pendente" || s.status === "aprovado");
+        if (!temPendente) { clearInterval(_pollingTimer); _pollingTimer = null; }
+      }
+    } catch(_) { /* sem permissão — regras ainda não atualizadas */ }
+  }
+  _poll(); // imediato
+  _pollingTimer = setInterval(_poll, 20000); // a cada 20s
+}
+
+// ── Render locações ───────────────────────────────────────────────────────────
+function renderLocacoes() {
+  const div = el("lista-locacoes");
+  if (!_locacoes.length) {
+    div.innerHTML = `<div class="empty"><i class="ti ti-calendar-off"></i><p>Você ainda não tem locações.</p>
+      <a href="solicitar.html?from=cliente" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:var(--p);color:#fff;border-radius:12px;font-size:13px;font-weight:700;text-decoration:none;margin-top:8px">
+        <i class="ti ti-plus"></i> Solicitar locação
+      </a></div>`;
+    return;
+  }
+  const statusMap = { orcamento:"Solicitado", aceito:"Aceito ✓", aguardando_entrada:"Aguardando pagamento", aguardando_assinatura:"Aguardando assinatura", ativo:"Aguardando retirada", devolvido:"Concluída", cancelado:"Cancelada", pendente:"Aguardando aprovação", aprovado:"Aprovado ✓", convertido:"Confirmada" };
+  div.innerHTML = _locacoes.map(l => {
+    const st = l.status || (l._tipo === "solicitacao" ? "pendente" : "orcamento");
+    const isSol = l._tipo === "solicitacao";
+    // Pagamento enviado pelo cliente, aguardando aprovação do admin
+    const pagEmAnalise = !isSol ? window._pagAguardandoDe?.(l) : null;
+    // Label do badge — entrada paga = locação ativa com saldo pendente
+    const stLabel = pagEmAnalise
+      ? "Pagamento em análise ⏳"
+      : (!isSol && st === "ativo" && l.saldo > 0)
+      ? "Entrada Paga ✓"
+      : (statusMap[st] || st);
+
+    // Banner de status
+    let statusBanner = "";
+
+    // Pagamento enviado pelo cliente — aguardando aprovação do admin
+    if (pagEmAnalise) {
+      statusBanner = `
+        <div style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border-left:4px solid #f59e0b;padding:13px 16px;margin:0;display:flex;gap:12px;align-items:flex-start">
+          <i class="ti ti-hourglass-high" style="font-size:20px;color:#d97706;flex-shrink:0;margin-top:1px"></i>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:800;color:#92400e;margin-bottom:3px">⏳ Pagamento pendente de aprovação do ADM</div>
+            <div style="font-size:12px;color:#a16207;line-height:1.5">Recebemos seu aviso de pagamento de <strong>${fmtR(pagEmAnalise.valor || 0)}</strong> (${pagEmAnalise.tipo === "entrada" ? "entrada 50%" : "valor total"}). O administrador está processando — assim que confirmar, esta locação avança para <strong>Confirmada</strong>.</div>
+          </div>
+        </div>`;
+    }
+
+    // Locação ativa com saldo pendente: entrada paga, falta pagar na retirada
+    else if (!isSol && st === "ativo" && l.saldo > 0 && l.entrada > 0) {
+      statusBanner = `
+        <div style="background:#f0fdf4;border-left:4px solid #22c55e;padding:12px 16px;margin:0;display:flex;gap:12px;align-items:flex-start">
+          <div style="flex-shrink:0;margin-top:1px">
+            <i class="ti ti-circle-check" style="font-size:20px;color:#16a34a"></i>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700;color:#15803d;margin-bottom:3px">✅ Entrada confirmada — ${fmtR(l.entrada)}</div>
+            <div style="font-size:12px;color:#166534;line-height:1.5">Sua locação está confirmada! O saldo restante de <strong>${fmtR(l.saldo)}</strong> será cobrado na <strong>retirada da decoração</strong>.</div>
+          </div>
+        </div>`;
+    }
+
+    // Locação ativa totalmente paga
+    else if (!isSol && st === "ativo" && (l.saldo === 0 || !l.saldo) && l.total > 0) {
+      statusBanner = `
+        <div style="background:#f0fdf4;border-left:4px solid #22c55e;padding:12px 16px;margin:0;display:flex;gap:12px;align-items:center">
+          <i class="ti ti-circle-check" style="font-size:20px;color:#16a34a;flex-shrink:0"></i>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#15803d">✅ Locação confirmada e quitada!</div>
+            <div style="font-size:12px;color:#166534">Pagamento completo. Prepare-se para o grande dia! 🎉</div>
+          </div>
+        </div>`;
+    }
+
+    else if (isSol && st === "pendente") {
+      const pendencias = l.pendencias || [];
+      statusBanner = pendencias.length > 0 ? `
+        <div style="background:#fff7ed;border-left:4px solid #f97316;padding:14px 16px;margin:0">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <i class="ti ti-alert-triangle" style="font-size:20px;color:#ea580c;flex-shrink:0"></i>
+            <span style="font-size:14px;font-weight:800;color:#c2410c">⚠️ Ação necessária</span>
+          </div>
+          <div style="font-size:12px;color:#9a3412;margin-bottom:10px;line-height:1.6">
+            Nossa equipe analisou sua solicitação e identificou itens pendentes. Envie os documentos abaixo para continuar:
+          </div>
+          <ul style="margin:0 0 12px 16px;padding:0;font-size:12px;color:#7c2d12;line-height:2.2">
+            ${(l.pendencias||[]).map(p => '<li>📎 ' + p + '</li>').join('')}
+          </ul>
+          <button onclick="mudarAba('perfil',null)" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:#ea580c;color:#fff;border:none;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit"><i class="ti ti-upload"></i> Ir para Meu Perfil e enviar documentos</button>
+          <button onclick="solicitarNovaAnalise('${l.id}')" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:#fff;color:#ea580c;border:2px solid #ea580c;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px"><i class="ti ti-send"></i> Já enviei — solicitar nova análise</button>
+        </div>` : `
+        <div class="sol-banner sol-banner-pendente">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">⏳</span>
+            <span style="font-size:14px;font-weight:700;color:#b45309">Aguardando aprovação</span>
+          </div>
+          <div style="font-size:12px;color:#92400e;line-height:1.6">Seu pedido foi recebido e está sendo analisado. Em breve entraremos em contato.</div>
+        </div>`;
+    } else if (isSol && st === "aprovado") {
+      statusBanner = `
+        <div style="background:#f0fdf4;border-left:4px solid #22c55e;padding:14px 16px;margin:0;display:flex;gap:12px;align-items:flex-start">
+          <i class="ti ti-circle-check" style="font-size:22px;color:#16a34a;flex-shrink:0;margin-top:1px"></i>
+          <div>
+            <div style="font-size:14px;font-weight:800;color:#15803d;margin-bottom:4px">Cadastro aprovado!</div>
+            <div style="font-size:12px;color:#166534;line-height:1.7">
+              Seu cadastro e documentos foram verificados com sucesso.<br>
+              Nossa equipe entrará em contato para acertar os detalhes da decoracao, valores de frete e montagem.<br>
+              Apos a confirmacao, a locacao sera gerada e voce podera efetuar o pagamento.
+            </div>
+            <button onclick="falarWhatsApp('')" style="margin-top:10px;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#16a34a;color:#fff;border:none;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit"><i class="ti ti-brand-whatsapp" style="font-size:14px"></i> Falar com a equipe</button>
+          </div>
+        </div>`;
+    }
+
+    return `<div class="loc-card">
+      <div class="loc-card-header">
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:var(--txt)">${l.evento||l.tipoEvento||'Locação'}</div>
+          <div style="font-size:11px;color:var(--txt3);margin-top:2px">${l.kitNome||''}</div>
+          ${l.numContrato ? `<div style="font-size:10px;color:var(--p);font-weight:700;margin-top:3px;letter-spacing:.5px">#${l.numContrato}</div>` : ''}
+        </div>
+        <span class="loc-status-badge s-${st === "ativo" && !isSol && l.saldo > 0 ? "aguardando_entrada" : st}">${stLabel}</span>
+      </div>
+      ${statusBanner}
+      <div class="loc-card-body">
+        ${!isSol ? (() => {
+          // ── Barra de progresso — fluxo oficial ──────────────────────────
+          // Solicitado → Aceito → Pago → Assinar contrato → Aguard. retirada → Devolvido
+          const assinado    = !!l.assinadoEm;
+          const temContrato = !!l.contrato;
+          const pagConfirm  = st === "aguardando_assinatura" || st === "ativo" || st === "devolvido";
+
+          const steps = [
+            { label:"Solicitado",        icon:"ti-send",          done: true },
+            { label:"Aceito",            icon:"ti-thumb-up",      done: st !== "orcamento" },
+            { label:"Pago",              icon:"ti-circle-check",  done: pagConfirm || (pagEmAnalise && st === "aguardando_entrada") },
+            { label:"Assinar contrato",  icon:"ti-pen",           done: assinado,
+              destaque: (st === "aguardando_assinatura") && !assinado },
+            { label:"Aguard. retirada",  icon:"ti-package",       done: st === "devolvido" },
+            { label:"Devolvido",         icon:"ti-home-check",    done: st === "devolvido" },
+          ];
+
+          let curIdx;
+          if      (st === "devolvido")              curIdx = 6;
+          else if (st === "ativo")                  curIdx = 4;
+          else if (st === "aguardando_assinatura" && assinado) curIdx = 4;
+          else if (st === "aguardando_assinatura")  curIdx = 3;
+          else if (pagEmAnalise && st === "aguardando_entrada") curIdx = 2;
+          else if (st === "aguardando_entrada")     curIdx = 2;
+          else if (st === "aceito")                 curIdx = 2;
+          else                                      curIdx = 1; // orcamento
+
+          const renderSteps = (steps, curIdx) => steps.map((s2, i) => {
+            const isDone    = i < curIdx || (s2.done && i < steps.length);
+            const isActive  = i === curIdx && !s2.done;
+            const isDestaque = !!s2.destaque; // precisa assinar agora
+            const circleBg  = isDone ? "#16a34a" : isDestaque ? "#fef9c3" : isActive ? "var(--pl)" : "#f3f4f6";
+            const circleBdr = isDone ? "#16a34a" : isDestaque ? "#f59e0b"  : isActive ? "var(--p)"  : "#d1d5db";
+            const lblColor  = isDone ? "#16a34a" : isDestaque ? "#92400e"  : isActive ? "var(--p)"  : "#9ca3af";
+            const lineColor = isDone ? "#16a34a" : "#e5e7eb";
+            const pulse     = isDestaque ? "animation:pulse-assinar 2s ease-in-out infinite" : "";
+            return `<div style="display:flex;flex-direction:column;align-items:center;flex:1;position:relative;z-index:1">
+              <div style="width:28px;height:28px;border-radius:50%;background:${circleBg};border:2px solid ${circleBdr};display:flex;align-items:center;justify-content:center;transition:all .3s;${pulse}">
+                ${isDone
+                  ? `<i class="ti ti-check" style="color:#fff;font-size:13px"></i>`
+                  : `<i class="ti ${s2.icon}" style="color:${isDestaque?"#92400e":isActive?"var(--p)":"#9ca3af"};font-size:12px"></i>`}
+              </div>
+              <div style="font-size:9px;color:${lblColor};font-weight:${(isActive||isDestaque)?"700":"500"};margin-top:4px;text-align:center;line-height:1.2">${s2.label}</div>
+              ${i < steps.length-1 ? `<div style="position:absolute;top:13px;left:50%;width:100%;height:2px;background:${lineColor};z-index:0"></div>` : ""}
+            </div>`;
+          }).join("");
+
+          return `<div style="padding:12px 0 8px;margin-bottom:4px">
+            <div style="display:flex;align-items:flex-start;gap:0;position:relative">
+              ${renderSteps(steps, curIdx)}
+            </div>
+            ${(st === "aguardando_assinatura" || st === "ativo") && !assinado ? `
+            <div style="margin-top:10px;padding:10px 14px;background:#fefce8;border:1.5px solid #fde68a;border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+              <div style="font-size:12px;color:#92400e;font-weight:600;display:flex;align-items:center;gap:6px">
+                <i class="ti ti-pen" style="font-size:14px"></i>
+                Seu contrato está pronto para assinar
+              </div>
+              <button onclick="abrirModalAssinar('${l.id}')" style="padding:6px 14px;border-radius:8px;border:none;background:#d97706;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap">
+                ✍ Assinar agora
+              </button>
+            </div>` : ""}
+            ${assinado ? `
+            <div style="margin-top:8px;padding:7px 12px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;display:flex;align-items:center;gap:6px;font-size:11px;color:#15803d;font-weight:600">
+              <i class="ti ti-rosette-discount-check" style="font-size:14px"></i>
+              Contrato assinado em ${new Date(l.assinadoEm).toLocaleDateString('pt-BR')} por ${l.assinadoPor||'você'}
+            </div>` : ""}
+          </div>`;
+        })() : ''}
+        <div class="loc-info-row"><span class="loc-info-lbl">Retirada</span><span class="loc-info-val">${fmtD(l.retirada||l.dataEvento)}</span></div>
+        <div class="loc-info-row"><span class="loc-info-lbl">Devolução</span><span class="loc-info-val">${fmtD(l.devolucao)}</span></div>
+        ${l.total ? `<div class="loc-info-row"><span class="loc-info-lbl">Total</span><span class="loc-info-val" style="color:var(--p);font-weight:700">${fmtR(l.total)}</span></div>` : ''}
+        ${!isSol && st === "ativo" && l.entrada > 0 ? `<div class="loc-info-row">
+          <span class="loc-info-lbl">Entrada paga</span>
+          <span class="loc-info-val" style="color:#15803d;font-weight:700;display:flex;align-items:center;gap:5px">
+            <i class="ti ti-circle-check" style="font-size:14px"></i> ${fmtR(l.entrada)}
+          </span>
+        </div>` : ''}
+        ${!isSol && st === "ativo" && l.saldo > 0 ? `<div class="loc-info-row">
+          <span class="loc-info-lbl">Saldo na retirada</span>
+          <span class="loc-info-val" style="color:#dc2626;font-weight:700">
+            ${fmtR(l.saldo)}
+            <button onclick="mudarAbaBtn('pagamentos')" style="font-size:10px;background:var(--p);color:#fff;border:none;border-radius:6px;padding:2px 8px;cursor:pointer;margin-left:4px">Pagar →</button>
+          </span>
+        </div>` : ''}
+        ${!isSol && l.saldo === 0 && l.total > 0 ? `<div class="loc-info-row">
+          <span class="loc-info-lbl">Pagamento</span>
+          <span class="loc-info-val" style="color:#15803d;font-weight:700;display:flex;align-items:center;gap:5px">
+            <i class="ti ti-circle-check" style="font-size:14px"></i> Quitado
+          </span>
+        </div>` : ''}
+      </div>
+      ${!isSol ? `
+      <div style="padding:12px 16px;border-top:1px solid var(--bdr)">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          ${l.contrato ? `<button class="btn-doc primary" onclick="verContrato('${l.id}')"><i class="ti ti-file-text"></i> Contrato</button>` : ''}
+          ${(st === 'aguardando_assinatura' || st === 'ativo') && !l.assinadoEm ? `<button class="btn-doc" style="background:#fefce8;color:#92400e;border-color:#fde68a;animation:pulse-assinar 2s ease-in-out infinite" onclick="abrirModalAssinar('${l.id}')"><i class="ti ti-pen"></i> ✍ Assinar contrato</button>` : ''}
+          ${l.assinadoEm ? `<span style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:#f0fdf4;color:#15803d;border:1px solid #86efac;border-radius:10px;font-size:12px;font-weight:600"><i class="ti ti-rosette-discount-check"></i> Assinado em ${new Date(l.assinadoEm).toLocaleDateString('pt-BR')}</span>` : ''}
+          ${l.recibos?.length ? `<button class="btn-doc" onclick="verRecibos('${l.id}')"><i class="ti ti-receipt"></i> Recibo</button>` : ''}
+          ${(!isSol && st === "aguardando_entrada" && !pagEmAnalise) ? `
+            <button class="btn-doc primary" style="background:var(--p);color:#fff;border-color:var(--p)" onclick="_abrirEscolhaPagamento(this.dataset.id,+this.dataset.t,+this.dataset.h,this.dataset.e)" data-id="${l.id}" data-t="${l.total||0}" data-h="${(l.total||0)*0.5}" data-e="${l.evento||l.tipoEvento||''}">
+              <i class="ti ti-credit-card"></i> Pagar entrada — ${fmtR((l.total||0)*0.5)}
+            </button>
+            <button class="btn-doc" style="background:#f0fdf4;color:#15803d;border-color:#22c55e" onclick="abrirPagamentoValor('${l.id}',${l.total||0},'total')">
+              <i class="ti ti-circle-check"></i> Pagar tudo — ${fmtR(l.total||0)}
+            </button>
+          ` : (!isSol && st === "ativo" && l.saldo > 0) ? `
+            <button class="btn-doc primary" style="background:var(--p);color:#fff;border-color:var(--p)" onclick="abrirPagamentoValor('${l.id}',${l.saldo},'total')">
+              <i class="ti ti-credit-card"></i> Quitar saldo — ${fmtR(l.saldo)}
+            </button>
+          ` : ''}
+          <button class="btn-doc" onclick="falarWhatsApp(this.dataset.e)" data-e="${l.evento||l.tipoEvento||'minha locação'}"><i class="ti ti-brand-whatsapp"></i> Falar com a equipe</button>
+        </div>
+      </div>` : ''}
+    </div>`;
+  }).join("");
+}
+
+// ── Render documentos ─────────────────────────────────────────────────────────
+function renderDocumentos() {
+  const div = el("lista-documentos");
+  const docs = [];
+  _locacoes.forEach(l => {
+    if (l.contrato) docs.push({ tipo:"contrato", evento:l.evento||"Locação", id:l.id, data:l.criadoEm, kit:l.kitNome||"" });
+    (l.recibos||[]).forEach((r,i) => docs.push({ tipo:"recibo", evento:l.evento||"Locação", id:l.id, idx:i, data:r.data, valor:r.valor, kit:l.kitNome||"" }));
+    if (l.comprovante) docs.push({ tipo:"comprovante", evento:l.evento||"Locação", id:l.id, url:l.comprovante, nome:l.comprovanteNome||"Comprovante" });
+  });
+  // Comprovante de residência do perfil do cliente
+  if (_clienteData?.comprovante) {
+    docs.push({
+      tipo: "comprovante",
+      evento: "Comprovante de residência",
+      id: "_perfil",
+      url: _clienteData.comprovante,
+      nome: _clienteData.comprovanteNome || "Comprovante de residência",
+      data: _clienteData.atualizadoEm || null
+    });
+  }
+  el("stat-docs").textContent = docs.length;
+  const ctratos = docs.filter(d=>d.tipo==="contrato").length;
+  const crecibos = docs.filter(d=>d.tipo==="recibo").length;
+  const ccomp = docs.filter(d=>d.tipo==="comprovante").length;
+  const elC = el("cnt-contratos"); if(elC) elC.textContent = ctratos;
+  const elR = el("cnt-recibos"); if(elR) elR.textContent = crecibos;
+  const elCo = el("cnt-comprovantes"); if(elCo) elCo.textContent = ccomp;
+  // Badge na aba documentos
+  document.querySelectorAll("[data-aba='documentos']").forEach(btn => {
+    let badge = btn.querySelector(".bnav-badge");
+    if (docs.length > 0) {
+      if (!badge) { badge = document.createElement("span"); badge.className = "bnav-badge"; btn.appendChild(badge); }
+      badge.textContent = docs.length;
+    } else if (badge) badge.remove();
+  });
+
+  if (!docs.length) {
+    // Verificar se há locações reais confirmadas (sem contrato gerado ainda)
+    const locsConfirmadas = _locacoes.filter(l => !l._tipo && (l.status === "ativo" || l.status === "devolvido" || l.status === "aguardando_entrada"));
+    const msgExtra = locsConfirmadas.length > 0
+      ? `<div style="margin-top:12px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px;text-align:left;max-width:360px">
+          <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:4px">📋 Locação confirmada encontrada</div>
+          <div style="font-size:12px;color:#78350f;line-height:1.6">O contrato é gerado pelo administrador. Se você ainda não recebeu, entre em contato pelo WhatsApp.</div>
+          <button onclick="falarWhatsApp('meu contrato')" style="margin-top:8px;padding:7px 14px;background:#16a34a;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:5px">
+            <i class="ti ti-brand-whatsapp"></i> Solicitar pelo WhatsApp
+          </button>
+        </div>`
+      : "";
+    div.innerHTML = `
+      <div class="empty-state">
+        <i class="ti ti-file-off"></i>
+        <p>Nenhum documento disponível ainda.<br>
+        <span style="font-size:12px;color:var(--txt3)">Contratos e recibos aparecem aqui após geração pelo administrador.</span></p>
+        ${msgExtra}
+      </div>`;
+    return;
+  }
+
+  const cfg = {
+    contrato:     { ico:"ti-file-text",    cor:"#7c3aed", bg:"#ede9fe", label:"Contrato de locação",      sub: d => d.kit },
+    recibo:       { ico:"ti-receipt",      cor:"#059669", bg:"#d1fae5", label:"Recibo de pagamento",      sub: d => d.valor ? "R$ "+(d.valor).toFixed(2).replace(".",",") : "" },
+    comprovante:  { ico:"ti-home-check",   cor:"#d97706", bg:"#fef3c7", label: d => d.id === "_perfil" ? "Comprovante de residência" : "Comprovante enviado", sub: d => d.nome },
+  };
+
+  div.innerHTML = docs.map(d => {
+    const c = cfg[d.tipo] || cfg.contrato;
+    const dataStr = d.data?.seconds ? new Date(d.data.seconds*1000).toLocaleDateString("pt-BR") : "—";
+    return `
+    <div class="doc-item" onclick="abrirDoc('${d.tipo}','${d.id||''}',${d.idx||0})" role="button">
+      <div class="doc-ico" style="background:${c.bg};color:${c.cor}">
+        <i class="ti ${c.ico}"></i>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div class="doc-name">${typeof c.label === "function" ? c.label(d) : c.label}</div>
+        <div style="font-size:11px;color:var(--p);font-weight:600;margin-top:1px">${d.evento}</div>
+        ${c.sub(d) ? `<div class="doc-date">${c.sub(d)}</div>` : ''}
+        <div class="doc-date">${dataStr !== "—" ? dataStr : ''}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">
+        <span style="font-size:10px;padding:3px 8px;border-radius:10px;background:${c.bg};color:${c.cor};font-weight:700">${d.tipo.toUpperCase()}</span>
+        <i class="ti ti-chevron-right" style="color:var(--txt3);font-size:16px"></i>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// ── Render stats ──────────────────────────────────────────────────────────────
+function renderStats() {
+  const ativas = _locacoes.filter(l => l.status === "ativo").length;
+  const pendentes = _locacoes.filter(l => l._tipo === "solicitacao" && (l.status === "pendente" || l.status === "aprovado")).length;
+  // Usar sel() que não quebra se elemento não existe
+  const sel = id => document.getElementById(id);
+  const set = (id, v) => { const e = sel(id); if (e) e.textContent = v; };
+  set("stat-total", _locacoes.length);
+  set("stat-ativas", ativas + (pendentes > 0 ? `+${pendentes}` : ""));
+  // Badge de ação necessária quando há pendências não resolvidas
+  const temPendDoc = _locacoes.some(l => l._tipo === "solicitacao" && (l.pendencias||[]).length > 0);
+  document.querySelectorAll("[data-aba='locacoes']").forEach(btn => {
+    let badge = btn.querySelector(".bnav-badge.urgente");
+    if (temPendDoc) {
+      if (!badge) { badge = document.createElement("span"); badge.className = "bnav-badge urgente"; badge.style.cssText="background:#ef4444"; btn.appendChild(badge); }
+      badge.textContent = "!";
+    } else if (badge) badge.remove();
+  });
+  set("badge-ativas", ativas + " ativa" + (ativas !== 1 ? "s" : "") + (pendentes > 0 ? ` · ${pendentes} pendente${pendentes>1?"s":""}` : ""));
+  set("badge-docs", "Documentos");
+  // Próxima locação
+  const hoje = new Date().toISOString().split("T")[0];
+  // Destaque: próxima locação ou pedido pendente
+  const destaqueSec = el("destaque-sec");
+  if (destaqueSec) {
+    const proxima = _locacoes.filter(l => l.status === "ativo" && l.retirada >= hoje).sort((a,b) => a.retirada?.localeCompare(b.retirada))[0];
+    const pendente = !proxima && _locacoes.find(l => l._tipo === "solicitacao" && (l.status === "pendente" || l.status === "aprovado"));
+    if (proxima) {
+      destaqueSec.style.display = "";
+      destaqueSec.innerHTML = `<div class="sec-title"><i class="ti ti-calendar-star"></i> Próxima locação</div>
+        <div class="loc-card">
+          <div class="loc-card-header">
+            <div style="flex:1"><div style="font-size:14px;font-weight:700">${proxima.evento||'Locação'}</div><div style="font-size:11px;color:var(--txt3)">${proxima.kitNome||''}</div></div>
+            <span class="loc-status-badge s-ativo">Confirmada</span>
+          </div>
+          <div class="loc-card-body">
+            <div class="loc-info-row"><span class="loc-info-lbl">Retirada</span><span class="loc-info-val">${fmtD(proxima.retirada)}</span></div>
+            <div class="loc-info-row"><span class="loc-info-lbl">Devolução</span><span class="loc-info-val">${fmtD(proxima.devolucao)}</span></div>
+          </div>
+        </div>`;
+    } else if (pendente) {
+      destaqueSec.style.display = "";
+      const stLbl = pendente.status === "aprovado" ? "✅ Aprovado — aguardando pagamento" : "⏳ Aguardando aprovação";
+      const stColor = pendente.status === "aprovado" ? "#1d4ed8" : "#b45309";
+      destaqueSec.innerHTML = `<div class="sec-title"><i class="ti ti-clock"></i> Pedido em andamento</div>
+        <div style="background:#fff;border-radius:16px;border:1px solid var(--bdr);padding:14px 16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="font-size:14px;font-weight:700">${pendente.tipoEvento||pendente.evento||'Solicitação'}</div>
+            <span style="font-size:10px;font-weight:700;color:${stColor}">${stLbl}</span>
+          </div>
+          <div style="font-size:12px;color:var(--txt3)">${pendente.kitNome||''}</div>
+          <button onclick="mudarAbaBtn('locacoes')" style="margin-top:10px;font-size:12px;color:var(--p);background:none;border:none;cursor:pointer;font-family:inherit;font-weight:600;padding:0">Ver detalhes →</button>
+        </div>`;
+    } else {
+      destaqueSec.style.display = "none";
+    }
+  }
+}
+
+// ── Render perfil ─────────────────────────────────────────────────────────────
+function renderPerfil() {
+  if (!_clienteData && !_user) return;
+  const d = _clienteData || {};
+  if (!d.email) d.email = _user?.email || "";
+  if (!d.nome)  d.nome  = _user?.email?.split("@")[0] || "";
+
+  const nomeEl = el("perfil-nome");
+  if (nomeEl) nomeEl.textContent = d.nome || d.email?.split("@")[0] || "Cliente";
+
+  const div = el("perfil-dados");
+  if (!div) return;
+
+  const row = (lbl, val) => `
+    <div class="pdado">
+      <div class="pdado-lbl">${lbl}</div>
+      <div class="pdado-val${!val ? " vazio" : ""}">${val || "— não informado"}</div>
+    </div>`;
+
+  const rowFull = (lbl, val) => `
+    <div class="pdado full">
+      <div class="pdado-lbl">${lbl}</div>
+      <div class="pdado-val${!val ? " vazio" : ""}">${val || "— não informado"}</div>
+    </div>`;
+
+  const nascFmt = (d.nasc||d.nascimento) ? fmtD(d.nasc||d.nascimento) : "";
+  const totalPreenchido = [d.nome,d.cpf,d.tel,d.nasc,d.cep,d.rua].filter(Boolean).length;
+
+  div.innerHTML = `
+    <div class="pdado-sec full">Dados pessoais</div>
+    ${rowFull("Nome completo", d.nome)}
+    ${row("CPF / CNPJ", d.cpf)}
+    ${row("E-mail", d.email)}
+    ${row("WhatsApp", d.tel||d.wpp)}
+    ${row("Nascimento", nascFmt)}
+    <div class="pdado-sec full">Endereço</div>
+    ${row("CEP", d.cep)}
+    ${row("Estado (UF)", d.uf)}
+    ${rowFull("Rua / Logradouro", d.rua||d.end)}
+    ${row("Número", d.num)}
+    ${row("Bairro", d.bairro)}
+    ${row("Cidade", d.cidade)}
+    ${rowFull("Complemento", d.comp||d.complemento)}
+    ${totalPreenchido < 3 ? `
+    <div class="pdado-alerta full">
+      <i class="ti ti-info-circle"></i>
+      Dados incompletos. Clique em <strong>Editar</strong> para preencher.
+    </div>` : ""}
+  `;
+}
+
+// ── Modal de editar perfil ───────────────────────────────────────────────────
+
+// Inicializar selects de nascimento do modal de perfil
+(function initEpNascSelects() {
+  const dia = document.getElementById("ep-nasc-dia");
+  if (dia && dia.options.length <= 1) {
+    for (let d = 1; d <= 31; d++) {
+      const o = document.createElement("option");
+      o.value = String(d).padStart(2,"0");
+      o.textContent = String(d).padStart(2,"0");
+      dia.appendChild(o);
+    }
+  }
+  const ano = document.getElementById("ep-nasc-ano");
+  if (ano && ano.options.length <= 1) {
+    const anoAtual = new Date().getFullYear();
+    for (let y = anoAtual - 1; y >= 1920; y--) {
+      const o = document.createElement("option");
+      o.value = y; o.textContent = y;
+      ano.appendChild(o);
+    }
+  }
+})();
+
+window.syncEpNasc = function() {
+  const d = el("ep-nasc-dia")?.value;
+  const m = el("ep-nasc-mes")?.value;
+  const y = el("ep-nasc-ano")?.value;
+  const hidden = el("ep-nasc");
+  if (d && m && y && hidden) hidden.value = `${y}-${m}-${d}`;
+  else if (hidden) hidden.value = "";
+};
+
+window.abrirEditarPerfil = function() {
+  const d = _clienteData || {};
+  const ov = el("modal-editar-perfil");
+  if (!ov) return;
+
+  // Preencher campos
+  const set = (id, val) => { const e = el(id); if (e) e.value = val || ""; };
+  set("ep-nome",    d.nome);
+  set("ep-cpf",     d.cpf);
+  set("ep-tel",     d.tel || d.wpp);
+  set("ep-cep",     d.cep);
+  set("ep-rua",     d.rua);
+  set("ep-num",     d.num);
+  set("ep-bairro",  d.bairro);
+  set("ep-cidade",  d.cidade);
+  set("ep-uf",      d.uf);
+  set("ep-comp",    d.comp || d.complemento);
+
+  // Preencher selects de nascimento
+  const nascRaw = d.nasc || d.nascimento || "";
+  let ny="", nm="", nd="";
+  if (nascRaw.includes("-") && nascRaw.length === 10) { [ny,nm,nd] = nascRaw.split("-"); }
+  else if (nascRaw.includes("/") && nascRaw.length === 10) { [nd,nm,ny] = nascRaw.split("/"); }
+  const selDia = el("ep-nasc-dia"); if (selDia && nd) selDia.value = nd.padStart(2,"0");
+  const selMes = el("ep-nasc-mes"); if (selMes && nm) selMes.value = nm.padStart(2,"0");
+  const selAno = el("ep-nasc-ano"); if (selAno && ny) selAno.value = ny;
+  const hidden = el("ep-nasc"); if (hidden && ny&&nm&&nd) hidden.value = `${ny}-${nm.padStart(2,"0")}-${nd.padStart(2,"0")}`;
+
+  ov.style.display = "flex";
+};
+
+window.fecharEditarPerfil = function() {
+  const ov = el("modal-editar-perfil");
+  if (ov) ov.style.display = "none";
+};
+
+window.salvarPerfil = async function() {
+  const btn = el("ep-btn-salvar");
+  const msg = el("ep-msg");
+  if (btn) { btn.disabled = true; btn.textContent = "Salvando..."; }
+
+  const gv2 = id => el(id)?.value?.trim() || "";
+  const dados = {
+    nome:   gv2("ep-nome"),
+    cpf:    gv2("ep-cpf"),
+    tel:    gv2("ep-tel"),
+    nasc:   gv2("ep-nasc"),
+    cep:    gv2("ep-cep"),
+    rua:    gv2("ep-rua"),
+    num:    gv2("ep-num"),
+    bairro: gv2("ep-bairro"),
+    cidade: gv2("ep-cidade"),
+    uf:     gv2("ep-uf"),
+    comp:   gv2("ep-comp"),
+    atualizadoEm: serverTimestamp()
+  };
+
+  if (!dados.nome) {
+    if (msg) { msg.textContent = "Nome é obrigatório"; msg.style.display=""; msg.style.color="#dc2626"; }
+    if (btn) { btn.disabled = false; btn.textContent = "Salvar"; }
+    return;
+  }
+
+  try {
+    // Salvar em clientes_portal (cliente tem permissão)
+    await setDoc(doc(db, "clientes_portal", _user.uid), dados, { merge: true });
+
+    // Tentar atualizar na coleção clientes do admin — silencioso se falhar
+    try {
+      const q = query(collection(db, "clientes"), where("email", "==", _user.email));
+      const snap = await getDocs(q);
+      if (!snap.empty) {
+        await setDoc(doc(db, "clientes", snap.docs[0].id), dados, { merge: true });
+      }
+    } catch(_) {}
+
+    // Atualizar local
+    Object.assign(_clienteData, dados);
+    el("perfil-nome").textContent = dados.nome;
+    renderPerfil();
+    fecharEditarPerfil();
+
+    if (msg) { msg.textContent = "Dados salvos! ✓"; msg.style.display=""; msg.style.color="#059669"; }
+  } catch(e) {
+    if (msg) { msg.textContent = "Erro: " + e.message; msg.style.display=""; msg.style.color="#dc2626"; }
+    if (btn) { btn.disabled = false; btn.textContent = "Salvar"; }
+  }
+};
+
+// ── Ações ─────────────────────────────────────────────────────────────────────
+window.verContrato = async function(locId) {
+  try {
+    const snap = await getDoc(doc(db,"locacoes",locId));
+    if (!snap.exists()) { _mostrarAvisoDoc("Locação não encontrada."); return; }
+    const data = snap.data();
+
+    if (!data.contrato) {
+      _mostrarAvisoDoc("Contrato ainda não disponível. Aguarde o administrador gerar o contrato.");
+      return;
+    }
+
+    let html = data.contrato;
+
+    // ── 1. Substituir bloco de assinatura do locatário no HTML salvo ─────────
+    // O contrato.js usa class="ass-blk" no primeiro bloco (locatário)
+    // Quando não assinado, contém traço/linha. Quando assinado, contém nome cursivo.
+    // Aqui reconstruímos o primeiro ass-blk com o estado real do Firestore.
+
+    if (data.assinadoEm) {
+      const dt  = new Date(data.assinadoEm);
+      const dataFmt = dt.toLocaleDateString("pt-BR");
+      const horaFmt = dt.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+      const nomeAssin = data.assinadoPor || "—";
+
+      // Substituir assLoc (conteúdo entre ass-blk e ass-nome) pelo estado assinado
+      // Estrutura gerada pelo contrato.js:
+      // <div class='ass-blk'>[assLoc]<div class='ass-nome'>Nome
+      // assLoc não assinado = div com border-top (linha vazia)
+      // assLoc assinado = div cursiva + div verde com dados
+      const ANCORA_NOME = "<div class='ass-nome'>";
+      const ANCORA_BLK  = "<div class='ass-blk'>";
+      const idxNome = html.indexOf(ANCORA_NOME);  // primeiro ass-nome = locatário
+      const idxBlk  = html.lastIndexOf(ANCORA_BLK, idxNome); // ass-blk antes dele
+      if (idxBlk > -1 && idxNome > -1) {
+        const iniConteudo = idxBlk + ANCORA_BLK.length;
+        // Conteúdo assinado: nome cursivo + linha verde (igual ao contrato.js)
+        const assLocAssinado = '<div style="font-family:Georgia,serif;font-size:22px;color:#d4307a;font-style:italic;margin-bottom:4px">'+nomeAssin+'<\/div>'
+          + '<div style="font-size:8pt;color:#15803d;margin-top:2px">&#10003; Assinado digitalmente em '+dataFmt+' \xE0s '+horaFmt+' | IP: '+(data.assinadoIP||'\u2014')+'<\/div>';
+        html = html.slice(0, iniConteudo) + assLocAssinado + html.slice(idxNome);
+      }
+
+      // ── 2. Substituir bloco amarelo (aguardando) pelo bloco verde ──────────
+      // Bloco verde de certificação (igual ao contrato.js quando assinado)
+      const blocoVerde = '<div style="margin:28px auto;max-width:700px;padding:16px 20px;background:#f0fdf4;border:2px solid #86efac;border-radius:10px;font-size:10pt;color:#15803d;line-height:1.9">'
+        + '<strong>&#10003; Assinado digitalmente pelo LOCAT\xC1RIO(A)</strong><br>'
+        + 'Nome: <strong>'+nomeAssin+'</strong><br>'
+        + 'Data/Hora: '+dataFmt+' \xE0s '+horaFmt+'<br>'
+        + 'E-mail: '+(data.assinadoEmail||'\u2014')+'<br>'
+        + 'IP: '+(data.assinadoIP||'\u2014')+'<br>'
+        + '<span style="font-size:8pt;color:#16a34a">Validade jur\xEDdica conforme Lei 14.063/2020</span>'
+        + '<\/div>';
+
+      // Remover bloco amarelo (fundo #fefce8) — marcador de estilo único no contrato
+      const MARC_AMAR = "background:#fefce8";
+      const MARC_VERDE = "background:#f0fdf4";
+      if (html.includes(MARC_AMAR)) {
+        // Bloco amarelo começa em <div style="...fefce8..." — sem divs internos
+        const idxAmar = html.indexOf(MARC_AMAR);
+        const idxIni  = html.lastIndexOf("<div", idxAmar);
+        // Fim = próximo </div> após o marcador (bloco simples, sem divs aninhados)
+        const idxFim  = html.indexOf("<" + "/div>", idxAmar) + 6;
+        html = html.slice(0, idxIni) + blocoVerde + html.slice(idxFim);
+      } else if (!html.includes(MARC_VERDE)) {
+        // Sem nenhum bloco de certif — injetar antes do fechamento do body
+        const bc = "<" + "/body>";
+        html = html.includes(bc) ? html.split(bc)[0] + blocoVerde + bc : html + blocoVerde;
+      }
+    }
+
+    const w = window.open("", "_blank");
+    if (w) { w.document.write(html); w.document.close(); }
+    else { _mostrarAvisoDoc("Permita popups para visualizar o contrato."); }
+
+  } catch(e) {
+    console.error("[verContrato cliente]", e);
+    const locLocal = _locacoes.find(l => l.id === locId);
+    if (locLocal?.contrato) {
+      const w = window.open("","_blank");
+      if (w) { w.document.write(locLocal.contrato); w.document.close(); }
+    } else {
+      _mostrarAvisoDoc("Não foi possível carregar o contrato.");
+    }
+  }
+};
+
+window.verRecibos = async function(locId) {
+  try {
+    const snap = await getDoc(doc(db,"locacoes",locId));
+    const recibos = snap.data()?.recibos || [];
+    if (recibos.length) {
+      const w = window.open("","_blank");
+      if (w) { w.document.write(recibos[recibos.length-1].html || "<p>Recibo não disponível</p>"); w.document.close(); }
+      return;
+    }
+    _mostrarAvisoDoc("Nenhum recibo disponível ainda. Solicite pelo WhatsApp.");
+  } catch(e) {
+    const locLocal = _locacoes.find(l => l.id === locId);
+    const recibos = locLocal?.recibos || [];
+    if (recibos.length) {
+      const w = window.open("","_blank");
+      if (w) { w.document.write(recibos[recibos.length-1].html || "<p>Recibo não disponível</p>"); w.document.close(); }
+    } else {
+      _mostrarAvisoDoc("Nenhum recibo disponível. Solicite pelo WhatsApp.");
+    }
+  }
+};
+
+// Abrir arquivo (base64 ou URL) sem bloqueio do Chrome
+function _abrirArquivo(url, nome) {
+  if (!url) return;
+  if (url.startsWith("data:")) {
+    // Converter base64 para blob URL para evitar bloqueio do Chrome
+    try {
+      const [meta, b64] = url.split(",");
+      const mime = meta.match(/:(.*?);/)[1];
+      const bin = atob(b64);
+      const arr = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      const blob = new Blob([arr], { type: mime });
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.target = "_blank";
+      a.download = nome || "arquivo";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+    } catch(e) {
+      // Fallback: download direto
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = nome || "comprovante";
+      a.click();
+    }
+  } else {
+    window.open(url, "_blank");
+  }
+}
+
+window.abrirDoc = function(tipo, locId, idx) {
+  if (tipo === "contrato") verContrato(locId);
+  else if (tipo === "recibo") verRecibos(locId);
+  else if (tipo === "comprovante") {
+    if (locId === "_perfil") {
+      _abrirArquivo(_clienteData?.comprovante, _clienteData?.comprovanteNome || "comprovante-residencia");
+    } else {
+      const loc = _locacoes.find(l => l.id === locId);
+      _abrirArquivo(loc?.comprovante, loc?.comprovanteNome || "comprovante");
+    }
+  }
+};
+
+function _mostrarAvisoDoc(msg) {
+  // Toast elegante em vez de alert
+  const t = document.createElement("div");
+  t.style.cssText = "position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#150810;color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.3);max-width:320px;text-align:center";
+  t.innerHTML = `<i class="ti ti-info-circle" style="margin-right:6px"></i>${msg}`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 4000);
+}
+
+window.verPix = function(locId) {
+  const loc = _locacoes.find(l => l.id === locId);
+  if (!loc) return;
+  const chave = _cfg.pixKey || "";
+  if (!chave) { alert("Chave Pix não configurada. Entre em contato via WhatsApp."); return; }
+  const w = window.open("","_blank","width=400,height=500");
+  const pixHtml = "<html><head><title>Pagar via Pix</title>"
+    + "<style>body{font-family:sans-serif;text-align:center;padding:30px;background:#f9f5f8}"
+    + "h2{color:#d4307a}img{margin:16px auto;display:block;border-radius:12px;border:2px solid #fce4f3}"
+    + "p{font-size:14px;color:#555}<" + "/style><" + "/head><body>"
+    + "<h2>&#127880; Pagar via Pix</h2>"
+    + "<p><strong>Valor: R$ " + (loc.saldo||0).toFixed(2).replace(".",",") + "</strong></p>"
+    + '<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(chave) + '" width="200">'
+    + "<p>Chave Pix: <strong>" + chave + "</strong></p>"
+    + "<p style='font-size:12px;color:#888'>Ap&oacute;s o pagamento, envie o comprovante via WhatsApp</p>"
+    + "<" + "/body><" + "/html>";
+  w.document.write(pixHtml);
+};
+
+window.falarWhatsApp = function(evento) {
+  const tel = (_cfg.wppEmpresa||"").replace(/\D/g,"").slice(-11);
+  if (!tel) return;
+  const nome = _clienteData?.nome || "cliente";
+  const msg  = encodeURIComponent(`Olá! Sou ${nome} e gostaria de falar sobre minha locação de *${evento}*.`);
+  const isMob = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+  window.open(`${isMob?"whatsapp://send?phone=55":"https://wa.me/55"}${tel}&text=${msg}`,"_blank");
+};
+
+// ── Comprovante de residência ─────────────────────────────────────────────────
+let _compFile = null;
+let _compBase64 = null;
+
+window.handleCompFile = function(file) {
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    showCompMsg("Arquivo muito grande. Máx. 5MB.", "err"); return;
+  }
+
+  _compFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    _compBase64 = e.target.result;
+    const preview = el("comp-preview");
+    const btn = el("comp-btn-enviar");
+
+    // Mostrar preview
+    if (file.type.startsWith("image/")) {
+      preview.innerHTML = `<img src="${_compBase64}" style="width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--bdr)">`;
+    } else {
+      preview.innerHTML = `<div style="padding:12px;background:var(--bg);border-radius:10px;display:flex;align-items:center;gap:10px">
+        <i class="ti ti-file-type-pdf" style="font-size:28px;color:#ef4444"></i>
+        <div><div style="font-size:13px;font-weight:600">${file.name}</div><div style="font-size:11px;color:var(--txt3)">${(file.size/1024).toFixed(0)} KB</div></div>
+      </div>`;
+    }
+    preview.style.display = "";
+    if (btn) { btn.style.display = "flex"; btn.style.alignItems = "center"; btn.style.justifyContent = "center"; }
+    el("comp-upload-area").style.borderColor = "var(--p)";
+    el("comp-upload-area").style.background = "var(--pl)";
+  };
+  reader.readAsDataURL(file);
+};
+
+window.enviarComprovante = async function() {
+  if (!_compBase64 || !_user) { showCompMsg("Selecione um arquivo antes.", "err"); return; }
+  const btn = el("comp-btn-enviar");
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader"></i> Enviando...'; }
+
+  try {
+    const uid = _user.uid;
+    const email = _user.email;
+
+    // Salvar base64 no Firestore (clientes_portal e clientes)
+    const dadosComp = {
+      comprovante:     _compBase64,
+      comprovanteNome: _compFile.name,
+      comprovanteTipo: _compFile.type,
+      comprovanteData: serverTimestamp()
+    };
+
+    // Atualizar clientes_portal (cliente tem permissão)
+    await setDoc(doc(db, "clientes_portal", uid), dadosComp, { merge: true });
+
+    // Tentar atualizar na coleção clientes (admin) — silencioso se falhar por permissão
+    try {
+      const q = query(collection(db, "clientes"), where("email", "==", email));
+      const snap = await getDocs(q);
+      if (!snap.empty) {
+        await setDoc(doc(db, "clientes", snap.docs[0].id), dadosComp, { merge: true });
+      }
+    } catch(_) { /* sem permissão — ok, admin verá pelo clientes_portal */ }
+
+    // Atualizar _clienteData local
+    if (_clienteData) {
+      _clienteData.comprovante     = _compBase64;
+      _clienteData.comprovanteNome = _compFile.name;
+    }
+
+    showCompMsg("Comprovante enviado com sucesso! ✓", "ok");
+    renderStatusComprovante();
+
+    // Reset
+    el("comp-upload-area").style.borderColor = "var(--bdr2)";
+    el("comp-upload-area").style.background = "var(--bg)";
+    if (btn) { btn.style.display = "none"; btn.disabled = false; btn.innerHTML = '<i class="ti ti-upload"></i> Enviar comprovante'; }
+    _compFile = null; _compBase64 = null;
+
+  } catch(e) {
+    showCompMsg("Erro ao enviar: " + e.message, "err");
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="ti ti-upload"></i> Enviar comprovante'; }
+  }
+};
+
+function showCompMsg(txt, tipo) {
+  const msg = el("comp-msg");
+  if (!msg) return;
+  msg.textContent = txt;
+  msg.style.display = "";
+  msg.style.background = tipo === "ok" ? "#d1fae5" : "#fee2e2";
+  msg.style.color      = tipo === "ok" ? "#065f46" : "#dc2626";
+  msg.style.border     = "1px solid " + (tipo === "ok" ? "#6ee7b7" : "#fca5a5");
+}
+
+function renderStatusComprovante() {
+  const div = el("comp-status-atual");
+  if (!div) return;
+  if (_clienteData?.comprovante) {
+    div.innerHTML = `<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#d1fae5;border-radius:10px;border:1px solid #6ee7b7">
+      <i class="ti ti-circle-check" style="font-size:20px;color:#059669;flex-shrink:0"></i>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#065f46">Comprovante enviado</div>
+        <div style="font-size:11px;color:#047857">${_clienteData.comprovanteNome || "Arquivo enviado"}</div>
+      </div>
+      <a href="${_clienteData.comprovante}" target="_blank" style="margin-left:auto;color:#059669;font-size:12px;font-weight:600;text-decoration:none">Ver ↗</a>
+    </div>
+    <div style="font-size:12px;color:var(--txt3);margin-top:8px;text-align:center">Deseja enviar um novo arquivo?</div>`;
+  } else {
+    div.innerHTML = `<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fef9c3;border-radius:10px;border:1px solid #fde68a">
+      <i class="ti ti-alert-circle" style="font-size:20px;color:#b45309;flex-shrink:0"></i>
+      <div style="font-size:12px;color:#92400e">Comprovante não enviado ainda. Envie para agilizar a aprovação da sua locação.</div>
+    </div>`;
+  }
+}
+
+// ── Buscar CEP no modal de perfil ────────────────────────────────────────────
+window.buscarCepPerfil = async function(val) {
+  const cep = val.replace(/\D/g,"");
+  if (cep.length !== 8) return;
+  try {
+    const r = await fetch("https://viacep.com.br/ws/" + cep + "/json/");
+    const d = await r.json();
+    if (!d.erro) {
+      const set = (id, v) => { const e = el(id); if (e && !e.value) e.value = v; };
+      set("ep-rua",    d.logradouro || "");
+      set("ep-bairro", d.bairro     || "");
+      set("ep-cidade", d.localidade || "");
+      set("ep-uf",     d.uf         || "");
+    }
+  } catch(_) {}
+};
+
+// ── Render Pagamentos ─────────────────────────────────────────────────────────
+function renderPagamentos() {
+  const div     = el("lista-pagamentos"); if (!div) return;
+  const divPend = el("pag-pendentes-lista");
+  const secPend = el("pag-pendentes-sec");
+
+  const temGateway = !!(_cfg.pixKey || _cfg.infinitpayHandle || _cfg.mpToken || _cfg.pagsToken || _cfg.stripePubKey || _cfg.pagamentoAtivo);
+
+  // Incluir locações reais + solicitações aprovadas/convertidas com valor
+  const temLocReal = _locacoes.some(l => !l._tipo); // há locações reais
+  // Pagamento: APENAS locações reais com saldo pendente
+  const comSaldo = _locacoes.filter(l => {
+    if (l._tipo) return false; // nunca solicitações
+    if (l.status === "devolvido" || l.status === "cancelado") return false;
+    if (l.status === "aguardando_entrada" && l.total > 0) return true;
+    if (l.status === "ativo" && l.saldo > 0) return true;
+    return false;
+  });
+  const todasComValor = comSaldo; // mesma lista
+
+  // Badge na aba
+  const btnPag = el("tab-btn-pagamentos");
+  if (btnPag) {
+    const badge = btnPag.querySelector(".bnav-badge");
+    if (comSaldo.length > 0) {
+      if (!badge) {
+        const b = document.createElement("span");
+        b.className = "bnav-badge";
+        b.textContent = comSaldo.length;
+        btnPag.appendChild(b);
+      } else {
+        badge.textContent = comSaldo.length;
+      }
+    } else if (badge) badge.remove();
+  }
+
+  // Mostrar no início se tiver pendentes
+  if (secPend) secPend.style.display = comSaldo.length > 0 ? "" : "none";
+
+  const mkCard = (l, mini = false) => {
+    const saldo  = l.saldo > 0 ? l.saldo : (l.total || 0);
+    const totalLoc = l.total || l.kitValor || saldo;
+    const valor50 = Math.round(totalLoc * 0.5 * 100) / 100; // 50% sempre sobre o TOTAL
+    const status = l.status || "pendente";
+    // Entrada só é considerada PAGA quando o admin confirma (status muda para 'ativo')
+    const entradaPaga = status === "ativo" && l.entrada > 0;
+    // Se entrada ainda não foi paga, o pendente real é o TOTAL, não só o saldo
+    const pendente = entradaPaga ? saldo : totalLoc;
+    const pago   = saldo <= 0 || status === "devolvido";
+    const evt    = l.evento || l.tipoEvento || "Locação";
+    const kit    = l.kitNome || "";
+    const evtId  = l.id;
+
+    return `<div class="pag-card" style="border-color:${pago?"#86efac":"#fca5a5"}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:${mini?"8px":"12px"}">
+        <div>
+          <div style="font-size:${mini?"13px":"15px"};font-weight:700;color:var(--txt)">${evt}</div>
+          ${kit ? `<div style="font-size:12px;color:var(--txt3);margin-top:2px">${kit}</div>` : ''}
+          ${l.numContrato ? `<div style="font-size:10px;color:var(--p);font-weight:700;margin-top:2px">#${l.numContrato}</div>` : ''}
+          <div style="font-size:11px;color:var(--txt3);margin-top:3px"><i class="ti ti-calendar" style="font-size:11px"></i> ${fmtD(l.retirada||l.dataEvento)} → ${fmtD(l.devolucao)}</div>
+          ${!l._tipo && entradaPaga && l.saldo > 0 ? `<div style="font-size:11px;color:#15803d;font-weight:600;margin-top:3px"><i class="ti ti-circle-check" style="font-size:11px"></i> Entrada paga: ${fmtR(l.entrada)}</div>` : ''}
+          ${!l._tipo && entradaPaga && l.saldo > 0 ? `<div style="font-size:11px;color:#dc2626;font-weight:600;margin-top:1px">💳 Pagar na retirada: ${fmtR(l.saldo)}</div>` : ''}
+          ${!l._tipo && !entradaPaga && !pago ? `<div style="font-size:11px;color:#2563eb;font-weight:600;margin-top:3px">💳 Entrada (50%): ${fmtR(valor50)}</div>` : ''}
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          ${l.total||l.kitValor ? `<div style="font-size:11px;color:var(--txt3)">Total: ${fmtR(l.total||l.kitValor)}</div>` : ''}
+          ${pago
+            ? `<div style="font-size:13px;font-weight:700;color:#15803d;display:flex;align-items:center;gap:4px;margin-top:4px"><i class="ti ti-circle-check"></i> Pago</div>`
+            : `<div style="font-size:${mini?"16px":"22px"};font-weight:800;color:#dc2626;margin-top:2px">${fmtR(pendente)}</div>
+               <div style="font-size:10px;color:#dc2626;font-weight:600">pendente</div>`
+          }
+        </div>
+      </div>
+      ${!pago && !mini ? (() => {
+        const aguardAprov = window._pagAguardandoDe?.(l);
+        if (aguardAprov) return `
+        <div style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:2px solid #f59e0b;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+          <div style="width:36px;height:36px;border-radius:10px;background:#f59e0b;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <i class="ti ti-hourglass-high" style="font-size:20px;color:#fff"></i>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:800;color:#92400e;margin-bottom:3px">⏳ Pagamento pendente de aprovação do ADM</div>
+            <div style="font-size:12px;color:#a16207;line-height:1.5">Recebemos seu aviso de pagamento de <strong>${fmtR(aguardAprov.valor || 0)}</strong> (${aguardAprov.tipo === "entrada" ? "entrada 50%" : "valor total"}). Assim que o administrador confirmar, sua locação será atualizada aqui.</div>
+          </div>
+        </div>
+        <button onclick="falarWhatsApp('${evt}')" style="width:100%;margin-top:10px;padding:10px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;font-size:12px;color:#6b7280;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px">
+          <i class="ti ti-brand-whatsapp" style="color:#16a34a"></i> Demorou? Falar com a equipe
+        </button>`;
+        return `
+        <button onclick="_abrirEscolhaPagamento('${evtId}',${saldo},${entradaPaga ? 0 : valor50},'${evt}')" style="width:100%;padding:12px;background:var(--p);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px">
+          <i class="ti ti-credit-card"></i> Pagar agora
+        </button>
+        ${window._pagPendenteDe?.(evtId) ? `
+        <button onclick="_reabrirAguardandoPag('${evtId}')" style="width:100%;margin-top:8px;padding:11px;background:#fffbeb;color:#92400e;border:1.5px solid #f59e0b;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px">
+          <i class="ti ti-clock"></i> Pagamento em andamento — Já paguei / enviar comprovante
+        </button>` : ''}`;
+      })() : ''}
+    </div>`;
+  };
+
+  // Aba pagamentos — todas com valor
+  if (!todasComValor.length) {
+    div.innerHTML = `<div class="empty-state"><i class="ti ti-credit-card"></i><p>Nenhum pagamento pendente.<br><span style="font-size:12px">Os valores aparecem aqui após confirmação da locação.</span></p></div>`;
+  } else {
+    div.innerHTML = todasComValor.map(l => mkCard(l)).join("");
+  }
+
+  // Início — só pendentes (mini)
+  if (divPend) divPend.innerHTML = comSaldo.slice(0,2).map(l => mkCard(l, true)).join("");
+}
+
+window.renderPagamentos = renderPagamentos;
+window.mudarAba = function(aba, btn) {
+  document.querySelectorAll(".tab-body").forEach(t => t.classList.remove("on"));
+  document.querySelectorAll(".bnav-btn,.dtab-btn").forEach(t => t.classList.remove("on"));
+  el("tab-" + aba)?.classList.add("on");
+  document.querySelectorAll(`[data-aba="${aba}"]`).forEach(b => b.classList.add("on"));
+  if (aba === "perfil") { renderStatusComprovante(); renderPerfil(); detectarOrfaos(); }
+  if (aba === "documentos") { _recarregarDocumentos(); }
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+window.mudarAbaBtn = function(aba) {
+  const btn = document.querySelector(`.bnav-btn[data-aba="${aba}"]`);
+  mudarAba(aba, btn);
+};
+
+// ── Helper: abrir pagamento com valor específico (50% entrada ou 100%) ──────────
+// Mostrar escolha 50% ou 100% antes de abrir o modal de pagamento
+window._abrirEscolhaPagamento = function(locId, saldo, valor50, evt) {
+  const loc = _locacoes.find(l => l.id === locId); if (!loc) return;
+  if (saldo <= 0) return;
+  document.getElementById("modal-escolha-pag")?.remove();
+
+  const total         = loc.total || loc.kitValor || saldo;
+  const entrada       = loc.entrada || 0;
+  // Entrada só conta como PAGA quando o admin confirmou (status 'ativo')
+  const entradaJaPaga = valor50 === 0 || (loc.status === "ativo" && entrada > 0);
+  const saldoRestante = saldo;
+  const valor50calc   = entradaJaPaga ? 0 : Math.round(total * 0.5 * 100) / 100; // 50% SEMPRE sobre o total
+
+  const ov = document.createElement("div");
+  ov.id = "modal-escolha-pag";
+  ov.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px";
+
+  ov.innerHTML = `
+    <div style="background:#fff;border-radius:20px;width:100%;max-width:420px;padding:24px;font-family:'DM Sans',sans-serif;position:relative">
+      <button onclick="document.getElementById('modal-escolha-pag').remove()"
+        style="position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;border:none;background:#f3f4f6;cursor:pointer;font-size:18px;color:#6b7280">×</button>
+
+      <div style="font-size:17px;font-weight:800;color:var(--txt);margin-bottom:2px">Como deseja pagar?</div>
+      <div style="font-size:12px;color:var(--txt3);margin-bottom:18px">${evt}</div>
+
+      <!-- Resumo valores -->
+      <div style="background:var(--bg);border-radius:12px;padding:12px 14px;margin-bottom:16px;display:grid;grid-template-columns:1fr 1fr ${entradaJaPaga ? "1fr" : ''};gap:8px;text-align:center">
+        <div>
+          <div style="font-size:10px;color:var(--txt3);font-weight:700;text-transform:uppercase;margin-bottom:2px">Total</div>
+          <div style="font-size:15px;font-weight:800;color:var(--txt)">${fmtR(total)}</div>
+        </div>
+        ${entradaJaPaga ? `
+        <div>
+          <div style="font-size:10px;color:#15803d;font-weight:700;text-transform:uppercase;margin-bottom:2px">Entrada paga ✓</div>
+          <div style="font-size:15px;font-weight:800;color:#15803d">${fmtR(entrada)}</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:#dc2626;font-weight:700;text-transform:uppercase;margin-bottom:2px">Saldo</div>
+          <div style="font-size:15px;font-weight:800;color:#dc2626">${fmtR(saldoRestante)}</div>
+        </div>` : `
+        <div>
+          <div style="font-size:10px;color:#2563eb;font-weight:700;text-transform:uppercase;margin-bottom:2px">Entrada (50%)</div>
+          <div style="font-size:15px;font-weight:800;color:#2563eb">${fmtR(valor50calc)}</div>
+        </div>`}
+      </div>
+
+      <div style="display:grid;gap:10px;margin-bottom:10px">
+        ${entradaJaPaga ? `
+          <!-- Só saldo restante -->
+          <button onclick="document.getElementById('modal-escolha-pag').remove();_abrirEscolhaFormaPag('${locId}',${saldoRestante},'total','${evt.replace(/'/g,"\\'")}',true)"
+            style="padding:16px;background:#f0fdf4;border:2.5px solid #22c55e;border-radius:14px;cursor:pointer;font-family:inherit;text-align:left"
+            onmouseover="this.style.background='#dcfce7'" onmouseout="this.style.background='#f0fdf4'">
+            <div style="font-size:11px;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Quitar saldo restante</div>
+            <div style="font-size:28px;font-weight:800;color:#15803d">${fmtR(saldoRestante)}</div>
+            <div style="font-size:11px;color:#16a34a;margin-top:3px">Quitar locação completamente</div>
+          </button>
+        ` : `
+          <!-- Entrada 50% -->
+          <button onclick="document.getElementById('modal-escolha-pag').remove();_abrirEscolhaFormaPag('${locId}',${valor50calc},'entrada','${evt.replace(/'/g,"\\'")}',false)"
+            style="padding:16px;background:#eff6ff;border:2.5px solid #3b82f6;border-radius:14px;cursor:pointer;font-family:inherit;text-align:left"
+            onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
+            <div style="font-size:11px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Pagar entrada (50%)</div>
+            <div style="font-size:28px;font-weight:800;color:#1d4ed8">${fmtR(valor50calc)}</div>
+            <div style="font-size:11px;color:#3b82f6;margin-top:3px">Restante pago na retirada do kit</div>
+          </button>
+          <!-- Total 100% -->
+          <button onclick="document.getElementById('modal-escolha-pag').remove();_abrirEscolhaFormaPag('${locId}',${total},'total','${evt.replace(/'/g,"\\'")}',false)"
+            style="padding:16px;background:#f0fdf4;border:2.5px solid #22c55e;border-radius:14px;cursor:pointer;font-family:inherit;text-align:left"
+            onmouseover="this.style.background='#dcfce7'" onmouseout="this.style.background='#f0fdf4'">
+            <div style="font-size:11px;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Pagar valor total (100%)</div>
+            <div style="font-size:28px;font-weight:800;color:#15803d">${fmtR(total)}</div>
+            <div style="font-size:11px;color:#16a34a;margin-top:3px">Pagamento único — sem parcelas</div>
+          </button>
+        `}
+      </div>
+
+      <button onclick="document.getElementById('modal-escolha-pag').remove();falarWhatsApp('${evt}')"
+        style="width:100%;padding:11px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:#6b7280">
+        <i class="ti ti-brand-whatsapp" style="color:#16a34a"></i> Prefiro combinar pelo WhatsApp
+      </button>
+    </div>`;
+
+  document.body.appendChild(ov);
+  ov.addEventListener("click", e => { if (e.target === ov) ov.remove(); });
+};
+
+// ── Modal escolha de forma de pagamento (Cartão/Pix) ─────────────────────────
+window._abrirEscolhaFormaPag = function(locId, valor, tipo, evt, isSaldo) {
+  document.getElementById("modal-forma-pag")?.remove();
+  const ov = document.createElement("div");
+  ov.id = "modal-forma-pag";
+  ov.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px";
+
+  const labelTipo = tipo === "entrada" ? "Entrada (50%)" : isSaldo ? "Saldo restante" : "Valor total";
+  const valorFmt  = "R$ " + valor.toFixed(2).replace(".",",");
+
+  ov.innerHTML = `
+    <div style="background:#fff;border-radius:20px;width:100%;max-width:400px;padding:24px;font-family:'DM Sans',sans-serif;position:relative">
+      <button onclick="document.getElementById('modal-forma-pag').remove()"
+        style="position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;border:none;background:#f3f4f6;cursor:pointer;font-size:18px;color:#6b7280">×</button>
+
+      <div style="font-size:17px;font-weight:800;color:#150810;margin-bottom:2px">Como quer pagar?</div>
+      <div style="font-size:12px;color:#9a8aa8;margin-bottom:6px">${evt}</div>
+      <div style="display:inline-block;background:#f0f9ff;color:#0369a1;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:18px">
+        ${labelTipo} · ${valorFmt}
+      </div>
+
+      <div style="display:grid;gap:10px;margin-bottom:12px">
+
+        <!-- Cartão / Parcelado -->
+        <button onclick="document.getElementById('modal-forma-pag').remove();abrirPagamentoValor('${locId}',${valor},'${tipo}')"
+          style="padding:16px;background:#fdf2f8;border:2.5px solid #d4307a;border-radius:14px;cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:14px"
+          onmouseover="this.style.background='#fce7f3'" onmouseout="this.style.background='#fdf2f8'">
+          <div style="width:44px;height:44px;background:#d4307a;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <i class="ti ti-credit-card" style="font-size:22px;color:#fff"></i>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:800;color:#d4307a">Cartão de Crédito</div>
+            <div style="font-size:11px;color:#9a8aa8;margin-top:2px">Parcelado em até 12x · Checkout InfinitePay</div>
+          </div>
+        </button>
+
+        <!-- Pix -->
+        <button onclick="document.getElementById('modal-forma-pag').remove();_abrirModalPix(_locacoes.find(l=>l.id==='${locId}')||{id:'${locId}',evento:'${evt}'},${valor},'${tipo}')"
+          style="padding:16px;background:#f0fdf4;border:2.5px solid #16a34a;border-radius:14px;cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:14px"
+          onmouseover="this.style.background='#dcfce7'" onmouseout="this.style.background='#f0fdf4'">
+          <div style="width:44px;height:44px;background:#16a34a;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <i class="ti ti-qrcode" style="font-size:22px;color:#fff"></i>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:800;color:#16a34a">Pix</div>
+            <div style="font-size:11px;color:#9a8aa8;margin-top:2px">QR Code gerado aqui mesmo · Sem sair do app</div>
+          </div>
+        </button>
+
+      </div>
+
+      <button onclick="document.getElementById('modal-forma-pag').remove();falarWhatsApp('${evt}')"
+        style="width:100%;padding:11px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:#6b7280">
+        <i class="ti ti-brand-whatsapp" style="color:#16a34a"></i> Combinar pelo WhatsApp
+      </button>
+    </div>`;
+
+  document.body.appendChild(ov);
+  ov.addEventListener("click", e => { if (e.target === ov) ov.remove(); });
+};
+
+window.abrirPagamentoValor = function(locId, valor, tipo) {
+  const loc = _locacoes.find(l => l.id === locId); if (!loc) return;
+  if (!valor || valor <= 0) { falarWhatsApp(loc.evento || loc.tipoEvento || "minha locação"); return; }
+  _abrirModalPagamento(loc, valor, tipo);
+};
+
+// ── Modal de Pagamento ────────────────────────────────────────────────────────
+// Solicitar nova análise após resolver pendências
+window.solicitarNovaAnalise = async function(solId) {
+  try {
+    // Limpar pendências e marcar como "aguardando reanálise"
+    await updateDoc(doc(db, "solicitacoes", solId), {
+      pendencias:   [],
+      statusNotif:  "reanalise_solicitada",
+      reanaliseEm:  new Date()
+    });
+    // Feedback visual
+    const btn = event?.target?.closest('button');
+    if (btn) { btn.innerHTML = '<i class="ti ti-check"></i> Solicitado! Aguarde análise.'; btn.disabled = true; btn.style.opacity = '0.7'; }
+    // Recarregar após 1s
+    setTimeout(() => _mergeERenderizar?.(), 1000);
+  } catch(e) {
+    alert("Erro ao solicitar análise. Tente pelo WhatsApp.");
+  }
+};
+
+window.abrirPagamento = function(locId) {
+  const loc = _locacoes.find(l => l.id === locId); if (!loc) return;
+  const total = loc.total || loc.kitValor || 0;
+  const saldo = loc.saldo > 0 ? loc.saldo : total;
+  if (saldo <= 0) {
+    falarWhatsApp(loc.evento || loc.tipoEvento || "minha locação");
+    return;
+  }
+  // Se entrada já confirmada pelo admin (status ativo), ir direto pro saldo
+  if (loc.status === "ativo" && loc.entrada > 0 && loc.saldo > 0) {
+    _abrirEscolhaPagamento(locId, loc.saldo, 0, loc.evento || loc.tipoEvento || "");
+  } else {
+    const valor50 = Math.round(total * 0.5 * 100) / 100;
+    _abrirEscolhaPagamento(locId, saldo, valor50, loc.evento || loc.tipoEvento || "");
+  }
+};
+
+// ── PIX INFINITEPAY — Geração de QR Code nativo ──────────────────────────────
+
+// ── INFINITE PAY CHECKOUT — Integração completa ──────────────────────────────
+// Lidos dinamicamente para pegar o valor mais recente do Firestore
+function _getIPHandle()  { return _cfg?.infinitepayHandle  || "katreseli-decoracoes"; }
+function _getIPWebhook() { return _cfg?.infinitepayWebhook || "https://eocl2yc6bj7qbx7.m.pipedream.net"; }
+
+window._abrirModalPagamento = function(loc, valor, tipo) {
+  if (!loc || !valor || valor <= 0) return;
+
+  // ── Gerar URL do checkout Infinite Pay diretamente (novo formato 06/2026) ──
+  // https://checkout.infinitepay.io/{handle}?items=[...]&order_nsu=xxx&redirect_url=xxx
+  const handle = _getIPHandle();
+  const evt    = (loc.evento || loc.tipoEvento || "Locacao Katreseli")
+                   .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+                   .replace(/[^\w\s-]/g,"").trim();
+  const nsu    = `${loc.id?.slice(-8)||"LOC"}-${tipo==="entrada"?"ENT":"TOT"}-${Date.now()}`;
+  const desc   = tipo === "entrada" ? `Entrada 50% - ${evt}` : `Pagamento - ${evt}`;
+  const preco  = Math.round(valor * 100); // centavos
+
+  // URL de retorno após pagamento
+  const redirectBase = _cfg?.redirectUrl || `${location.origin}/cliente.html`;
+  const redirectUrl  = `${redirectBase}?pag=ok&loc=${loc.id}&tipo=${tipo}&nsu=${nsu}`;
+
+  // Montar items no formato da API
+  const items = JSON.stringify([{ name: desc, price: preco, quantity: 1 }]);
+
+  // URL direta — sem precisar de Pipedream para criar o link
+  const url = `https://checkout.infinitepay.io/${handle}?items=${encodeURIComponent(items)}&order_nsu=${nsu}&redirect_url=${encodeURIComponent(redirectUrl)}`;
+
+  _abrirCheckoutModal(url, loc, valor, tipo, nsu);
+};
+
+// Abre o checkout da Infinite Pay em janela nomeada (reutiliza a mesma, sem criar segunda aba do cliente)
+function _abrirCheckoutModal(url, loc, valor, tipo, nsu, abrirAba = true) {
+  // Infinite Pay bloqueia iframe — abrir em janela nomeada fixa
+  // Usar nome fixo "kat_checkout" faz o navegador reutilizar sempre a mesma aba
+  if (abrirAba) window.open(url, "kat_checkout");
+
+  // Guardar pendência local — permite reabrir este modal se o usuário fechar
+  try {
+    localStorage.setItem("kat_pag_pendente", JSON.stringify({
+      locId: loc.id, valor, tipo, nsu: nsu || "", url, ts: Date.now()
+    }));
+  } catch(_) {}
+
+  // Mostrar modal de aguardando pagamento
+  document.getElementById("modal-aguard-pag")?.remove();
+  const ov = document.createElement("div");
+  ov.id = "modal-aguard-pag";
+  ov.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px";
+
+  const evt = loc.evento || loc.tipoEvento || "Locação";
+  ov.innerHTML = `
+    <div style="background:#fff;border-radius:20px;width:100%;max-width:380px;padding:28px 24px;text-align:center;font-family:'DM Sans',sans-serif;position:relative">
+      <button onclick="document.getElementById('modal-aguard-pag').remove()"
+        style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;color:#9ca3af;cursor:pointer">×</button>
+      <div style="width:56px;height:56px;background:#f0fdf4;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+        <i class="ti ti-external-link" style="font-size:28px;color:#16a34a"></i>
+      </div>
+      <div style="font-size:16px;font-weight:700;color:#150810;margin-bottom:6px">Checkout aberto!</div>
+      <div style="font-size:13px;color:#6b7280;margin-bottom:6px">${evt}</div>
+      <div style="font-size:22px;font-weight:800;color:#d4307a;margin-bottom:16px">R$ ${valor.toFixed(2).replace(".",",")}</div>
+      <div style="font-size:12px;color:#6b7280;background:#f9fafb;border-radius:10px;padding:12px;margin-bottom:14px;line-height:1.6">
+        Uma nova aba foi aberta com o checkout da InfinitePay.<br>
+        Após pagar, anexe o comprovante e clique em <strong>"Já paguei"</strong>.
+      </div>
+
+      <!-- Upload comprovante -->
+      <div style="margin-bottom:14px;text-align:left">
+        <label style="font-size:11px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:6px">
+          <i class="ti ti-file-invoice" style="color:#d4307a"></i> Anexar comprovante (opcional)
+        </label>
+        <label id="comp-pag-label" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px dashed #d1d5db;border-radius:10px;cursor:pointer;font-size:12px;color:#6b7280;background:#f9fafb;transition:all .15s"
+          onmouseover="this.style.borderColor='#d4307a';this.style.background='#fdf2f8'"
+          onmouseout="this.style.borderColor='#d1d5db';this.style.background='#f9fafb'">
+          <i class="ti ti-upload" style="font-size:16px;flex-shrink:0"></i>
+          <span id="comp-pag-nome">Foto ou PDF do comprovante</span>
+          <input type="file" id="comp-pag-file" accept="image/*,application/pdf" style="display:none"
+            onchange="window._onCompPagFile(this,'${loc.id}','${tipo}')">
+        </label>
+      </div>
+
+      <button id="btn-ja-paguei" onclick="document.getElementById('modal-aguard-pag').remove();_confirmarPagamentoLocal((window._locacoes||[]).find(l=>l.id==='${loc.id}')||{id:'${loc.id}'},${valor},'${tipo}','${nsu}')"
+        style="width:100%;padding:14px;background:#16a34a;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px">
+        ✅ Já paguei
+      </button>
+      <button onclick="window.open('${url}','kat_checkout')"
+        style="width:100%;padding:11px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;font-size:13px;color:#6b7280;cursor:pointer;font-family:inherit">
+        Abrir checkout novamente
+      </button>
+    </div>`;
+
+  document.body.appendChild(ov);
+  ov.addEventListener("click", e => { if (e.target === ov) ov.remove(); });
+
+  // Re-renderizar pagamentos para o card exibir o atalho "Já fiz o pagamento"
+  try { window.renderPagamentos?.(); } catch(_) {}
+
+  // Monitorar retorno por URL
+  const checkMain = setInterval(() => {
+    if (location.search.includes("pag=ok")) {
+      clearInterval(checkMain);
+      ov.remove();
+      _confirmarPagamentoLocal(loc, valor, tipo, nsu);
+      history.replaceState({}, "", location.pathname);
+    }
+  }, 500);
+}
+
+// Confirmar pagamento localmente enquanto webhook processa
+// ── Reabrir o modal "Já paguei" para um pagamento em andamento ────────────────
+window._reabrirAguardandoPag = function(locId) {
+  let pend = null;
+  try { pend = JSON.parse(localStorage.getItem("kat_pag_pendente") || "null"); } catch(_) {}
+  if (!pend || pend.locId !== locId) return;
+  const loc = _locacoes?.find(l => l.id === locId);
+  if (!loc) return;
+  _abrirCheckoutModal(pend.url, loc, pend.valor, pend.tipo, pend.nsu, false); // sem abrir nova aba
+};
+
+// Retorna a pendência local de pagamento da locação (ou null)
+window._pagPendenteDe = function(locId) {
+  try {
+    const p = JSON.parse(localStorage.getItem("kat_pag_pendente") || "null");
+    // Expira após 48h
+    if (p && p.locId === locId && Date.now() - (p.ts || 0) < 48 * 3600 * 1000) return p;
+  } catch(_) {}
+  return null;
+};
+
+// ── Pagamento enviado, AGUARDANDO APROVAÇÃO do admin ──────────────────────────
+// Limpa automaticamente quando o admin confirma (status da locação avança)
+window._pagAguardandoDe = function(loc) {
+  try {
+    const p = JSON.parse(localStorage.getItem("kat_pag_aguardando") || "null");
+    if (!p) return null;
+    const l = typeof loc === "object" ? loc : (_locacoes || []).find(x => x.id === loc);
+    if (!l || p.locId !== l.id) return null;
+    if (Date.now() - (p.ts || 0) > 7 * 24 * 3600 * 1000) { localStorage.removeItem("kat_pag_aguardando"); return null; }
+    // Admin já confirmou? → limpar estado
+    const confirmado =
+      l.status === "devolvido" ||
+      (p.tipo === "entrada" && l.status === "ativo") ||
+      (p.tipo === "total"   && l.status === "ativo" && (l.saldo || 0) <= 0);
+    if (confirmado) { localStorage.removeItem("kat_pag_aguardando"); return null; }
+    return p;
+  } catch(_) { return null; }
+};
+
+// ── Handler de upload de comprovante de pagamento ────────────────────────────
+window._compPagData = {}; // cache do arquivo convertido
+
+window._onCompPagFile = function(input, locId, tipo) {
+  const file = input.files[0];
+  if (!file) return;
+  const nome = document.getElementById("comp-pag-nome");
+  if (nome) nome.textContent = file.name;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    window._compPagData = {
+      locId, tipo,
+      base64: e.target.result,
+      nome: file.name,
+      mime: file.type,
+    };
+    const label = document.getElementById("comp-pag-label");
+    if (label) { label.style.borderColor = "#16a34a"; label.style.background = "#f0fdf4"; }
+  };
+  reader.readAsDataURL(file);
+};
+
+async function _confirmarPagamentoLocal(loc, valor, tipo, nsu) {
+  // ⚠️ Cliente apenas AVISA que pagou — admin confirma manualmente
+  try {
+    const nomeCliente = _clienteData?.nome  || loc?.nomeCliente || "";
+    const evento      = loc?.evento || loc?.tipoEvento || "Locação";
+
+    const { addDoc, collection: col2, serverTimestamp: st2 } =
+      await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+
+    // 1. Registrar transação PENDENTE — aparece imediatamente na aba Transações do admin
+    //    (regras do Firestore permitem create em /transacoes para autenticados)
+    try {
+      await addDoc(col2(db,"transacoes"), {
+        locacaoId:    loc?.id || "",
+        clienteNome:  nomeCliente,
+        clienteEmail: _clienteData?.email || loc?.email || "",
+        valor, metodo: "pix", status: "pendente", tipo,
+        nsu:          nsu || "",
+        evento,
+        criadoEm:     st2(),
+        origem:       "cliente_informou",
+      });
+    } catch(eT) { console.warn("Erro ao registrar transação:", eT); }
+
+    // Salvar comprovante se foi anexado
+    const compData = window._compPagData;
+    if (compData?.base64 && (compData.locId === loc?.id || !loc?.id)) {
+      try {
+        await addDoc(col2(db,"comprovantes_pag"), {
+          locId:        loc?.id || compData.locId || "",
+          tipo, valor,
+          nomeCliente,
+          emailCliente: _clienteData?.email || loc?.email || "",
+          evento,
+          arquivo:      compData.base64,
+          nomeArquivo:  compData.nome,
+          mimeType:     compData.mime,
+          status:       "pendente_revisao",
+          criadoEm:     st2(),
+        });
+        window._compPagData = {};
+      } catch(e2) { console.warn("Erro ao salvar comprovante:", e2); }
+    }
+
+    // Notificar admin — aparece no sino e no painel (requer regra de create p/ autenticados)
+    try {
+      await addDoc(col2(db,"notificacoes"), {
+        tipo:     "pagamento_aguardando",
+        locId:    loc?.id || "",
+        valor, tipoPag: tipo,
+        nsu:      nsu || "",
+        criadoEm: st2(),
+        lida:     false,
+        msg: `⏳ Pagamento aguardando confirmação — R$ ${valor.toFixed(2).replace(".",",")} — ${evento} (${nomeCliente})`,
+      });
+    } catch(eN) { console.warn("Erro ao notificar (regras):", eN); }
+
+    // Limpar pendência local — aviso já foi enviado
+    try { localStorage.removeItem("kat_pag_pendente"); } catch(_) {}
+
+    // Marcar pagamento como AGUARDANDO APROVAÇÃO do admin (estado local)
+    try {
+      localStorage.setItem("kat_pag_aguardando", JSON.stringify({
+        locId: loc?.id || "", valor, tipo, ts: Date.now()
+      }));
+    } catch(_) {}
+
+    // Feedback visual para o cliente
+    const toast = document.createElement("div");
+    toast.style.cssText = "position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1d4ed8;color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:99999;display:flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,.2);text-align:center";
+    toast.innerHTML = `<i class="ti ti-clock" style="font-size:18px"></i> Aviso enviado! Aguarde a confirmação do admin.`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 5000);
+
+    setTimeout(() => _mergeERenderizar?.(), 1500);
+  } catch(e) {
+    console.error("Erro ao notificar pagamento:", e);
+  }
+}
+window._confirmarPagamentoLocal = _confirmarPagamentoLocal;
+
+// Fallback quando a API da Infinite Pay falha
+function _abrirFallbackPagamento(loc, valor, tipo, errMsg) {
+  document.getElementById("modal-fallback-pag")?.remove();
+
+  const ov = document.createElement("div");
+  ov.id = "modal-fallback-pag";
+  ov.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px";
+
+  ov.innerHTML = `
+    <div style="background:#fff;border-radius:20px;width:100%;max-width:380px;padding:24px;font-family:'DM Sans',sans-serif;position:relative">
+      <button onclick="document.getElementById('modal-fallback-pag').remove()"
+        style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;color:#9ca3af;cursor:pointer">×</button>
+      <div style="text-align:center;margin-bottom:18px">
+        <div style="width:48px;height:48px;background:#fef2f2;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px">
+          <i class="ti ti-alert-triangle" style="font-size:24px;color:#dc2626"></i>
+        </div>
+        <div style="font-size:15px;font-weight:700;color:#150810">Falha ao gerar link</div>
+        <div style="font-size:12px;color:#9a8aa8;margin-top:4px">Tente pelo Pix manual ou WhatsApp</div>
+      </div>
+      <div style="display:grid;gap:10px">
+        <button onclick="document.getElementById('modal-fallback-pag').remove();_abrirModalPix(window._locacoes?.find(l=>l.id==='${loc.id}')||${JSON.stringify({id:loc.id,evento:loc.evento||loc.tipoEvento||""})}, ${valor}, '${tipo}')"
+          style="padding:14px;background:#f0fdf4;border:2px solid #22c55e;border-radius:12px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:#15803d;display:flex;align-items:center;justify-content:center;gap:8px">
+          <i class="ti ti-qrcode" style="font-size:18px"></i> Pagar via Pix Manual
+        </button>
+        <button onclick="document.getElementById('modal-fallback-pag').remove();falarWhatsApp('${loc.evento||loc.tipoEvento||"minha locação"}')"
+          style="padding:14px;background:#f0fff4;border:2px solid #16a34a;border-radius:12px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:#15803d;display:flex;align-items:center;justify-content:center;gap:8px">
+          <i class="ti ti-brand-whatsapp" style="font-size:18px"></i> Combinar pelo WhatsApp
+        </button>
+      </div>
+    </div>`;
+
+  document.body.appendChild(ov);
+  ov.addEventListener("click", e => { if (e.target === ov) ov.remove(); });
+}
+
+// ── Gerar Pix BR Code (EMV) com valor dinâmico — chave CNPJ fixa ──────────────
+function _gerarBRCode(chave, nome, cidade, valor, txId) {
+  const v = valor.toFixed(2);
+  const nomeClean = nome.normalize("NFD").replace(/[\u0300-\u036f]/g,"").substring(0,25).toUpperCase();
+  const cidadeClean = cidade.normalize("NFD").replace(/[\u0300-\u036f]/g,"").substring(0,15).toUpperCase();
+  const tid = (txId || "***").substring(0,25);
+
+  function tlv(tag, val) {
+    return tag + String(val.length).padStart(2,"0") + val;
+  }
+  function crc16(str) {
+    let crc = 0xFFFF;
+    for (let i = 0; i < str.length; i++) {
+      crc ^= str.charCodeAt(i) << 8;
+      for (let j = 0; j < 8; j++) crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+    }
+    return ((crc & 0xFFFF).toString(16).toUpperCase().padStart(4,"0"));
+  }
+
+  const gui  = tlv("00","BR.GOV.BCB.PIX");
+  const key  = tlv("01", chave);
+  const mai  = tlv("26", gui + key);
+  const amt  = tlv("54", v);
+  const merN = tlv("59", nomeClean);
+  const merC = tlv("60", cidadeClean);
+  const addD = tlv("62", tlv("05", tid));
+
+  const partial = "000201" + "010212" + mai + "52040000" + "5303986" + amt + "5802BR" + merN + merC + addD + "6304";
+  return partial + crc16(partial);
+}
+
+async function _gerarPixLocal(loc, valor) {
+  const chave  = (_cfg.pixKey  || "61083661000112").replace(/\D/g,"");
+  const nome   = (_cfg.pixNome || "Katreseli Decoracoes").toUpperCase();
+  const cidade = "CURITIBA";
+  const txId   = loc.id?.slice(-8).toUpperCase() || "KATRESELI";
+
+  const emv = _gerarBRCode(chave, nome, cidade, valor, txId);
+
+  // Gerar QR Code usando API pública (sem dependências)
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(emv)}&size=200x200&margin=10`;
+
+  return {
+    qrCode:     null,        // vai carregar via img src
+    qrUrl:      qrUrl,
+    copiaECola: emv,
+    txId:       null         // sem polling automático no manual
+  };
+}
+
+window._abrirModalPix = _abrirModalPix; // exposto p/ onclick (hoisting)
+function _abrirModalPix(loc, valor, tipoPag) {
+  document.getElementById("modal-pix")?.remove();
+
+  const ov = document.createElement("div");
+  ov.id = "modal-pix";
+  ov.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px";
+
+  const evento = loc.evento || loc.tipoEvento || "Locação";
+  const numLoc = loc.numContrato ? `#${loc.numContrato}` : "";
+
+  ov.innerHTML = `
+    <div id="pix-box" style="background:var(--sur);border-radius:20px;width:100%;max-width:400px;padding:24px 20px;font-family:'DM Sans',sans-serif;position:relative">
+      <button onclick="document.getElementById('modal-pix').remove()"
+        style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;color:var(--txt3);cursor:pointer;line-height:1">×</button>
+
+      <!-- Header -->
+      <div style="text-align:center;margin-bottom:18px">
+        <div style="width:52px;height:52px;background:#f0fdf4;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px">
+          <svg width="30" height="30" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="#32BCAD" d="M389.6 325.5c-22.5 0-43.7-8.8-59.6-24.7l-83.2-83.2c-5.2-5.2-14.3-5.2-19.5 0l-83.5 83.5c-15.9 15.9-37.1 24.7-59.6 24.7H67l104.9 104.9c32.7 32.7 85.7 32.7 118.4 0L395.2 325.5h-5.6zm0-139.1h5.6L290.3 81.5c-32.7-32.7-85.7-32.7-118.4 0L67 186.4h17.2c22.5 0 43.7 8.8 59.6 24.7l83.5 83.5c5.4 5.4 14.1 5.4 19.5 0l83.2-83.2c15.9-15.8 37.1-24.6 59.6-25z"/><path fill="#32BCAD" d="M430.7 210.9l-36.1-36.1h-5.1c-16.2 0-31.7 6.4-43.1 17.8l-83.2 83.2c-9.3 9.3-21.5 14.4-34.6 14.4s-25.3-5.1-34.6-14.4l-83.5-83.5c-11.4-11.4-26.9-17.8-43.1-17.8H81.3L45.3 211c-27.1 27.1-27.1 71 0 98.1l36 36h17.2c16.2 0 31.7-6.4 43.1-17.8l83.5-83.5c9.3-9.3 21.5-14.4 34.6-14.4s25.3 5.1 34.6 14.4l83.2 83.2c11.4 11.4 26.9 17.8 43.1 17.8h5.1l36.1-36.1c27-27.1 27-71 0-98.2z"/></svg>
+        </div>
+        <div style="font-size:16px;font-weight:800;color:var(--txt)">Pagar com Pix</div>
+        <div style="font-size:12px;color:var(--txt3);margin-top:2px">${evento} ${numLoc}</div>
+        ${tipoPag === "entrada" ? `<div style="font-size:11px;color:#2563eb;font-weight:600;margin-top:3px">Entrada — restante na retirada</div>` : ''}
+      </div>
+
+      <!-- Valor -->
+      <div style="background:linear-gradient(135deg,var(--pl),#f0fdf4);border-radius:14px;padding:14px;text-align:center;margin-bottom:20px">
+        <div style="font-size:11px;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Valor a pagar</div>
+        <div style="font-size:32px;font-weight:800;color:var(--p)">${fmtR(valor)}</div>
+      </div>
+
+      <!-- Loading / QR -->
+      <div id="pix-loading" style="text-align:center;padding:20px">
+        <div style="width:40px;height:40px;border:3px solid var(--pl);border-top-color:var(--p);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px"></div>
+        <div style="font-size:13px;color:var(--txt3)">Gerando QR Code...</div>
+      </div>
+
+      <div id="pix-content" style="display:none">
+        <!-- QR Code -->
+        <div style="text-align:center;margin-bottom:16px">
+          <img id="pix-qr-img" src="" alt="QR Code Pix" style="width:200px;height:200px;border-radius:12px;border:2px solid var(--bdr2);display:none">
+          <div id="pix-qr-placeholder" style="width:200px;height:200px;margin:0 auto;border-radius:12px;border:2px dashed var(--bdr2);display:flex;align-items:center;justify-content:center;background:var(--bg)">
+            <span style="font-size:12px;color:var(--txt3)">QR Code indisponível</span>
+          </div>
+        </div>
+
+        <!-- Copia e Cola -->
+        <div style="margin-bottom:16px">
+          <div style="font-size:11px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Pix Copia e Cola</div>
+          <div style="display:flex;gap:8px;align-items:stretch">
+            <div id="pix-emv" style="flex:1;background:var(--bg);border:1.5px solid var(--bdr2);border-radius:10px;padding:10px 12px;font-size:11px;color:var(--txt2);word-break:break-all;line-height:1.5;max-height:60px;overflow:hidden"></div>
+            <button id="btn-copiar-pix" onclick="window._copiarPix()"
+              style="padding:0 16px;background:var(--p);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;flex-shrink:0;display:flex;align-items:center;gap:6px">
+              <i class="ti ti-copy"></i> Copiar
+            </button>
+          </div>
+        </div>
+
+        <!-- Instruções -->
+        <div style="background:#fffbeb;border-radius:10px;padding:12px;margin-bottom:16px;font-size:12px;color:#92400e;line-height:1.6">
+          <strong>Como pagar:</strong><br>
+          1. Abra seu banco ou carteira digital<br>
+          2. Escolha pagar com Pix → Copia e Cola ou QR Code<br>
+          3. Cole o código ou escaneie o QR<br>
+          4. Confirme o pagamento
+        </div>
+
+        <!-- Instrução de confirmação manual -->
+        <div id="pix-aguardando" style="display:flex;align-items:center;gap:10px;background:#fffbeb;border-radius:10px;padding:10px 14px;margin-bottom:16px">
+          <i class="ti ti-clock" style="font-size:18px;color:#d97706;flex-shrink:0"></i>
+          <div style="font-size:12px;color:#92400e;font-weight:600;line-height:1.5">Após pagar, <strong>envie o comprovante pelo WhatsApp</strong> para confirmarmos e liberarmos sua locação.</div>
+        </div>
+
+        <div id="pix-confirmado" style="display:none;background:#f0fdf4;border:1.5px solid #22c55e;border-radius:12px;padding:14px;text-align:center;margin-bottom:16px">
+          <div style="font-size:24px;margin-bottom:6px">✅</div>
+          <div style="font-size:15px;font-weight:800;color:#15803d">Pagamento confirmado!</div>
+          <div style="font-size:12px;color:#166534;margin-top:4px">Sua locação foi atualizada automaticamente.</div>
+        </div>
+
+        <!-- WhatsApp comprovante -->
+        <button onclick="falarWhatsApp('${evento}')" id="btn-wpp-pix"
+          style="width:100%;padding:11px;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;font-size:13px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;color:#374151;font-weight:600">
+          <i class="ti ti-brand-whatsapp" style="color:#16a34a;font-size:16px"></i> Enviar comprovante pelo WhatsApp
+        </button>
+      </div>
+
+      <!-- Erro -->
+      <div id="pix-erro" style="display:none;text-align:center;padding:16px">
+        <div style="font-size:13px;color:#dc2626;margin-bottom:12px">Não foi possível gerar o Pix.<br>Entre em contato pelo WhatsApp.</div>
+        <button onclick="document.getElementById('modal-pix').remove();falarWhatsApp('${evento}')"
+          style="padding:10px 20px;background:#16a34a;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">
+          <i class="ti ti-brand-whatsapp"></i> Falar pelo WhatsApp
+        </button>
+      </div>
+    </div>`;
+
+  document.body.appendChild(ov);
+  ov.addEventListener("click", e => { if (e.target === ov) ov.remove(); });
+
+  // Gerar Pix
+  _gerarPixLocal(loc, valor).then(pix => {
+    document.getElementById("pix-loading").style.display = "none";
+
+    if (!pix || (!pix.qrCode && !pix.copiaECola)) {
+      document.getElementById("pix-erro").style.display = "";
+      return;
+    }
+
+    document.getElementById("pix-content").style.display = "";
+
+    // QR Code via URL
+    const img = document.getElementById("pix-qr-img");
+    const src = pix.qrUrl || (pix.qrCode ? `data:image/png;base64,${pix.qrCode}` : null);
+    if (src) {
+      img.src = src;
+      img.style.display = "";
+      document.getElementById("pix-qr-placeholder").style.display = "none";
+    }
+
+    // Copia e Cola
+    if (pix.copiaECola) {
+      document.getElementById("pix-emv").textContent = pix.copiaECola;
+      window._pixEmv = pix.copiaECola;
+    }
+
+    // Pix manual — sem polling automático
+    // Cliente envia comprovante pelo WhatsApp para confirmação manual
+  });
+}
+
+window._copiarPix = function() {
+  const emv = window._pixEmv || "";
+  if (!emv) return;
+  navigator.clipboard.writeText(emv).then(() => {
+    const btn = document.getElementById("btn-copiar-pix");
+    if (btn) { btn.innerHTML = '<i class="ti ti-check"></i> Copiado!'; btn.style.background = "#16a34a"; }
+    setTimeout(() => {
+      if (btn) { btn.innerHTML = '<i class="ti ti-copy"></i> Copiar'; btn.style.background = "var(--p)"; }
+    }, 3000);
+  });
+};
+
+// Polling para confirmar pagamento
+function _iniciarPollingPix() {
+  const token  = (_cfg.infinitpayToken || "").trim();
+  const txId   = window._pixTxId;
+  const locId  = window._pixLocId;
+  const valor  = window._pixValor;
+  const tipo   = window._pixTipo;
+  if (!token || !txId) return;
+
+  let tentativas = 0;
+  const MAX = 60; // 5 minutos (a cada 5s)
+
+  const check = async () => {
+    if (!document.getElementById("modal-pix")) return; // modal fechado
+    if (tentativas++ >= MAX) return;
+
+    try {
+      const resp = await fetch(`https://api.infinitepay.io/v2/transactions/${txId}`, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        const status = data.status || data.payment_status || "";
+        if (status === "approved" || status === "paid" || status === "completed") {
+          // Pagamento confirmado — baixa automática
+          await _confirmarBaixaAutomatica(locId, valor, tipo);
+          _mostrarPixConfirmado();
+          return;
+        }
+      }
+    } catch(e) {}
+
+    setTimeout(check, 5000);
+  };
+
+  setTimeout(check, 5000);
+}
+
+async function _confirmarBaixaAutomatica(locId, valor, tipo) {
+  try {
+    const loc = _locacoes.find(l => l.id === locId);
+    if (!loc) return;
+
+    const nomeCliente = _clienteData?.nome || loc.nomeCliente || "";
+    const evento      = loc.evento || loc.tipoEvento || "Locação";
+
+    const { addDoc, collection: col3, serverTimestamp: st3 } =
+      await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+
+    // Apenas notificar admin — NÃO altera status da locação
+    await addDoc(col3(db,"notificacoes"), {
+      tipo:     "pagamento_aguardando",
+      locId,
+      valor,
+      tipoPag:  tipo,
+      criadoEm: st3(),
+      lida:     false,
+      msg: `⏳ Pagamento aguardando confirmação — R$ ${valor.toFixed(2).replace(".",",")} — ${evento} (${nomeCliente})`,
+    });
+  } catch(e) {}
+}
+
+function _mostrarPixConfirmado() {
+  document.getElementById("pix-aguardando")?.style && (document.getElementById("pix-aguardando").style.display = "none");
+  document.getElementById("pix-confirmado")?.style  && (document.getElementById("pix-confirmado").style.display = "");
+  document.getElementById("btn-wpp-pix")?.style     && (document.getElementById("btn-wpp-pix").style.display = "none");
+  // Recarregar locações após 2s
+  setTimeout(() => _mergeERenderizar?.(), 2000);
+}
+
+// Entrada pública — chamada pelo botão Pagar
+// Solicitar nova análise após resolver pendências
+window.solicitarNovaAnalise = async function(solId) {
+  try {
+    // Limpar pendências e marcar como "aguardando reanálise"
+    await updateDoc(doc(db, "solicitacoes", solId), {
+      pendencias:   [],
+      statusNotif:  "reanalise_solicitada",
+      reanaliseEm:  new Date()
+    });
+    // Feedback visual
+    const btn = event?.target?.closest('button');
+    if (btn) { btn.innerHTML = '<i class="ti ti-check"></i> Solicitado! Aguarde análise.'; btn.disabled = true; btn.style.opacity = '0.7'; }
+    // Recarregar após 1s
+    setTimeout(() => _mergeERenderizar?.(), 1000);
+  } catch(e) {
+    alert("Erro ao solicitar análise. Tente pelo WhatsApp.");
+  }
+};
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ASSINATURA DIGITAL DO CONTRATO
+// ══════════════════════════════════════════════════════════════════════════════
+
+window.abrirModalAssinar = async function(locId) {
+  // Criar modal de assinatura dinamicamente
+  let modal = document.getElementById("modal-assinar-contrato");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "modal-assinar-contrato";
+    modal.style.cssText = "position:fixed;inset:0;background:rgba(10,2,22,.65);z-index:9000;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px);padding:0";
+    modal.innerHTML = `
+      <div style="background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:92dvh;display:flex;flex-direction:column;box-shadow:0 -8px 40px rgba(0,0,0,.25);animation:slideUp .25s ease">
+        <div style="padding:16px 20px 12px;border-bottom:1px solid #f0eaf4;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+          <div>
+            <div style="font-size:16px;font-weight:700;color:#150810;display:flex;align-items:center;gap:8px"><i class="ti ti-pen" style="color:#d4307a"></i> Assinar contrato</div>
+            <div id="assinar-evento" style="font-size:12px;color:#9a8aa8;margin-top:2px"></div>
+          </div>
+          <button onclick="document.getElementById('modal-assinar-contrato').remove()" style="width:32px;height:32px;border-radius:50%;border:none;background:#f0eaf4;color:#6b4060;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center">×</button>
+        </div>
+        <div style="padding:20px;overflow-y:auto;flex:1">
+          <!-- Pré-visualização do contrato -->
+          <div style="background:#fafafa;border:1px solid #e8d5f0;border-radius:12px;padding:16px;margin-bottom:16px;max-height:220px;overflow-y:auto;font-size:12px;line-height:1.7;color:#333" id="assinar-preview-ctr">
+            <div style="text-align:center;color:#b09aaa;font-size:12px">Carregando contrato...</div>
+          </div>
+          <!-- Campo de assinatura -->
+          <div style="margin-bottom:14px">
+            <label style="display:block;font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Digite seu nome completo para assinar</label>
+            <input id="assinar-nome-input" type="text" placeholder="Ex: Maria da Silva" autocomplete="name"
+              style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #e8d5f0;font-size:15px;font-family:'DM Sans',sans-serif;color:#150810;outline:none;transition:border .15s"
+              onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#e8d5f0'"
+              oninput="document.getElementById('assinar-preview-nome').textContent=this.value||'_______________'">
+          </div>
+          <!-- Preview da assinatura -->
+          <div style="background:linear-gradient(135deg,#fdf4ff,#fff5fb);border:1.5px dashed #d4307a;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center">
+            <div style="font-size:11px;color:#9a8aa8;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Prévia da assinatura</div>
+            <div style="font-family:'Playfair Display',Georgia,serif;font-size:20px;color:#d4307a;font-style:italic;margin-bottom:4px" id="assinar-preview-nome">_______________</div>
+            <div style="font-size:10px;color:#b09aaa" id="assinar-preview-data"></div>
+          </div>
+          <!-- Termos -->
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin-bottom:16px">
+            <input type="checkbox" id="assinar-aceite" style="width:18px;height:18px;accent-color:#d4307a;flex-shrink:0;margin-top:2px">
+            <span style="font-size:12px;color:#6b4060;line-height:1.6">Declaro que li e aceito integralmente os termos do contrato de locação acima, e que minha assinatura digital tem validade jurídica conforme a Lei 14.063/2020.</span>
+          </label>
+          <button id="assinar-btn" onclick="confirmarAssinatura()"
+            style="width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#d4307a,#a0235c);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(212,48,122,.35)">
+            <i class="ti ti-rosette-discount-check"></i> Assinar digitalmente
+          </button>
+          <div style="font-size:10px;color:#b09aaa;text-align:center;margin-top:10px">🔒 Registro seguro: nome, data/hora e IP são salvos permanentemente</div>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+  }
+
+  modal.style.display = "flex";
+  modal._locId = locId;
+
+  // Preencher data atual
+  const agora = new Date();
+  const dataStr = agora.toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long",year:"numeric"}) + " às " + agora.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+  const previewData = document.getElementById("assinar-preview-data");
+  if (previewData) previewData.textContent = dataStr;
+
+  // Preencher nome do evento
+  const loc = _locacoes.find(l => l.id === locId);
+  const eventoEl = document.getElementById("assinar-evento");
+  if (eventoEl && loc) eventoEl.textContent = loc.evento || loc.tipoEvento || "Locação";
+
+  // Pré-preencher nome do cliente logado
+  const nomeInput = document.getElementById("assinar-nome-input");
+  const previewNome = document.getElementById("assinar-preview-nome");
+  if (nomeInput && _clienteData?.nome) {
+    nomeInput.value = _clienteData.nome;
+    if (previewNome) previewNome.textContent = _clienteData.nome;
+  }
+
+  // Carregar preview do contrato
+  const previewCtr = document.getElementById("assinar-preview-ctr");
+  if (previewCtr) {
+    try {
+      const snap = await getDoc(doc(db,"locacoes",locId));
+      const contratoHtml = snap.data()?.contrato || loc?.contrato || "";
+      if (contratoHtml) {
+        // Extrair corpo do contrato sem CSS/scripts
+        const tmp = document.createElement("div");
+        const bodyRe = new RegExp("<body[^>]*>([\\s\\S]*?)<\\/body>", "i");
+        const bodyM = contratoHtml.match(bodyRe);
+        tmp.innerHTML = bodyM ? bodyM[1] : contratoHtml;
+        // Remover elementos style e script do DOM antes de extrair texto
+        tmp.querySelectorAll("style,script,link").forEach(el => el.remove());
+        const texto = (tmp.innerText || tmp.textContent || "").replace(/\s{3,}/g,"\n").trim();
+        previewCtr.innerHTML = `<div style="white-space:pre-line;font-size:11.5px;color:#333;line-height:1.6">${texto.slice(0,2000)}${texto.length>2000?'<br><br><em style="color:#b09aaa">... (continua no contrato completo)</em>':""}</div>`;
+      } else {
+        previewCtr.innerHTML = `<div style="color:#b09aaa;text-align:center;padding:20px"><i class="ti ti-file-off" style="font-size:28px;display:block;margin-bottom:8px;opacity:.4"></i>Contrato será gerado após confirmação do pagamento.</div>`;
+      }
+    } catch(e) {
+      previewCtr.innerHTML = `<div style="color:#b09aaa;text-align:center;padding:16px">Clique em "Contrato" para ler o documento antes de assinar.</div>`;
+    }
+  }
+};
+
+window.confirmarAssinatura = async function() {
+  const modal   = document.getElementById("modal-assinar-contrato");
+  const locId   = modal?._locId;
+  const nome    = document.getElementById("assinar-nome-input")?.value?.trim();
+  const aceite  = document.getElementById("assinar-aceite")?.checked;
+  const btn     = document.getElementById("assinar-btn");
+
+  if (!nome || nome.length < 5)  return alert("Digite seu nome completo para assinar.");
+  if (!aceite)                   return alert("Você precisa aceitar os termos para assinar.");
+  if (!locId)                    return;
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader"></i> Registrando assinatura...';
+
+  try {
+    // Capturar IP via API pública (best-effort)
+    let ip = "—";
+    try {
+      const r = await fetch("https://api.ipify.org?format=json");
+      const j = await r.json();
+      ip = j.ip || "—";
+    } catch(_) {}
+
+    const agora    = new Date();
+    const dataFmt  = agora.toLocaleDateString("pt-BR");
+    const horaFmt  = agora.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+
+    const payload = {
+      assinadoEm:     agora.toISOString(),
+      assinadoPor:    nome,
+      assinadoEmail:  _clienteData?.email || _user?.email || "",
+      assinadoIP:     ip,
+      assinadoDevice: navigator.userAgent.slice(0,120),
+    };
+
+    // Salvar assinatura no Firestore
+    await updateDoc(doc(db,"locacoes",locId), payload);
+
+    // Atualizar cache local imediatamente para UI responder na hora
+    const loc = _locacoes.find(l => l.id === locId);
+    if (loc) Object.assign(loc, payload);
+
+    // Fechar modal
+    modal.remove();
+    _mostrarSucessoAssinatura(nome, agora);
+
+    // Re-renderizar após pequeno delay para garantir cache atualizado
+    setTimeout(() => {
+      renderLocacoes?.();
+      renderDocumentos?.();
+    }, 100);
+
+  } catch(e) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-rosette-discount-check"></i> Assinar digitalmente';
+    alert("Erro ao registrar assinatura: " + e.message);
+  }
+};
+
+function _mostrarSucessoAssinatura(nome, data) {
+  const toast = document.createElement("div");
+  toast.style.cssText = "position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#d4307a,#a0235c);color:#fff;border-radius:14px;padding:14px 20px;font-size:13px;font-weight:600;box-shadow:0 8px 30px rgba(212,48,122,.45);z-index:9999;text-align:center;animation:slideUp .3s ease;max-width:90vw";
+  toast.innerHTML = `<i class="ti ti-rosette-discount-check" style="font-size:18px;display:block;margin-bottom:6px"></i>Contrato assinado com sucesso!<br><span style="font-size:11px;font-weight:400;opacity:.85">${nome} · ${data.toLocaleDateString("pt-BR")}</span>`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+
+</script>
+</body>
+</html>

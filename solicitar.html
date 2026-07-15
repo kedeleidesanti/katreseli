@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Solicitar Locação — Katreseli</title>
+<meta name="description" content="Faça sua solicitação de locação de decoração infantil">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--p:#d4307a;--pd:#a0235c;--pl:#fce4f3;--txt:#1a0a14;--txt2:#6b5a72;--txt3:#9a8aa8;--bg:#f5f0f4;--sur:#fff;--bdr:#f0eaf4;--bdr2:#e0d4e8;--ok:#15803d;--ok-bg:#f0fdf4}
+body{font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+
+/* Loading */
+#loading{position:fixed;inset:0;background:var(--p);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .4s}
+#loading.out{opacity:0;pointer-events:none}
+.ld-ico{font-size:56px;margin-bottom:14px;animation:pulse 1.2s ease-in-out infinite}
+.ld-txt{color:#fff;font-size:20px;font-weight:800;margin-bottom:6px}
+.ld-sub{color:rgba(255,255,255,.7);font-size:13px}
+.ld-bar{width:140px;height:3px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:18px;overflow:hidden}
+.ld-fill{height:100%;background:#fff;border-radius:2px;animation:load 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes load{0%{width:0;margin-left:0}50%{width:100%}100%{width:0;margin-left:100%}}
+
+/* Header */
+.hd{background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;padding:28px 20px 24px;text-align:center}
+.hd a{color:rgba(255,255,255,.7);font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-bottom:16px;transition:color .15s}
+.hd a:hover{color:#fff}
+.hd-logo{width:64px;height:64px;border-radius:50%;border:3px solid rgba(255,255,255,.4);object-fit:cover;margin-bottom:10px}
+.hd-logo-ph{width:64px;height:64px;border-radius:50%;border:3px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);display:inline-flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:10px}
+.hd-nome{font-size:22px;font-weight:800;margin-bottom:4px}
+.hd-sub{font-size:13px;opacity:.85}
+
+/* Wizard steps */
+.steps{display:flex;align-items:center;justify-content:center;gap:0;padding:20px 16px 0;max-width:600px;margin:0 auto}
+.step{display:flex;align-items:center;gap:0;flex:1}
+.step-circle{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;transition:all .3s;border:2px solid var(--bdr2);background:var(--sur);color:var(--txt3)}
+.step.on .step-circle{background:var(--p);color:#fff;border-color:var(--p);box-shadow:0 3px 12px rgba(212,48,122,.35)}
+.step.done .step-circle{background:var(--ok);color:#fff;border-color:var(--ok)}
+.step-label{font-size:11px;font-weight:500;color:var(--txt3);margin-left:8px;white-space:nowrap}
+.step.on .step-label{color:var(--p);font-weight:700}
+.step.done .step-label{color:var(--ok)}
+.step-line{flex:1;height:2px;background:var(--bdr2);margin:0 8px;transition:background .3s}
+.step.done + .step-line,.step.done .step-line{background:var(--ok)}
+
+/* Main */
+.main{max-width:640px;margin:0 auto;padding:24px 16px 60px}
+
+/* Cards do wizard */
+.wiz-panel{display:none;animation:fadeIn .25s ease}
+.wiz-panel.on{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--sur);border-radius:18px;border:1.5px solid var(--bdr);padding:24px;margin-bottom:16px}
+.card-title{font-size:11px;font-weight:800;color:var(--p);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1.5px solid var(--pl)}
+
+/* Formulário */
+.fg{margin-bottom:16px}
+.fg label{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.fg input,.fg select,.fg textarea{width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--bdr2);font-size:14px;font-family:inherit;color:var(--txt);background:var(--sur);outline:none;transition:border-color .15s,box-shadow .15s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(212,48,122,.12)}
+.fg input.err,.fg select.err,input.err,select.err{border-color:#ef4444!important;box-shadow:0 0 0 2px rgba(239,68,68,.15)}
+.fg input::placeholder{color:var(--txt3)}
+.fg textarea{resize:vertical;min-height:80px}
+.input-icon-wrap{position:relative}
+.input-icon-wrap .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--txt3);font-size:16px;pointer-events:none}
+.input-icon-wrap input{padding-left:38px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fr3{display:grid;grid-template-columns:1fr 1fr 80px;gap:12px}
+.obrig{color:#ef4444;margin-left:2px}
+.cep-row{display:flex;gap:8px;align-items:flex-start}
+.cep-row input{flex:1}
+.btn-cep{padding:11px 14px;border-radius:12px;border:1.5px solid var(--bdr2);background:var(--bg);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--txt2);font-family:inherit;transition:all .15s;flex-shrink:0}
+.btn-cep:hover{border-color:var(--p);color:var(--p);background:var(--pl)}
+
+/* Kit selector */
+.kit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:8px}
+.kit-card{border:2px solid var(--bdr2);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .18s;position:relative}
+.kit-card:hover{border-color:var(--p);transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,48,122,.12)}
+.kit-card.sel{border-color:var(--p);box-shadow:0 0 0 3px rgba(212,48,122,.15)}
+.kit-card-chk{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;background:var(--p);color:#fff;display:none;align-items:center;justify-content:center;font-size:13px;z-index:2}
+.kit-card.sel .kit-card-chk{display:flex}
+.kit-card-img{height:130px;background:var(--pl);overflow:hidden}
+.kit-card-img img{width:100%;height:100%;object-fit:cover}
+.kit-card-img-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;opacity:.35}
+.kit-card-body{padding:10px 12px}
+.kit-card-tema{font-size:10px;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.kit-card-nome{font-size:13px;font-weight:700;line-height:1.2;margin-bottom:4px}
+.kit-card-preco{font-size:14px;font-weight:800;color:var(--p)}
+.kit-card-disp{font-size:10px;margin-top:4px;padding:2px 7px;border-radius:5px;display:inline-block;font-weight:600}
+.kit-card-disp.livre{background:#dcfce7;color:#166534}
+.kit-card-disp.ocupado{background:#fee2e2;color:#991b1b}
+
+/* Calendário de seleção */
+.cal-wrap{margin-top:8px}
+.cal-nav{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.cal-mes{flex:1;text-align:center;font-size:15px;font-weight:700;color:var(--p)}
+.cal-btn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--bdr2);background:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;color:var(--txt2)}
+.cal-btn:hover{border-color:var(--p);color:var(--p)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:6px}
+.cal-hdr{text-align:center;font-size:10px;font-weight:700;color:var(--txt3);padding:4px 0}
+.cal-dia{height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid transparent;transition:all .12s;user-select:none}
+.cal-dia:hover:not(.vazio):not(.passado):not(.ocupado){background:var(--pl);color:var(--p)}
+.cal-dia.vazio{visibility:hidden}
+.cal-dia.passado{color:var(--txt3);cursor:not-allowed;opacity:.4}
+.cal-dia.ocupado{background:#fee2e2;color:#991b1b;cursor:not-allowed;text-decoration:line-through;opacity:.6}
+.cal-dia.ret{background:var(--p);color:#fff;border-radius:8px 0 0 8px}
+.cal-dia.dev{background:var(--p);color:#fff;border-radius:0 8px 8px 0}
+.cal-dia.range{background:var(--pl);color:var(--pd)}
+.cal-dia.ret.dev{border-radius:8px}
+.cal-info{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.cal-chip{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600}
+.cal-chip.ret{background:var(--p);color:#fff}
+.cal-chip.dev{background:var(--pd);color:#fff}
+.cal-chip.dur{background:var(--pl);color:var(--pd)}
+.cal-leg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--txt3);margin-top:8px}
+.leg-sq{width:12px;height:12px;border-radius:3px}
+
+/* Resumo */
+.resumo-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--bdr);font-size:13px}
+.resumo-row:last-child{border:none;padding-top:14px}
+.resumo-lbl{color:var(--txt2)}
+.resumo-val{font-weight:600}
+.resumo-total{font-size:17px;font-weight:800;color:var(--p)}
+
+/* Botões */
+.btn-row{display:flex;gap:10px;margin-top:8px}
+.btn{padding:12px 20px;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;border:none;transition:all .15s;display:inline-flex;align-items:center;gap:7px}
+.btn-p{background:var(--p);color:#fff}
+.btn-p:hover{background:var(--pd)}
+.btn-p:disabled{opacity:.5;cursor:not-allowed}
+.btn-s{background:var(--bg);color:var(--txt2);border:1.5px solid var(--bdr2)}
+.btn-s:hover{border-color:var(--p);color:var(--p)}
+.btn-full{width:100%;justify-content:center}
+
+/* Sucesso */
+#tela-sucesso{display:none;text-align:center;padding:40px 20px}
+.sucesso-ico{font-size:72px;margin-bottom:20px;animation:pop .5s ease}
+.sucesso-title{font-size:24px;font-weight:800;color:var(--ok);margin-bottom:8px}
+.sucesso-sub{font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:24px}
+.sucesso-card{background:var(--ok-bg);border:1.5px solid #86efac;border-radius:14px;padding:16px;margin-bottom:20px;text-align:left;font-size:13px;line-height:1.8}
+.sucesso-card strong{color:var(--ok)}
+@keyframes pop{0%{transform:scale(.5)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+
+/* Badge de campo obrigatório */
+.hint{font-size:11px;color:var(--txt3);margin-top:4px}
+.origem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.origem-btn{padding:8px;border-radius:9px;border:1.5px solid var(--bdr2);background:none;font-size:12px;cursor:pointer;font-family:inherit;color:var(--txt2);transition:all .15s;text-align:center}
+.origem-btn.sel,.origem-btn:hover{border-color:var(--p);color:var(--p);background:var(--pl)}
+
+/* Responsivo */
+@media(max-width:520px){
+  .fr{grid-template-columns:1fr}
+  .fr3{grid-template-columns:1fr 1fr}
+  .kit-grid{grid-template-columns:repeat(2,1fr)}
+  .card{padding:16px}
+  .origem-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ══════════════════════════════════════════════════
+   RESPONSIVIDADE COMPLETA — solicitar.html
+   ══════════════════════════════════════════════════ */
+@media(max-width:600px){
+  /* Main menor */
+  .main{padding:16px 14px 60px !important}
+
+  /* Steps menores */
+  .step-label{display:none}
+  .steps{padding:14px 10px 0 !important}
+
+  /* Data de nascimento — preservar 3 colunas mas menores */
+  [style*="grid-template-columns:80px 1fr 100px"]{
+    grid-template-columns:70px 1fr 80px !important;
+    gap:6px !important;
+  }
+
+  /* Origem grid — 2 colunas */
+  .origem-grid{grid-template-columns:repeat(2,1fr) !important}
+
+  /* Kit grid — 2 colunas */
+  .kit-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+
+  /* Fracionado 2 col */
+  .fr{grid-template-columns:1fr !important}
+  .fr3{grid-template-columns:1fr 1fr !important}
+
+  /* Botões */
+  .btn-row{flex-direction:column !important}
+  .btn-row .btn{width:100% !important;justify-content:center !important}
+
+  /* Inputs maiores no mobile (evita zoom no iOS) */
+  input,select,textarea{font-size:16px !important}
+
+  /* Calendário */
+  .cal-grid{gap:1px !important}
+  .cal-dia{font-size:11px !important;height:32px !important}
+  .cal-hdr{font-size:9px !important}
+
+  /* Cards */
+  .card{padding:14px !important}
+}
+
+@media(max-width:380px){
+  [style*="grid-template-columns:80px 1fr 100px"],
+  [style*="grid-template-columns:70px 1fr 80px"]{
+    grid-template-columns:60px 1fr 70px !important;
+  }
+  .origem-grid{grid-template-columns:1fr 1fr !important}
+}
+.entrega-opcao{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;border:1.5px solid var(--bdr2);cursor:pointer;transition:all .15s;background:var(--sur)}
+.entrega-opcao:hover{border-color:var(--p)}
+.entrega-opcao.sel{border-color:var(--p);background:var(--pl)}
+.entrega-opcao-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--bdr2);flex-shrink:0;margin-top:1px;transition:all .15s;position:relative}
+.entrega-opcao.sel .entrega-opcao-radio{border-color:var(--p);background:var(--p)}
+.entrega-opcao.sel .entrega-opcao-radio::after{content:"";position:absolute;width:6px;height:6px;background:#fff;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
+.toggle-sw{position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0}
+.toggle-sw input{opacity:0;width:0;height:0}
+.toggle-sl{position:absolute;cursor:pointer;inset:0;background:#ddd;border-radius:24px;transition:.3s}
+.toggle-sl:before{content:"";position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.toggle-sw input:checked + .toggle-sl{background:var(--p)}
+.toggle-sw input:checked + .toggle-sl:before{transform:translateX(18px)}
+
+/* ── Animações e dinamismo ─────────────────────────────── */
+.wiz-panel.on .card{animation:slideCard .22s ease both}
+.wiz-panel.on .card:nth-child(2){animation-delay:.07s}
+.wiz-panel.on .card:nth-child(3){animation-delay:.14s}
+.wiz-panel.on .card:nth-child(4){animation-delay:.21s}
+@keyframes slideCard{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.kit-card-img{overflow:hidden}
+.kit-card-img img{transition:transform .25s ease}
+.kit-card:hover .kit-card-img img{transform:scale(1.06)}
+.kit-card.sel{box-shadow:0 0 0 3px var(--p),0 8px 28px rgba(212,48,122,.18)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{box-shadow:0 0 0 3px rgba(212,48,122,.12)}
+@keyframes pulse-btn{0%,100%{box-shadow:0 4px 15px rgba(212,48,122,.3)}50%{box-shadow:0 6px 28px rgba(212,48,122,.55)}}
+.btn-p.btn-full{animation:pulse-btn 2.8s ease-in-out infinite}
+.hd{background:linear-gradient(135deg,var(--p) 0%,var(--pd) 100%)}
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="ld-ico">🎀</div>
+  <div class="ld-txt" id="ld-nome">Katreseli</div>
+  <div class="ld-sub">Carregando...</div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+</div>
+
+<header class="hd">
+  <div>
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);border-radius:30px;padding:8px 16px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;backdrop-filter:blur(6px);transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.28)'" onmouseout="this.style.background='rgba(255,255,255,.18)'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="15" height="15"><polyline points="15 18 9 12 15 6"/></svg>
+      Ver catálogo
+    </a>
+  </div>
+  <div id="hd-logo-wrap"><div class="hd-logo-ph">🎀</div></div>
+  <div class="hd-nome" id="hd-nome">Katreseli</div>
+  <div class="hd-sub">Solicitação de Locação</div>
+</header>
+
+<!-- Steps -->
+<div class="steps" id="steps">
+  <div class="step on" id="s1"><div class="step-circle" id="sc1">1</div><span class="step-label">Dados</span></div>
+  <div class="step-line" id="sl1"></div>
+  <div class="step" id="s2"><div class="step-circle" id="sc2">2</div><span class="step-label">Kit</span></div>
+  <div class="step-line" id="sl2"></div>
+  <div class="step" id="s3"><div class="step-circle" id="sc3">3</div><span class="step-label">Datas</span></div>
+  <div class="step-line" id="sl3"></div>
+  <div class="step" id="s4"><div class="step-circle" id="sc4">4</div><span class="step-label">Revisar</span></div>
+</div>
+<div style="max-width:640px;margin:0 auto;padding:0 16px 6px">
+  <div style="height:3px;background:var(--bdr2);border-radius:2px;overflow:hidden">
+    <div id="prog-bar" style="height:100%;background:linear-gradient(90deg,var(--p),var(--pd));border-radius:2px;transition:width .4s ease;width:25%"></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txt3);margin-top:4px">
+    <span id="prog-txt">Passo 1 de 4</span>
+    <span id="prog-pct">25%</span>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- STEP 1: Dados do cliente -->
+  <div class="wiz-panel on" id="p1">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-user"></i> Dados pessoais</div>
+      <div class="fr">
+        <div class="fg">
+          <label><i class="ti ti-user" style="color:var(--p)"></i> Nome completo <span class="obrig">*</span></label>
+          <div class="input-icon-wrap"><i class="ti ti-user ico"></i><input id="s-nome" placeholder="Maria da Silva" oninput="limparErro(this)" style="padding-left:38px"></div>
+        </div>
+        <div class="fg">
+          <label><i class="ti ti-id-badge" style="color:var(--p)"></i> CPF / CNPJ <span class="obrig">*</span></label>
+          <div class="input-icon-wrap"><i class="ti ti-id-badge-2 ico"></i><input id="s-cpf" placeholder="000.000.000-00" oninput="mkCpf(this)" maxlength="18" style="padding-left:38px"></div>
+        </div>
+      </div>
+      <div class="fr">
+        <div class="fg">
+          <label><i class="ti ti-brand-whatsapp" style="color:var(--p)"></i> WhatsApp <span class="obrig">*</span></label>
+          <div class="input-icon-wrap"><i class="ti ti-phone ico"></i><input id="s-tel" placeholder="(41) 99999-9999" oninput="mkTel(this)" maxlength="15" style="padding-left:38px"></div>
+        </div>
+        <div class="fg">
+          <label><i class="ti ti-mail" style="color:var(--p)"></i> E-mail <span class="obrig">*</span></label>
+          <div class="input-icon-wrap"><i class="ti ti-at ico"></i><input id="s-email" type="email" placeholder="email@exemplo.com" oninput="limparErro(this)" autocapitalize="none" autocorrect="off" style="padding-left:38px"></div>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Data de nascimento <span class="obrig">*</span></label>
+        <div style="display:grid;grid-template-columns:80px 1fr 100px;gap:8px">
+          <div style="position:relative">
+            <select id="s-nasc-dia" onchange="syncNascSelects()" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--bdr2);font-size:14px;font-family:inherit;color:var(--txt);background:var(--sur);outline:none;transition:border-color .15s,box-shadow .15s;appearance:none;cursor:pointer" onfocus="this.style.borderColor='var(--p)';this.style.boxShadow='0 0 0 3px rgba(212,48,122,.12)'" onblur="this.style.borderColor='var(--bdr2)';this.style.boxShadow='none'">
+              <option value="">Dia</option>
+            </select>
+            <svg style="position:absolute;right:8px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--txt3)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div style="position:relative">
+            <select id="s-nasc-mes" onchange="syncNascSelects()" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--bdr2);font-size:14px;font-family:inherit;color:var(--txt);background:var(--sur);outline:none;transition:border-color .15s,box-shadow .15s;appearance:none;cursor:pointer" onfocus="this.style.borderColor='var(--p)';this.style.boxShadow='0 0 0 3px rgba(212,48,122,.12)'" onblur="this.style.borderColor='var(--bdr2)';this.style.boxShadow='none'">
+              <option value="">Mês</option>
+              <option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option>
+              <option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option>
+              <option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option>
+              <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
+            </select>
+            <svg style="position:absolute;right:8px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--txt3)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div style="position:relative">
+            <select id="s-nasc-ano" onchange="syncNascSelects()" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--bdr2);font-size:14px;font-family:inherit;color:var(--txt);background:var(--sur);outline:none;transition:border-color .15s,box-shadow .15s;appearance:none;cursor:pointer" onfocus="this.style.borderColor='var(--p)';this.style.boxShadow='0 0 0 3px rgba(212,48,122,.12)'" onblur="this.style.borderColor='var(--bdr2)';this.style.boxShadow='none'">
+              <option value="">Ano</option>
+            </select>
+            <svg style="position:absolute;right:8px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--txt3)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div id="s-nasc-err" style="font-size:11px;color:#ef4444;margin-top:4px;display:none"></div>
+        <input type="hidden" id="s-nasc">
+        <input type="hidden" id="s-nasc-txt">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i class="ti ti-map-pin"></i> Endereço</div>
+      <div class="cep-row">
+        <div class="fg" style="margin:0;flex:1">
+          <label><i class="ti ti-map-pin" style="color:var(--p)"></i> CEP <span class="obrig">*</span></label>
+          <div class="input-icon-wrap"><i class="ti ti-map-pin-2 ico"></i><input id="s-cep" placeholder="00000-000" oninput="mkCep(this);if(this.value.replace(/\D/g,'').length===8)buscarCepS()" maxlength="9" style="padding-left:38px"></div>
+        </div>
+        <button class="btn-cep" onclick="buscarCepS()" style="margin-top:29px"><i class="ti ti-search"></i> Buscar</button>
+      </div>
+      <div id="s-cep-status" style="font-size:11px;margin:4px 0 8px"></div>
+      <div class="fg">
+        <label><i class="ti ti-road" style="color:var(--p)"></i> Rua / Logradouro</label>
+        <input id="s-rua" placeholder="Rua Engenheiro Pontoni">
+      </div>
+      <div class="fr3">
+        <div class="fg"><label>Número <span class="obrig">*</span></label><input id="s-num" placeholder="248" oninput="limparErro(this)" inputmode="numeric"></div>
+        <div class="fg"><label>Bairro</label><input id="s-bairro" placeholder="Jardim Primavera"></div>
+        <div class="fg"><label>UF</label><input id="s-uf" placeholder="PR" maxlength="2" oninput="this.value=this.value.toUpperCase()"></div>
+      </div>
+      <div class="fr">
+        <div class="fg"><label>Cidade</label><input id="s-cidade" placeholder="Piraquara"></div>
+        <div class="fg"><label>Complemento</label><input id="s-compl" placeholder="Apto, casa, bloco..."></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i class="ti ti-file-check"></i> Comprovante de residência</div>
+      <p style="font-size:12px;color:var(--txt2);margin-bottom:12px;line-height:1.6">Opcional, mas agiliza a aprovação. Aceito: foto do comprovante (conta de água, luz, telefone) ou RG/CNH.</p>
+      <div id="comp-preview" style="display:none;margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--ok-bg);border:1.5px solid #86efac;border-radius:10px">
+          <i class="ti ti-file-check" style="color:var(--ok);font-size:20px"></i>
+          <div style="flex:1">
+            <div id="comp-nome" style="font-size:13px;font-weight:600;color:var(--ok)"></div>
+            <div id="comp-tam" style="font-size:11px;color:var(--txt3)"></div>
+          </div>
+          <button onclick="removerComp()" style="background:none;border:none;color:#b91c1c;cursor:pointer;font-size:18px;line-height:1">×</button>
+        </div>
+      </div>
+      <label style="display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;border:1.5px dashed var(--bdr2);background:var(--bg);cursor:pointer;font-size:13px;font-weight:500;color:var(--txt2);transition:all .15s" onmouseover="this.style.borderColor='var(--p)';this.style.color='var(--p)'" onmouseout="this.style.borderColor='var(--bdr2)';this.style.color='var(--txt2)'">
+        <i class="ti ti-upload" style="font-size:16px"></i>
+        Selecionar arquivo
+        <input type="file" id="comp-file" accept="image/*,.pdf" onchange="carregarComp(this)" style="display:none">
+      </label>
+      <input type="hidden" id="s-comprovante" value="">
+      <input type="hidden" id="s-comprovante-tipo" value="">
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i class="ti ti-heart"></i> Como nos conheceu?</div>
+      <div class="origem-grid">
+        <button class="origem-btn" onclick="setOrigem(this,'Instagram')">📸 Instagram</button>
+        <button class="origem-btn" onclick="setOrigem(this,'Indicação')">🤝 Indicação</button>
+        <button class="origem-btn" onclick="setOrigem(this,'WhatsApp')">💬 WhatsApp</button>
+        <button class="origem-btn" onclick="setOrigem(this,'Google')">🔍 Google</button>
+        <button class="origem-btn" onclick="setOrigem(this,'Facebook')">👥 Facebook</button>
+        <button class="origem-btn" onclick="setOrigem(this,'TikTok')">🎵 TikTok</button>
+        <button class="origem-btn" onclick="setOrigem(this,'Outro')">💡 Outro</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i class="ti ti-notes"></i> Observações</div>
+      <div class="fg" style="margin:0"><textarea id="s-obs" rows="3" placeholder="Algum detalhe especial sobre seu evento, pedido específico ou dúvida..."></textarea></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-p btn-full" onclick="irP2()"><i class="ti ti-arrow-right"></i> Próximo: Escolher kit</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Escolher kit -->
+  <div class="wiz-panel" id="p2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-gift"></i> Qual kit você deseja?</div>
+      <p style="font-size:13px;color:var(--txt2);margin-bottom:14px">Selecione o kit de decoração. Você também pode pular e descrever o que deseja nas observações.</p>
+      <!-- Busca de kit -->
+      <div style="position:relative;margin-bottom:14px">
+        <i class="ti ti-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--txt3);font-size:16px;pointer-events:none"></i>
+        <input id="s-busca-kit" type="search" placeholder="Buscar kit por nome ou tema..."
+          oninput="window.renderKitGrid?.()"
+          style="width:100%;padding:11px 14px 11px 38px;border-radius:12px;border:1.5px solid var(--bdr2);font-size:14px;font-family:inherit;color:var(--txt);outline:none;background:var(--bg);transition:border-color .15s"
+          onfocus="this.style.borderColor='var(--p)'" onblur="this.style.borderColor='var(--bdr2)'">
+        <span id="s-busca-cnt" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--txt3);pointer-events:none"></span>
+      </div>
+      <div class="kit-grid" id="kit-grid">
+        <div style="text-align:center;padding:40px;color:var(--txt3);grid-column:1/-1">Carregando kits...</div>
+      </div>
+      <div class="fg" style="margin-top:16px">
+        <label>Tipo de evento <span class="obrig">*</span></label>
+        <select id="s-tipo-evento">
+          <option value="">Selecione...</option>
+          <option>Aniversário infantil</option>
+          <option>Aniversário adulto</option>
+          <option>Casamento</option>
+          <option>Chá de bebê</option>
+          <option>Chá revelação</option>
+          <option>Formatura</option>
+          <option>Debutante</option>
+          <option>Batizado</option>
+          <option>Confraternização</option>
+          <option>Outro</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Card: pedidos adicionais -->
+    <div class="card">
+      <div class="card-title"><i class="ti ti-sparkles"></i> Deseja algo adicional?</div>
+      <p style="font-size:13px;color:var(--txt2);margin-bottom:12px">Descreva cores, temas, itens extras ou qualquer detalhe especial que queira na decoração.</p>
+      <div class="fg" style="margin:0">
+        <textarea id="s-adicionais" rows="3" placeholder="Ex: Quero balões azuis e dourados, mesa de doces com arranjo floral, tema dinossauros..."></textarea>
+      </div>
+    </div>
+
+    <!-- Cupom de desconto — visível só se cupomAtivo nas configurações -->
+    <div class="card" id="card-cupom" style="margin-bottom:0;display:none">
+      <div class="card-title"><i class="ti ti-ticket"></i> Tem cupom de desconto?</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input type="text" id="s-cupom" placeholder="Código do cupom (opcional)" style="flex:1;text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+        <button class="btn btn-s" onclick="window.aplicarCupomSol()"><i class="ti ti-check"></i> Aplicar</button>
+      </div>
+      <div id="s-cupom-msg" style="display:none;margin-top:8px;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-s" onclick="irP(1)"><i class="ti ti-arrow-left"></i> Voltar</button>
+      <button class="btn btn-p" style="flex:1" onclick="irP3()"><i class="ti ti-arrow-right"></i> Próximo: Datas</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Datas -->
+  <div class="wiz-panel" id="p3">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-calendar"></i> Quando é seu evento?</div>
+      <p style="font-size:13px;color:var(--txt2);margin-bottom:16px">Clique no dia de <strong>retirada</strong> e depois no dia de <strong>devolução</strong>. Dias em vermelho já estão reservados.</p>
+
+      <div class="cal-wrap">
+        <div class="cal-nav">
+          <button class="cal-btn" onclick="calNav(-1)">&#8249;</button>
+          <div class="cal-mes" id="cal-mes">—</div>
+          <button class="cal-btn" onclick="calNav(1)">&#8250;</button>
+        </div>
+        <div class="cal-grid" id="cal-hdr"></div>
+        <div class="cal-grid" id="cal-body"></div>
+        <div class="cal-info" id="cal-info"></div>
+        <div class="cal-leg">
+          <span class="leg-sq" style="background:var(--p)"></span> Selecionado
+          <span class="leg-sq" style="background:#fee2e2"></span> Ocupado
+          <span class="leg-sq" style="background:var(--pl)"></span> Período
+        </div>
+      </div>
+
+      <!-- Local do evento -->
+      <div style="margin-top:16px;padding:14px;background:var(--bg);border-radius:12px;border:1.5px solid var(--bdr2)">
+        <div style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;margin-bottom:12px">
+          <i class="ti ti-map-pin" style="color:var(--p)"></i> Local do evento
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label class="entrega-opcao" id="opt-loc-cad" onclick="setLocalEvento('cadastrado')">
+            <div class="entrega-opcao-radio"></div>
+            <div>
+              <div style="font-size:13px;font-weight:600">Meu endereço cadastrado</div>
+              <div id="loc-cad-texto" style="font-size:11px;color:var(--txt3);margin-top:1px">—</div>
+            </div>
+          </label>
+          <label class="entrega-opcao" id="opt-loc-outro" onclick="setLocalEvento('outro')">
+            <div class="entrega-opcao-radio"></div>
+            <div style="width:100%">
+              <div style="font-size:13px;font-weight:600">Outro endereço</div>
+              <div id="outro-local-form" style="display:none;margin-top:10px">
+                <div class="cep-row" style="margin-bottom:8px">
+                  <div class="fg" style="margin:0;flex:1"><label style="font-size:10px">CEP</label>
+                    <input id="s-local-cep" placeholder="00000-000" oninput="mkCep(this)" maxlength="9">
+                  </div>
+                  <button class="btn-cep" onclick="buscarCepLocal()" style="margin-top:18px"><i class="ti ti-search"></i></button>
+                </div>
+                <div id="s-local-cep-status" style="font-size:11px;color:var(--txt3);margin-bottom:6px"></div>
+                <div class="fr" style="margin-bottom:6px">
+                  <div class="fg" style="margin:0"><label style="font-size:10px">Rua</label><input id="s-local-rua" placeholder="Rua..."></div>
+                  <div class="fg" style="margin:0;max-width:80px"><label style="font-size:10px">Número</label><input id="s-local-num" placeholder="123"></div>
+                </div>
+                <div class="fr">
+                  <div class="fg" style="margin:0"><label style="font-size:10px">Bairro</label><input id="s-local-bairro" placeholder="Bairro..."></div>
+                  <div class="fg" style="margin:0"><label style="font-size:10px">Cidade / UF</label><input id="s-local-cidade" placeholder="Cidade/PR"></div>
+                </div>
+                <div class="fg" style="margin-top:6px;margin-bottom:0"><label style="font-size:10px">Complemento</label><input id="s-local-compl" placeholder="Salão, chácara, clube..."></div>
+              </div>
+            </div>
+          </label>
+        </div>
+        <input type="hidden" id="s-local">
+      </div>
+
+      <!-- Entrega e Montagem separadas -->
+      <div style="margin-top:16px;padding:14px;background:var(--bg);border-radius:12px;border:1.5px solid var(--bdr2)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+              <div>
+                <div style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px">
+                  <i class="ti ti-truck" style="color:var(--p)"></i> Entrega no local
+                </div>
+                <div style="font-size:11px;color:var(--txt3);margin-top:2px">Nossa equipe leva os itens até você</div>
+              </div>
+              <label class="toggle-sw"><input type="checkbox" id="s-entrega" onchange="toggleEntregaSol(this.checked)"><span class="toggle-sl"></span></label>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px">
+                  <i class="ti ti-tools" style="color:var(--p)"></i> Montagem e desmontagem
+                </div>
+                <div style="font-size:11px;color:var(--txt3);margin-top:2px">Equipe monta e desmonta a decoração</div>
+              </div>
+              <label class="toggle-sw"><input type="checkbox" id="s-montagem"><span class="toggle-sl"></span></label>
+            </div>
+          </div>
+        </div>
+        <div id="s-entrega-info" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--bdr2)">
+
+          <!-- Onde entregar -->
+          <div class="fg" style="margin-bottom:12px">
+            <label>Local de entrega</label>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+              <label class="entrega-opcao" id="opt-end-cad" onclick="setEndEntrega('cadastrado')">
+                <div class="entrega-opcao-radio"></div>
+                <div>
+                  <div style="font-size:13px;font-weight:600">Endereço cadastrado</div>
+                  <div id="end-cad-texto" style="font-size:11px;color:var(--txt3);margin-top:1px">—</div>
+                </div>
+              </label>
+              <label class="entrega-opcao" id="opt-end-evento" onclick="setEndEntrega('evento')">
+                <div class="entrega-opcao-radio"></div>
+                <div>
+                  <div style="font-size:13px;font-weight:600">Local do evento</div>
+                  <div style="font-size:11px;color:var(--txt3);margin-top:1px">Usar o endereço informado no campo acima</div>
+                </div>
+              </label>
+              <label class="entrega-opcao" id="opt-end-outro" onclick="setEndEntrega('outro')">
+                <div class="entrega-opcao-radio"></div>
+                <div style="width:100%">
+                  <div style="font-size:13px;font-weight:600">Outro endereço</div>
+                  <div id="outro-end-form" style="display:none;margin-top:10px">
+                    <div class="cep-row" style="margin-bottom:8px">
+                      <div class="fg" style="margin:0;flex:1"><label style="font-size:10px">CEP</label><input id="s-entrega-cep" placeholder="00000-000" oninput="mkCep(this);if(this.value.replace(/\D/g,'').length===8)buscarCepEntrega()" maxlength="9"></div>
+                      <button class="btn-cep" onclick="buscarCepEntrega()" style="margin-top:18px"><i class="ti ti-search"></i></button>
+                    </div>
+                    <div id="s-entrega-cep-status" style="font-size:11px;color:var(--txt3);margin-bottom:6px"></div>
+                    <div class="fr" style="margin-bottom:6px">
+                      <div class="fg" style="margin:0"><label style="font-size:10px">Rua</label><input id="s-entrega-rua" placeholder="Rua..."></div>
+                      <div class="fg" style="margin:0;max-width:80px"><label style="font-size:10px">Número</label><input id="s-entrega-num" placeholder="123"></div>
+                    </div>
+                    <div class="fg" style="margin:0"><label style="font-size:10px">Complemento</label><input id="s-entrega-compl" placeholder="Apto, sala, bloco..."></div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="fg" style="margin:0">
+            <label>Observações para a entrega</label>
+            <input id="s-entrega-obs" placeholder="Ex: Portaria, horário preferido, andar...">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-s" onclick="irP(2)"><i class="ti ti-arrow-left"></i> Voltar</button>
+      <button class="btn btn-p" style="flex:1" onclick="irP4()"><i class="ti ti-arrow-right"></i> Revisar pedido</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Confirmar -->
+  <div class="wiz-panel" id="p4">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-checklist"></i> Resumo da solicitação</div>
+      <div id="resumo-content"></div>
+    </div>
+
+    <div class="card" style="border-color:#fde68a;background:#fffbeb">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:24px;flex-shrink:0">ℹ️</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#854d0e;margin-bottom:4px">Aguardando aprovação</div>
+          <div style="font-size:12px;color:#92400e;line-height:1.6">Após enviar, nossa equipe analisará sua solicitação e entrará em contato pelo WhatsApp para confirmar disponibilidade, tirar dúvidas e combinar os detalhes do pagamento.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-s" onclick="irP(3)"><i class="ti ti-arrow-left"></i> Voltar</button>
+      <button class="btn btn-p" style="flex:1" id="btn-enviar" onclick="enviarSolicitacao()">
+        <i class="ti ti-send"></i> Enviar solicitação
+      </button>
+    </div>
+  </div>
+
+  <!-- Tela de sucesso -->
+  <div id="tela-sucesso">
+    <div class="sucesso-ico">🎉</div>
+    <div class="sucesso-title">Pedido enviado!</div>
+    <div class="sucesso-sub">Recebemos sua solicitação! Crie sua senha para acompanhar sua locação.</div>
+    <div class="sucesso-card" id="sucesso-resumo"></div>
+
+    <!-- Criar senha direto aqui -->
+    <div id="bloco-criar-senha" style="display:none;background:#fff;border-radius:16px;border:1.5px solid #f9a8d4;padding:20px;margin:16px 0;text-align:left">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <i class="ti ti-lock" style="color:#d4307a;font-size:18px"></i>
+        <span style="font-size:14px;font-weight:700;color:#9d174d">Criar senha de acesso</span>
+      </div>
+      <p style="font-size:12px;color:#be185d;margin-bottom:14px">Use para entrar na sua área e acompanhar suas locações.</p>
+
+      <!-- E-mail (mostrar se preenchido ou pedir se vazio) -->
+      <div id="suc-email-disp-row" style="display:none;margin-bottom:10px;padding:8px 12px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;font-size:12px;color:#065f46">
+        <i class="ti ti-mail" style="font-size:13px"></i> Conta: <strong id="suc-email-disp"></strong>
+      </div>
+      <div id="suc-email-row" style="display:none;margin-bottom:10px">
+        <label style="display:block;font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Seu e-mail *</label>
+        <input id="suc-email" type="email" placeholder="seu@email.com"
+          style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:inherit;color:#150810;outline:none"
+          onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'"
+          autocomplete="email" enterkeyhint="next">
+      </div>
+
+      <div style="margin-bottom:10px">
+        <label style="display:block;font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Nova senha *</label>
+        <input id="suc-senha" type="password" placeholder="Mínimo 6 caracteres"
+          style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:inherit;color:#150810;outline:none;transition:border-color .15s"
+          onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'"
+          autocomplete="new-password" enterkeyhint="next">
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="display:block;font-size:11px;font-weight:700;color:#6b4060;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Confirmar senha *</label>
+        <input id="suc-conf" type="password" placeholder="Repita a senha"
+          style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid #f0eaf4;font-size:14px;font-family:inherit;color:#150810;outline:none;transition:border-color .15s"
+          onfocus="this.style.borderColor='#d4307a'" onblur="this.style.borderColor='#f0eaf4'"
+          autocomplete="new-password" enterkeyhint="done"
+          onkeydown="if(event.key==='Enter')salvarSenhaEIr()">
+      </div>
+      <div id="suc-msg" style="font-size:12px;margin-bottom:10px;display:none;padding:8px 12px;border-radius:8px"></div>
+      <button id="suc-btn-senha" onclick="salvarSenhaEIr()"
+        style="width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,#d4307a,#a0235c);color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px">
+        <i class="ti ti-arrow-right"></i> Salvar senha e entrar na minha área
+      </button>
+    </div>
+
+    <!-- Sem e-mail: botões normais -->
+    <div id="bloco-sem-conta">
+      <button class="btn btn-p btn-full" onclick="abrirWpp()" style="margin-bottom:12px">
+        <i class="ti ti-brand-whatsapp"></i> Falar pelo WhatsApp
+      </button>
+      <a href="index.html" style="color:var(--txt3);font-size:13px;text-decoration:none">← Voltar ao catálogo</a>
+    </div>
+  </div>
+
+</main>
+
+<script type="module">
+import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, doc, addDoc, setDoc, getDoc, onSnapshot, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const fbConfig = {
+  apiKey:"AIzaSyAZCaUFsBdm_Eu38TcxYfKVfnP4fBlOClw",
+  authDomain:"katreseli.firebaseapp.com",
+  projectId:"katreseli",
+  storageBucket:"katreseli.firebasestorage.app",
+  messagingSenderId:"70788726473",
+  appId:"1:70788726473:web:da67bdf6b9d4861fed1718"
+};
+
+const app  = initializeApp(fbConfig);
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+// ── Estado ──────────────────────────────────────────────────────────────────
+let _kits     = [];
+let _locacoes = [];
+let _cfg      = {};
+let _kitSel   = null;
+let _origem   = "";
+let _mostrarSoKitSel = false;
+let _ret      = null;
+let _dev      = null;
+let _calMes   = new Date().getMonth();
+let _calAno   = new Date().getFullYear();
+const _hoje   = new Date().toISOString().split("T")[0];
+
+const fmtV = v => "R$ " + (parseFloat(v)||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtD = ds => { if(!ds)return"?"; const[y,m,d]=ds.split("-"); return`${d}/${m}/${y}`; };
+const el   = id => document.getElementById(id);
+const gv   = id => (el(id)?.value||"").trim();
+
+// ── Firebase listeners ───────────────────────────────────────────────────────
+onSnapshot(doc(db,"config","app"), snap => {
+  if (snap.exists()) {
+    _cfg = snap.data();
+    aplicarCfg();
+  }
+  esconderLoading();
+});
+
+onSnapshot(collection(db,"decoracoes"), snap => {
+  _kits = snap.docs.map(d=>({id:d.id,...d.data()}))
+    .filter(k => k.status !== "inativo" && k.status !== "Em manutencao");
+  // Pré-selecionar kit via parâmetro ?kit= na URL
+  const paramKit = new URLSearchParams(window.location.search).get("kit");
+  if (paramKit && !_kitSel) {
+    const match = _kits.find(k => k.id === paramKit) || _kits.find(k => k.nome.toLowerCase() === paramKit.toLowerCase());
+    if (match) { _mostrarSoKitSel = true; }
+    if (match) { _kitSel = match; }
+  }
+  renderKitGrid();
+});
+
+// ── Pré-preencher dados se cliente veio logado da área do cliente ─────────────
+(async function prefillClienteLogado() {
+  const params = new URLSearchParams(window.location.search);
+  const fromCliente = params.get("from") === "cliente";
+  if (!fromCliente) return;
+
+  try {
+    const { getAuth, onAuthStateChanged } =
+      await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+    const { getFirestore, collection: col, query: qry, where: whr, getDocs, getDoc, doc } =
+      await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+
+    const auth  = getAuth();
+    const dbRef = getFirestore();
+
+    onAuthStateChanged(auth, async user => {
+      if (!user) return;
+
+      // Buscar dados do cliente — prioridade: clientes_portal (por UID, sempre funciona)
+      let dados = null;
+      try {
+        const snapPortal = await getDoc(doc(dbRef,"clientes_portal", user.uid));
+        if (snapPortal.exists()) {
+          const portalData = snapPortal.data();
+          // Verificar se o email do portal bate com o usuário logado
+          if (!portalData.email || portalData.email.toLowerCase() === user.email.toLowerCase()) {
+            dados = portalData;
+          } else {
+            // Email diferente — dados de outro cliente, ignorar
+            console.warn("Portal email mismatch, ignorando");
+          }
+        }
+      } catch(_) {}
+
+      // Fallback: coleção clientes do admin (pode falhar por permissão — silencioso)
+      if (!dados || !dados.nome) {
+        try {
+          const snap = await getDocs(qry(col(dbRef,"clientes"), whr("email","==",user.email)));
+          if (!snap.empty) {
+            const adminD = snap.docs[0].data();
+            dados = { ...adminD, ...(dados||{}) };
+          }
+        } catch(_) {}
+      }
+
+      // Fallback final: pelo menos usar dados do Auth
+      if (!dados) dados = {};
+      if (!dados.email) dados.email = user.email;
+      if (!dados.nome)  dados.nome  = user.displayName || "";
+
+      // Preencher campos do step 1
+      const sv = (id, v) => { const e = document.getElementById(id); if (e && v) e.value = v; };
+      sv("s-nome",   dados?.nome   || user.displayName || "");
+      sv("s-email",  dados?.email  || user.email || "");
+      sv("s-tel",    dados?.tel    || "");
+      sv("s-cpf",    dados?.cpf    || "");
+      sv("s-cep",    dados?.cep    || "");
+      sv("s-rua",    dados?.rua    || dados?.end || "");
+      sv("s-num",    dados?.num || dados?.numero || dados?.endNum || "");
+      sv("s-bairro", dados?.bairro || "");
+      sv("s-cidade", dados?.cidade || "");
+      sv("s-uf",     dados?.uf     || "");
+      sv("s-compl",  dados?.comp || dados?.complemento || dados?.compl || "");
+
+      // Data de nascimento — preencher selects
+      const nascRaw = dados?.nasc || dados?.nascimento || "";
+      if (nascRaw) {
+        let y="", m="", d="";
+        if (nascRaw.includes("-") && nascRaw.length === 10) {
+          [y,m,d] = nascRaw.split("-");
+        } else if (nascRaw.includes("/") && nascRaw.length === 10) {
+          [d,m,y] = nascRaw.split("/");
+        }
+        if (d && m && y) {
+          const selDia = document.getElementById("s-nasc-dia");
+          const selMes = document.getElementById("s-nasc-mes");
+          const selAno = document.getElementById("s-nasc-ano");
+          if (selDia) selDia.value = d.padStart(2,"0");
+          if (selMes) selMes.value = m.padStart(2,"0");
+          if (selAno) selAno.value = y;
+          const hidden = document.getElementById("s-nasc");
+          const hiddenTxt = document.getElementById("s-nasc-txt");
+          if (hidden) hidden.value = `${y}-${m.padStart(2,"0")}-${d.padStart(2,"0")}`;
+          if (hiddenTxt) hiddenTxt.value = `${d.padStart(2,"0")}/${m.padStart(2,"0")}/${y}`;
+        }
+      }
+
+      // Como nos conheceu — origem
+      if (dados?.origem) {
+        window._origem = dados.origem;
+        document.querySelectorAll(".origem-btn").forEach(b => {
+          if (b.textContent.includes(dados.origem)) {
+            b.classList.add("sel");
+            b.style.borderColor = "var(--p)";
+            b.style.background  = "var(--pl)";
+          }
+        });
+      }
+
+      // Salvar dados do perfil para fallback no addDoc
+      window._dadosPrefill = {
+        nasc:   dados?.nasc || dados?.nascimento || "",
+        origem: dados?.origem || "Área do cliente"
+      };
+
+      // Quando vem da área do cliente — ir direto para step 2 (kit)
+      const nome = (dados?.nome || user.displayName || "").split(" ")[0];
+      // Definir origem: usar a do perfil se disponível, senão "Área do cliente"
+      if (!window._origem) {
+        window._origem = dados?.origem || dados?.comoConheceu || "Área do cliente";
+      }
+
+      // Ir direto para o passo 2 (escolher kit) sem precisar preencher step 1
+      setTimeout(() => {
+        // selects já preenchidos acima — apenas garantir hidden
+        const nascRaw2 = dados?.nasc || dados?.nascimento || "";
+        if (nascRaw2) {
+          const nascHid2 = document.getElementById("s-nasc");
+          if (!nascHid2?.value && nascRaw2.includes("-") && nascRaw2.length === 10) {
+            nascHid2.value = nascRaw2;
+          }
+        }
+        window.irP2?.();
+      }, 800);
+    });
+  } catch(_) {}
+})();
+
+// Locações para calendário — só carregar se autenticado
+onAuthStateChanged(auth, user => {
+  if (user) {
+    onSnapshot(collection(db,"locacoes"), snap => {
+      _locacoes = snap.docs.map(d=>({id:d.id,...d.data()}));
+      renderCal();
+    }, () => { _locacoes = []; renderCal(); });
+  } else {
+    _locacoes = [];
+    renderCal();
+  }
+});
+
+function aplicarCfg() {
+  // Mostrar campo cupom só se ativado nas configurações
+  const cardCupom = document.getElementById("card-cupom");
+  if (cardCupom) cardCupom.style.display = _cfg.cupomAtivo ? "" : "none";
+  const r = document.documentElement;
+  if (_cfg.cor)  r.style.setProperty("--p",  _cfg.cor);
+  if (_cfg.corD) r.style.setProperty("--pd", _cfg.corD);
+  if (_cfg.corL) r.style.setProperty("--pl", _cfg.corL);
+  const nome = _cfg.nome || "Katreseli";
+  el("hd-nome").textContent   = nome;
+  el("ld-nome").textContent   = nome;
+  document.title = `Solicitar Locação — ${nome}`;
+  if (_cfg.logo) {
+    // Header logo
+    el("hd-logo-wrap").innerHTML = `<img src="${_cfg.logo}" class="hd-logo" alt="${nome}">`;
+    // Loading screen logo
+    const ldIco = el("ld-ico");
+    if (ldIco) ldIco.innerHTML = `<img src="${_cfg.logo}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.4);" alt="${nome}">`;
+  }
+}
+
+function esconderLoading() {
+  el("loading").classList.add("out");
+}
+
+// ── Wizard navigation ────────────────────────────────────────────────────────
+let _step = 1;
+window.renderKitGrid = renderKitGrid;
+window.irP = function(n) {
+  el("p"+_step).classList.remove("on");
+  el("s"+_step).classList.remove("on");
+  el("sc"+_step).textContent = _step;
+  if (n < _step) { /* voltar */ }
+  else el("s"+_step).classList.add("done");
+  _step = n;
+  el("p"+n).classList.add("on");
+  el("s"+n).classList.add("on");
+  el("s"+n).classList.remove("done");
+  // Atualizar barra de progresso
+  const pct = Math.round((_step - 1) / 3 * 100) || 25;
+  const pb = el("prog-bar"); if (pb) pb.style.width = pct + "%";
+  const pt = el("prog-txt"); if (pt) pt.textContent = "Passo " + _step + " de 4";
+  const pp = el("prog-pct"); if (pp) pp.textContent = pct + "%";
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+window.irP2 = function() {
+  const fromCliente = new URLSearchParams(window.location.search).get("from") === "cliente";
+  const nome  = gv("s-nome").trim();
+  const tel   = gv("s-tel").replace(/\D/g,"");
+  const email = gv("s-email").trim();
+  const cep   = gv("s-cep").replace(/\D/g,"");
+  const num   = gv("s-num").trim();
+  const rua   = gv("s-rua").trim();
+
+  let ok = true;
+  let primeiro = null;
+
+  function err(id) {
+    const inp = el(id);
+    if (inp) { inp.classList.add("err"); if (!primeiro) primeiro = inp; }
+    ok = false;
+  }
+
+  if (!nome)           err("s-nome");
+  if (tel.length < 10) err("s-tel");
+  if (!email || !email.includes("@")) err("s-email");
+
+  // Data de nascimento — opcional quando vem da área do cliente
+  if (!fromCliente) {
+    const errNasc = el("s-nasc-err");
+    const nascVal = gv("s-nasc");
+    const markNascErr = (msg) => {
+      [el("s-nasc-dia"), el("s-nasc-mes"), el("s-nasc-ano")].forEach(s => { if(s){ s.classList.add("err"); s.style.borderColor="#ef4444"; s.style.boxShadow="0 0 0 2px rgba(239,68,68,.15)"; } });
+      if (errNasc) { errNasc.textContent = msg; errNasc.style.display=""; }
+      if (!primeiro) primeiro = el("s-nasc-dia");
+    };
+    if (!nascVal || nascVal.length < 10) {
+      markNascErr("Preencha a data completa");
+      ok = false;
+    } else {
+      const [y, m, d] = nascVal.split("-").map(Number);
+      if (y < 1920 || y > new Date().getFullYear() - 1) {
+        markNascErr("Ano inválido"); ok = false;
+      } else if (m < 1 || m > 12 || d < 1 || d > 31) {
+        markNascErr("Data inválida"); ok = false;
+      } else {
+        if (errNasc) errNasc.style.display = "none";
+      }
+    }
+  }
+
+  // Endereço — opcional quando vem da área do cliente (já cadastrado)
+  if (!fromCliente) {
+    if (cep.length < 8) err("s-cep");
+    if (!rua)           err("s-rua");
+    if (!num)           err("s-num");
+  }
+
+  if (!ok) {
+    primeiro?.scrollIntoView({behavior:"smooth",block:"center"});
+    setTimeout(() => primeiro?.focus(), 300);
+    return;
+  }
+
+  // Origem — pular quando vem da área do cliente
+  if (!_origem && !fromCliente) {
+    const grid = document.getElementById("origem-grid") || document.querySelector(".origem-grid");
+    if (grid) {
+      grid.style.outline = "2px solid #ef4444";
+      grid.style.borderRadius = "10px";
+      grid.scrollIntoView({behavior:"smooth",block:"center"});
+      setTimeout(() => { grid.style.outline=""; }, 2000);
+    }
+    alert("Por favor, nos diga como nos conheceu!");
+    return;
+  }
+
+  // Quando vem da área do cliente, definir origem padrão
+  if (!_origem && fromCliente) _origem = "Área do cliente";
+
+  irP(2);
+  renderKitGrid();
+};
+
+window.irP3 = function() {
+  // Kit obrigatório
+  if (!_kitSel) {
+    el("kit-grid")?.scrollIntoView({behavior:"smooth",block:"center"});
+    alert("Selecione um kit de decoração para continuar.");
+    return;
+  }
+  // Tipo de evento obrigatório
+  if (!gv("s-tipo-evento")) {
+    el("s-tipo-evento").classList.add("err");
+    el("s-tipo-evento").scrollIntoView({behavior:"smooth",block:"center"});
+    el("s-tipo-evento").focus();
+    return;
+  }
+  el("s-tipo-evento").classList.remove("err");
+  irP(3);
+  renderCal();
+  setTimeout(initLocalEvento, 100);
+};
+
+window.irP4 = function() {
+  if (!_ret || !_dev) {
+    alert("Selecione as datas de retirada e devolução!");
+    return;
+  }
+  if (!_localEventoTipo) {
+    alert("Informe o local do evento!");
+    el("opt-loc-cad")?.scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+  irP(4);
+  renderResumo();
+};
+
+window.limparErro = function(inp) { inp.classList.remove("err"); };
+
+// ── Data de nascimento — 3 selects (Dia / Mês / Ano) ────────────────────────
+(function initNascSelects() {
+  // Preencher dias
+  const dia = document.getElementById("s-nasc-dia");
+  if (dia) {
+    for (let d = 1; d <= 31; d++) {
+      const o = document.createElement("option");
+      o.value = String(d).padStart(2,"0");
+      o.textContent = String(d).padStart(2,"0");
+      dia.appendChild(o);
+    }
+  }
+  // Preencher anos (de hoje até 1920)
+  const ano = document.getElementById("s-nasc-ano");
+  if (ano) {
+    const anoAtual = new Date().getFullYear();
+    for (let y = anoAtual - 1; y >= 1920; y--) {
+      const o = document.createElement("option");
+      o.value = y;
+      o.textContent = y;
+      ano.appendChild(o);
+    }
+  }
+})();
+
+window.syncNascSelects = function() {
+  const d = el("s-nasc-dia")?.value;
+  const m = el("s-nasc-mes")?.value;
+  const y = el("s-nasc-ano")?.value;
+  [el("s-nasc-dia"), el("s-nasc-mes"), el("s-nasc-ano")].forEach(s => { if(s) { s.classList.remove("err"); s.style.borderColor="var(--bdr2)"; s.style.boxShadow="none"; } });
+  el("s-nasc-err") && (el("s-nasc-err").style.display = "none");
+  const hidden = el("s-nasc");
+  const hiddenTxt = el("s-nasc-txt");
+  if (d && m && y) {
+    if (hidden) hidden.value = `${y}-${m}-${d}`;
+    if (hiddenTxt) hiddenTxt.value = `${d}/${m}/${y}`;
+  } else {
+    if (hidden) hidden.value = "";
+    if (hiddenTxt) hiddenTxt.value = "";
+  }
+};
+
+// Stubs de compatibilidade
+window.mkDataNascTxt = function() {};
+window.abrirCalNasc  = function() {};
+window.sincNascPicker = function() {};
+function montarDataNasc() {}
+
+// ── Máscaras ─────────────────────────────────────────────────────────────────
+window.mkTel = function(inp) {
+  let v = inp.value.replace(/\D/g,"").slice(0,11);
+  if (v.length>10) v=`(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+  else if(v.length>6) v=`(${v.slice(0,2)}) ${v.slice(2,6)}-${v.slice(6)}`;
+  else if(v.length>2) v=`(${v.slice(0,2)}) ${v.slice(2)}`;
+  inp.value=v; limparErro(inp);
+};
+window.mkCpf = function(inp) {
+  let v=inp.value.replace(/\D/g,"").slice(0,14);
+  if(v.length<=11){
+    if(v.length>9) v=`${v.slice(0,3)}.${v.slice(3,6)}.${v.slice(6,9)}-${v.slice(9)}`;
+    else if(v.length>6) v=`${v.slice(0,3)}.${v.slice(3,6)}.${v.slice(6)}`;
+    else if(v.length>3) v=`${v.slice(0,3)}.${v.slice(3)}`;
+  } else {
+    if(v.length>12) v=`${v.slice(0,2)}.${v.slice(2,5)}.${v.slice(5,8)}/${v.slice(8,12)}-${v.slice(12)}`;
+    else if(v.length>8) v=`${v.slice(0,2)}.${v.slice(2,5)}.${v.slice(5,8)}/${v.slice(8)}`;
+    else if(v.length>5) v=`${v.slice(0,2)}.${v.slice(2,5)}.${v.slice(5)}`;
+    else if(v.length>2) v=`${v.slice(0,2)}.${v.slice(2)}`;
+  }
+  inp.value=v; limparErro(inp);
+};
+window.mkCep = function(inp) {
+  let v=inp.value.replace(/\D/g,"").slice(0,8);
+  if(v.length>5) v=`${v.slice(0,5)}-${v.slice(5)}`;
+  inp.value=v;
+};
+window.buscarCepS = async function() {
+  const cep = gv("s-cep").replace(/\D/g,"");
+  if (cep.length !== 8) return;
+  el("s-cep-status").style.display="";
+  el("s-cep-status").textContent="Buscando...";
+  try {
+    const r = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const d = await r.json();
+    if (!d.erro) {
+      el("s-rua").value    = d.logradouro || "";
+      el("s-bairro").value = d.bairro     || "";
+      el("s-cidade").value = d.localidade || "";
+      el("s-uf").value     = d.uf         || "";
+      el("s-cep-status").textContent = "✓ Endereço encontrado";
+      el("s-cep-status").style.color = "#15803d";
+      el("s-num").focus();
+    } else { el("s-cep-status").textContent = "CEP não encontrado"; el("s-cep-status").style.color="#ef4444"; }
+  } catch { el("s-cep-status").textContent = "Erro ao buscar CEP"; }
+};
+
+// ── Origem ───────────────────────────────────────────────────────────────────
+window.setOrigem = function(btn, val) {
+  document.querySelectorAll(".origem-btn").forEach(b=>b.classList.remove("sel"));
+  btn.classList.add("sel");
+  _origem = val;
+};
+
+// ── Grid de kits ─────────────────────────────────────────────────────────────
+// Flag global: mostrar só kit selecionado (quando vem do catálogo)
+
+function renderKitGrid() {
+  const grid = el("kit-grid"); if (!grid) return;
+  if (!_kits.length) {
+    grid.innerHTML = '<div style="text-align:center;padding:30px;color:var(--txt3);grid-column:1/-1">Nenhum kit disponível</div>';
+    return;
+  }
+
+  // Filtrar por busca
+  const q = (el("s-busca-kit")?.value || "").toLowerCase().trim();
+  const soUm = _mostrarSoKitSel && _kitSel;
+  const kitsFiltrados = soUm ? [_kitSel] : (q
+    ? _kits.filter(k => (k.nome||"").toLowerCase().includes(q) || (k.tema||"").toLowerCase().includes(q) || (k.descricao||"").toLowerCase().includes(q))
+    : _kits);
+  const listaKits = kitsFiltrados;
+
+  // Atualizar contador
+  const cnt = el("s-busca-cnt");
+  if (cnt) cnt.textContent = q ? `${listaKits.length} resultado${listaKits.length !== 1 ? "s" : ""}` : "";
+
+  if (!listaKits.length) {
+    grid.innerHTML = `<div style="text-align:center;padding:40px;color:var(--txt3);grid-column:1/-1">
+      <i class="ti ti-search-off" style="font-size:36px;display:block;margin-bottom:10px;opacity:.4"></i>
+      <div style="font-size:14px">Nenhum kit encontrado para "<strong>${q}</strong>"</div>
+      <button onclick="window.renderKitGrid && (el('s-busca-kit').value='') && window.renderKitGrid()" style="margin-top:12px;padding:7px 16px;border-radius:8px;border:1.5px solid var(--bdr2);background:none;font-size:13px;cursor:pointer;font-family:inherit;color:var(--p);font-weight:600">Limpar busca</button>
+    </div>`;
+    return;
+  }
+
+  function cardKit(k) {
+    const fotos = (k.fotos&&k.fotos.length)?k.fotos:(k.foto?[k.foto]:[]);
+    const alugado = estaAlugado(k.id, _hoje);
+    const sel = _kitSel?.id === k.id;
+
+    // Card grande quando é o único selecionado
+    if (soUm) {
+      const itensLista = (k.itens||[]).filter(i=>i.tipo!=="kit").slice(0,6);
+      return `<div class="kit-card sel" style="grid-column:1/-1;display:flex;gap:0;border-radius:18px;overflow:hidden;border:2px solid var(--p);box-shadow:0 8px 32px rgba(212,48,122,.15);cursor:default">
+        <!-- Imagem grande -->
+        <div style="flex:0 0 280px;min-height:260px;background:var(--pl);display:flex;align-items:center;justify-content:center;position:relative">
+          ${fotos[0]
+            ? `<img src="${fotos[0]}" alt="${k.nome}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" loading="lazy">`
+            : `<div style="font-size:60px">🎀</div>`}
+          <div class="kit-card-chk" style="position:absolute;top:12px;right:12px;width:32px;height:32px;font-size:16px">✓</div>
+        </div>
+        <!-- Info -->
+        <div style="flex:1;padding:24px 28px;display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${k.tema||"Kit"}</div>
+            <div style="font-size:22px;font-weight:700;color:var(--txt);margin-bottom:10px">${k.nome}</div>
+            ${k.descricao ? `<div style="font-size:13px;color:var(--txt3);margin-bottom:14px;line-height:1.6">${k.descricao}</div>` : ""}
+            ${itensLista.length ? `<div style="font-size:12px;color:var(--txt3);margin-bottom:14px">
+              <strong style="color:var(--txt2);display:block;margin-bottom:6px">Itens inclusos:</strong>
+              ${itensLista.map(i=>`<span style="display:inline-block;background:var(--pl);color:var(--pd);padding:2px 8px;border-radius:20px;font-size:11px;margin:2px">✓ ${i.nome||i.id}</span>`).join("")}
+              ${(k.itens||[]).length > 6 ? `<span style="font-size:11px;color:var(--txt3)"> +${(k.itens||[]).length-6} itens</span>` : ""}
+            </div>` : ""}
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div>
+              <div style="font-size:26px;font-weight:800;color:var(--p)">${fmtV(k.valorTotal)}</div>
+              <span class="kit-card-disp ${alugado?"ocupado":"livre"}" style="font-size:12px">${alugado?"🔒 Indisponível hoje":"✅ Disponível"}</span>
+            </div>
+            <div style="font-size:12px;color:var(--p);font-weight:600;display:flex;align-items:center;gap:4px">
+              <i class="ti ti-check-circle" style="font-size:18px"></i> Kit selecionado
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // Card normal (grid)
+    return `<div class="kit-card${sel?" sel":""}" onclick="selKit('${k.id}')">
+      <div class="kit-card-chk">✓</div>
+      <div class="kit-card-img">${fotos[0]?`<img src="${fotos[0]}" alt="${k.nome}" loading="lazy">`:'<div class="kit-card-img-ph">🎀</div>'}</div>
+      <div class="kit-card-body">
+        <div class="kit-card-tema">${k.tema||"Kit"}</div>
+        <div class="kit-card-nome">${k.nome}</div>
+        <div class="kit-card-preco">${fmtV(k.valorTotal)}</div>
+        <span class="kit-card-disp ${alugado?"ocupado":"livre"}">${alugado?"🔒 Alugado hoje":"✅ Disponível"}</span>
+      </div>
+    </div>`;
+  }
+
+  const botaoVerTodos = _mostrarSoKitSel ? `
+    <div style="grid-column:1/-1;text-align:center;padding:14px 0 4px">
+      <button onclick="window.verTodosKits()" style="padding:9px 20px;border-radius:10px;border:1.5px solid var(--bdr2);background:none;color:var(--p);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px">
+        <i class="ti ti-layout-grid"></i> Ver todos os kits disponíveis
+      </button>
+    </div>` : "";
+
+  grid.innerHTML = listaKits.map(cardKit).join("") + botaoVerTodos;
+}
+
+window.verTodosKits = function() {
+  _mostrarSoKitSel = false;
+  renderKitGrid();
+};
+
+window.selKit = function(id) {
+  _kitSel = _kits.find(k=>k.id===id) || null;
+  renderKitGrid();
+};
+
+// ── Calendário ───────────────────────────────────────────────────────────────
+function estaOcupado(kitId, iso) {
+  return _locacoes.some(l =>
+    (l.status==="ativo"||l.status==="orcamento") &&
+    (l.itens||[]).some(i=>i.tipo==="kit"&&i.id===kitId) &&
+    l.retirada<=iso && l.devolucao>=iso
+  );
+}
+function estaAlugado(kitId, iso) { return estaOcupado(kitId, iso); }
+
+function renderCal() {
+  const hdr  = el("cal-hdr"); const body = el("cal-body"); if (!hdr||!body) return;
+  const dias = ["D","S","T","Q","Q","S","S"];
+  hdr.innerHTML = dias.map(d=>`<div class="cal-hdr">${d}</div>`).join("");
+  const mes = new Date(_calAno,_calMes,1);
+  const mesNome = mes.toLocaleDateString("pt-BR",{month:"long",year:"numeric"});
+  el("cal-mes").textContent = mesNome.charAt(0).toUpperCase()+mesNome.slice(1);
+  const inicio = mes.getDay();
+  const total  = new Date(_calAno,_calMes+1,0).getDate();
+  let html = "";
+  for(let i=0;i<inicio;i++) html+=`<div class="cal-dia vazio"></div>`;
+  for(let d=1;d<=total;d++){
+    const iso = `${_calAno}-${String(_calMes+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const passado = iso < _hoje;
+    const ocup    = _kitSel ? estaOcupado(_kitSel.id, iso) : false;
+    const isRet   = iso === _ret;
+    const isDev   = iso === _dev;
+    const inRange = _ret&&_dev && iso>_ret && iso<_dev;
+    let cls = "cal-dia";
+    if(passado) cls+=" passado";
+    else if(ocup) cls+=" ocupado";
+    else if(isRet&&isDev) cls+=" ret dev";
+    else if(isRet) cls+=" ret";
+    else if(isDev) cls+=" dev";
+    else if(inRange) cls+=" range";
+    const click = (!passado&&!ocup) ? `onclick="clicDia('${iso}')"` : "";
+    html+=`<div class="${cls}" ${click}>${d}</div>`;
+  }
+  body.innerHTML = html;
+  renderCalInfo();
+}
+
+window.calNav = function(d) {
+  _calMes += d;
+  if(_calMes>11){_calMes=0;_calAno++;}
+  if(_calMes<0){_calMes=11;_calAno--;}
+  renderCal();
+};
+
+window.clicDia = function(iso) {
+  if(!_ret || (_ret&&_dev)) { _ret=iso; _dev=null; }
+  else if(iso<_ret) { _dev=_ret; _ret=iso; }
+  else _dev=iso;
+  renderCal();
+};
+
+function renderCalInfo() {
+  const info = el("cal-info"); if(!info) return;
+  let html = "";
+  if(_ret) html+=`<span class="cal-chip ret">📤 Retirada: ${fmtD(_ret)}</span>`;
+  if(_dev) html+=`<span class="cal-chip dev">📥 Devolução: ${fmtD(_dev)}</span>`;
+  if(_ret&&_dev){
+    const dias = Math.round((new Date(_dev)-new Date(_ret))/864e5)+1;
+    html+=`<span class="cal-chip dur">⏱ ${dias} dia${dias!==1?"s":""}</span>`;
+  }
+  info.innerHTML = html || `<span style="font-size:12px;color:var(--txt3)">Toque no dia de retirada</span>`;
+}
+
+// ── Resumo ───────────────────────────────────────────────────────────────────
+function renderResumo() {
+  const dias = _ret&&_dev ? Math.round((new Date(_dev)-new Date(_ret))/864e5)+1 : 0;
+  const div = el("resumo-content"); if(!div) return;
+  div.innerHTML = `
+    <div class="resumo-row"><span class="resumo-lbl">👤 Cliente</span><span class="resumo-val">${gv("s-nome")}</span></div>
+    <div class="resumo-row"><span class="resumo-lbl">📱 WhatsApp</span><span class="resumo-val">${gv("s-tel")}</span></div>
+    <div class="resumo-row"><span class="resumo-lbl">🎉 Evento</span><span class="resumo-val">${gv("s-tipo-evento")}</span></div>
+    ${_kitSel ? `<div class="resumo-row"><span class="resumo-lbl">🎀 Kit</span><span class="resumo-val">${_kitSel.nome}</span></div>` : ""}
+    <div class="resumo-row"><span class="resumo-lbl">📤 Retirada</span><span class="resumo-val">${fmtD(_ret)}</span></div>
+    <div class="resumo-row"><span class="resumo-lbl">📥 Devolução</span><span class="resumo-val">${fmtD(_dev)}</span></div>
+    <div class="resumo-row"><span class="resumo-lbl">⏱ Período</span><span class="resumo-val">${dias} dia${dias!==1?"s":""}</span></div>
+    ${obterLocalEvento() ? `<div class="resumo-row"><span class="resumo-lbl">📍 Local</span><span class="resumo-val">${obterLocalEvento()}</span></div>` : ""}
+    ${ (document.getElementById("s-montagem")||{}).checked ? `<div class="resumo-row"><span class="resumo-lbl">🔧 Montagem</span><span class="resumo-val" style="color:#15803d;font-weight:700">✅ Com montagem e desmontagem</span></div>` : "" }
+    ${_kitSel ? `<div class="resumo-row"><span class="resumo-lbl">💰 Valor do kit</span><span class="resumo-total">${fmtV(_kitSel.valorTotal)}</span></div>` : ""}
+    ${_origem ? `<div class="resumo-row"><span class="resumo-lbl">💡 Como nos conheceu</span><span class="resumo-val">${_origem}</span></div>` : ""}
+    ${ (document.getElementById("s-entrega")||{}).checked ? `<div class="resumo-row"><span class="resumo-lbl">🚚 Entrega</span><span class="resumo-val" style="color:#15803d;font-weight:700">✅ Com entrega e montagem</span></div>` : "" }
+    ${ gv("s-adicionais") ? `<div class="resumo-row"><span class="resumo-lbl">✨ Pedidos adicionais</span><span class="resumo-val" style="color:var(--p)">${gv("s-adicionais")}</span></div>` : "" }
+    ${ gv("s-obs") ? `<div class="resumo-row"><span class="resumo-lbl">📝 Observações</span><span class="resumo-val">${gv("s-obs")}</span></div>` : "" }
+    ${ window._cupomAplicado ? `<div class="resumo-row"><span class="resumo-lbl">🎟️ Cupom ${window._cupomAplicado.codigo}</span><span class="resumo-val" style="color:#15803d;font-weight:700">− ${window._cupomAplicado.tipo==="pct" ? window._cupomAplicado.valor+"%" : fmtV(window._cupomAplicado.valor)}</span></div>` : "" }`;
+}
+
+// ── Cupom ─────────────────────────────────────────────────────────────────────
+window._cupomAplicado = null;
+window.aplicarCupomSol = async function() {
+  const codigo = (document.getElementById("s-cupom")?.value || "").trim().toUpperCase();
+  const msg    = document.getElementById("s-cupom-msg");
+  if (!codigo) return;
+  if (!msg) return;
+
+  msg.style.display = "";
+  msg.style.background = "#f0fdf4";
+  msg.style.color = "#15803d";
+  msg.textContent = "Verificando...";
+
+  try {
+    const { collection, query, where, getDocs } =
+      await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const snap = await getDocs(query(collection(db, "cupons"), where("codigo","==",codigo)));
+    if (snap.empty) throw new Error("Cupom não encontrado");
+    const cupom = { id: snap.docs[0].id, ...snap.docs[0].data() };
+    if (!cupom.ativo) throw new Error("Cupom inativo");
+    if (cupom.usosMax && cupom.usos >= cupom.usosMax) throw new Error("Cupom esgotado");
+
+    window._cupomAplicado = cupom;
+    const desc = cupom.tipo === "pct" ? `${cupom.valor}% de desconto` : `R$ ${cupom.valor.toFixed(2)} de desconto`;
+    msg.style.background = "#f0fdf4";
+    msg.style.color = "#15803d";
+    msg.textContent = `✓ Cupom "${cupom.codigo}" aplicado — ${desc}!`;
+  } catch(e) {
+    window._cupomAplicado = null;
+    msg.style.background = "#fff1f2";
+    msg.style.color = "#b91c1c";
+    msg.textContent = e.message || "Cupom inválido";
+  }
+};
+
+// ── Enviar ───────────────────────────────────────────────────────────────────
+window.enviarSolicitacao = async function() {
+  const btn = el("btn-enviar");
+  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader"></i> Enviando...';
+  // Garantir que s-local está atualizado com o endereço selecionado
+  const localCalculado = obterLocalEvento();
+  if (el("s-local")) el("s-local").value = localCalculado;
+  const endParts = [gv("s-rua"),gv("s-num"),gv("s-bairro")].filter(Boolean).join(", ");
+  const endCompleto = [endParts, gv("s-cidade"), gv("s-uf")].filter(Boolean).join(" | ");
+  try {
+    const sol = {
+      // Dados do cliente
+      nomeCliente:  gv("s-nome"),
+      cpf:          gv("s-cpf"),
+      tel:          gv("s-tel"),
+      email:        gv("s-email"),
+      nasc:         gv("s-nasc") || window._dadosPrefill?.nasc || "",
+      cep:          gv("s-cep"),
+      rua:          gv("s-rua"),
+      numero:       gv("s-num"),
+      bairro:       gv("s-bairro"),
+      cidade:       gv("s-cidade"),
+      uf:           gv("s-uf"),
+      complemento:  gv("s-compl"),
+      endFormatado: endCompleto,
+      origem:       _origem || window._dadosPrefill?.origem || "Área do cliente",
+      obs:          gv("s-obs"),
+      adicionais:   gv("s-adicionais"),
+      cupomCodigo:  window._cupomAplicado?.codigo || null,
+      cupomDesconto: window._cupomAplicado ? (
+        window._cupomAplicado.tipo === "pct"
+          ? Math.round((_kitSel?.valorTotal||0) * window._cupomAplicado.valor / 100 * 100) / 100
+          : window._cupomAplicado.valor
+      ) : 0,
+      // Dados do pedido
+      kitId:        _kitSel?.id    || null,
+      kitNome:      _kitSel?.nome  || null,
+      kitValor:     _kitSel?.valorTotal || null,
+      tipoEvento:   gv("s-tipo-evento"),
+      retirada:     _ret,
+      devolucao:    _dev,
+      local:        obterLocalEvento() || gv("s-local"),
+      localTipo:    _localEventoTipo,
+      entrega:      (el("s-entrega")||{}).checked || false,
+      montagem:     (el("s-montagem")||{}).checked || false,
+      entregaEnd:   montarEndEntrega(),
+      entregaObs:   gv("s-entrega-obs"),
+      complemento:  gv("s-compl"),
+    // Meta
+      comprovante:     gv("s-comprovante") || null,
+      comprovanteNome: (el("comp-nome")?.textContent) || "",
+      comprovanteTipo: gv("s-comprovante-tipo") || "",
+      status:       "pendente",
+      criadoEm:     serverTimestamp(),
+      origem_canal: "catalogo_online"
+    };
+    const docRef = await addDoc(collection(db,"solicitacoes"), sol);
+
+    // Salvar/atualizar perfil do cliente em clientes_portal para aparecer na área do cliente
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        const perfilRef = doc(db,"clientes_portal", user.uid);
+        const perfilSnap = await getDoc(perfilRef);
+        const perfilAtual = perfilSnap.exists() ? perfilSnap.data() : {};
+        // Só atualizar campos que estão vazios no perfil atual (não sobrescrever edições posteriores)
+        const atualizar = {};
+        const mapear = {
+          nome:   sol.nomeCliente,
+          email:  sol.email,
+          tel:    sol.tel,
+          cpf:    sol.cpf,
+          nasc:   sol.nasc,
+          cep:    sol.cep,
+          rua:    sol.rua,
+          num:    sol.numero,
+          bairro: sol.bairro,
+          cidade: sol.cidade,
+          uf:     sol.uf,
+          comp:   sol.complemento,
+        };
+        for (const [k, v] of Object.entries(mapear)) {
+          if (v && !perfilAtual[k]) atualizar[k] = v;
+        }
+        // Sempre atualizar nome/tel/email se tiver valor (dados principais)
+        if (sol.nomeCliente) atualizar.nome = sol.nomeCliente;
+        if (sol.tel)         atualizar.tel  = sol.tel;
+        if (sol.email)       atualizar.email = sol.email;
+        atualizar.atualizadoEm = serverTimestamp();
+        await setDoc(perfilRef, atualizar, { merge: true });
+      }
+    } catch(_) {}
+
+    // Salvar pedido no localStorage para exibir na área do cliente
+    // mesmo antes das regras do Firestore serem atualizadas
+    try {
+      const solParaSalvar = {
+        id:         docRef.id,
+        _tipo:      "solicitacao",
+        status:     "pendente",
+        nomeCliente: sol.nomeCliente,
+        email:      sol.email,
+        tel:        sol.tel,
+        kitNome:    sol.kitNome,
+        kitValor:   sol.kitValor,
+        tipoEvento: sol.tipoEvento,
+        retirada:   sol.retirada,
+        devolucao:  sol.devolucao,
+        criadoEm:   { seconds: Math.floor(Date.now()/1000) }
+      };
+      const chave = "k_pedidos_" + (sol.email || "").toLowerCase();
+      const existentes = JSON.parse(localStorage.getItem(chave) || "[]");
+      existentes.unshift(solParaSalvar);
+      localStorage.setItem(chave, JSON.stringify(existentes.slice(0, 10)));
+    } catch(_) {}
+
+    // Registrar uso do cupom se aplicado
+    if (window._cupomAplicado?.id) {
+      try {
+        const { doc, getDoc, updateDoc } =
+          await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+        const ref   = doc(db, "cupons", window._cupomAplicado.id);
+        const snap  = await getDoc(ref);
+        if (snap.exists()) await updateDoc(ref, { usos: (snap.data().usos||0)+1 });
+      } catch(_) {}
+      window._cupomAplicado = null;
+    }
+
+    // Conta será criada na tela de sucesso quando o cliente definir a senha
+
+    // Tela de sucesso
+    document.querySelectorAll(".wiz-panel").forEach(p=>p.classList.remove("on"));
+    el("steps").style.display = "none";
+    el("tela-sucesso").style.display = "block";
+    const emailSolRes = gv("s-email").trim().toLowerCase();
+    el("sucesso-resumo").innerHTML = `
+      <div style="text-align:left;font-size:13px;line-height:1.8;background:#f9f5f8;border-radius:12px;padding:14px;margin-bottom:4px">
+        <strong style="font-size:14px;color:#150810">📋 Resumo do pedido</strong><br><br>
+        ${_kitSel ? `🎀 <strong>Kit:</strong> ${_kitSel.nome}<br>` : ""}
+        🎉 <strong>Evento:</strong> ${gv("s-tipo-evento")}<br>
+        📤 <strong>Retirada:</strong> ${fmtD(_ret)}<br>
+        📥 <strong>Devolução:</strong> ${fmtD(_dev)}<br>
+        📱 <strong>Contato:</strong> ${gv("s-tel")}
+      </div>
+    `;
+
+    // Mostrar bloco de senha — pular se veio logado da área do cliente
+    const fromCliente = new URLSearchParams(window.location.search).get("from") === "cliente";
+    if (fromCliente) {
+      // Já está logado — redirecionar direto para a área do cliente
+      el("bloco-criar-senha").style.display = "none";
+      el("bloco-sem-conta").style.display = "none";
+      const div = document.createElement("div");
+      div.style.cssText = "background:#f0fdf4;border:1.5px solid #86efac;border-radius:16px;padding:20px;margin:16px 0;text-align:center";
+      div.innerHTML = `
+        <i class="ti ti-circle-check" style="font-size:32px;color:#16a34a;display:block;margin-bottom:8px"></i>
+        <div style="font-size:15px;font-weight:700;color:#15803d;margin-bottom:4px">Solicitação enviada!</div>
+        <div style="font-size:13px;color:#166534;margin-bottom:16px">Você será redirecionada para sua área em instantes.</div>
+        <a href="cliente.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:#16a34a;color:#fff;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none">
+          <i class="ti ti-arrow-right"></i> Ir para minha área agora
+        </a>`;
+      el("tela-sucesso").appendChild(div);
+      // Redirecionar automaticamente após 3s
+      setTimeout(() => { window.location.href = "cliente.html"; }, 3000);
+    } else {
+      el("bloco-criar-senha").style.display = "";
+      el("bloco-sem-conta").style.display = "none";
+      if (!emailSolRes) {
+        const emailRow = document.getElementById("suc-email-row");
+        if (emailRow) emailRow.style.display = "";
+      } else {
+        const emailDisp = document.getElementById("suc-email-disp");
+        const emailDispRow = document.getElementById("suc-email-disp-row");
+        if (emailDisp) emailDisp.textContent = emailSolRes;
+        if (emailDispRow) emailDispRow.style.display = "";
+      }
+    }
+    window._wppFinal = sol;
+    window._solDadosCliente = {
+      nome:   sol.nomeCliente || "",
+      email:  sol.email       || "",
+      tel:    sol.tel         || "",
+      cpf:    sol.cpf         || "",
+      nasc:   sol.nasc        || "",
+      cep:    sol.cep         || "",
+      rua:    sol.rua         || "",
+      num:    sol.numero      || "",
+      bairro: sol.bairro      || "",
+      cidade: sol.cidade      || "",
+      uf:     sol.uf          || "",
+      comp:   sol.complemento || "",
+    };
+    window.scrollTo({top:0,behavior:"smooth"});
+  } catch(e) {
+    btn.disabled=false; btn.innerHTML='<i class="ti ti-send"></i> Enviar solicitação';
+    alert("Erro ao enviar: " + e.message);
+  }
+};
+
+// ─── Definir senha e ir para área do cliente ─────────────────────────────────
+// Redirecionar para área do cliente passando credenciais temporárias via sessionStorage
+// Salvar senha na tela de sucesso e ir para área do cliente
+window.salvarSenhaEIr = async function() {
+  const nova  = document.getElementById("suc-senha")?.value || "";
+  const conf  = document.getElementById("suc-conf")?.value || "";
+  const msg   = document.getElementById("suc-msg");
+  const btn   = document.getElementById("suc-btn-senha");
+  const emailInput = document.getElementById("suc-email");
+  const emailFinal = (emailInput?.value.trim().toLowerCase()) ||
+                     gv("s-email").trim().toLowerCase() || "";
+
+  function showM(txt, tipo) {
+    msg.textContent = txt;
+    msg.style.display = "";
+    msg.style.background = tipo === "err" ? "#fee2e2" : "#d1fae5";
+    msg.style.color      = tipo === "err" ? "#dc2626" : "#065f46";
+    msg.style.border     = "1px solid " + (tipo === "err" ? "#fca5a5" : "#6ee7b7");
+  }
+
+  if (!emailFinal) { showM("Informe seu e-mail","err"); return; }
+  if (nova.length < 6) { showM("Mínimo 6 caracteres","err"); return; }
+  if (nova !== conf)   { showM("As senhas não coincidem","err"); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader"></i> Salvando...';
+
+  try {
+    const { updatePassword, EmailAuthProvider, reauthenticateWithCredential, signInWithEmailAndPassword } =
+      await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+
+    // Caso 1: usuário autenticado — reautenticar com a senha que acabou de digitar
+    // não como senha nova, mas tentando fazer signIn fresco para validar sessão
+    if (auth.currentUser) {
+      const email = auth.currentUser.email;
+      try {
+        // Tentar reautenticar com qualquer senha salva temporariamente
+        const senhaTemp = window._solTempPass;
+        if (senhaTemp) {
+          const cred = EmailAuthProvider.credential(email, senhaTemp);
+          await reauthenticateWithCredential(auth.currentUser, cred);
+        }
+      } catch(_) { /* ignora — tenta updatePassword mesmo assim */ }
+
+      try {
+        await updatePassword(auth.currentUser, nova);
+      } catch(e2) {
+        if (e2.code === "auth/requires-recent-login") {
+          // Sessão expirou — criar conta nova com a senha certa diretamente
+          // (signOut e createUser)
+          await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js")
+            .then(m => m.signOut(auth)).catch(()=>{});
+          const novaCred = await createUserWithEmailAndPassword(auth, email, nova).catch(()=>null);
+          if (!novaCred) {
+            // Conta já existe — fazer signIn e forçar reset
+            showM("Sessão expirada. Use 'Esqueceu a senha?' na área do cliente.","err");
+            btn.disabled = false;
+            btn.innerHTML = '<i class="ti ti-arrow-right"></i> Salvar senha e entrar na minha área';
+            setTimeout(() => { window.location.href = "cliente.html"; }, 2500);
+            return;
+          }
+        } else {
+          throw e2;
+        }
+      }
+
+      // Salvar/atualizar todos os dados do formulário no perfil
+      try {
+        const d = window._solDadosCliente || {};
+        const perfilRef = doc(db,"clientes_portal", auth.currentUser.uid);
+        const payload = {};
+        const campos = {nome:d.nome,email:emailFinal||d.email,tel:d.tel,cpf:d.cpf,nasc:d.nasc,cep:d.cep,rua:d.rua,num:d.num,bairro:d.bairro,cidade:d.cidade,uf:d.uf,comp:d.comp};
+        for (const [k,v] of Object.entries(campos)) { if (v) payload[k] = v; }
+        payload.uid = auth.currentUser.uid;
+        payload.atualizadoEm = serverTimestamp();
+        await setDoc(perfilRef, payload, { merge: true });
+      } catch(_) {}
+
+      showM("Senha salva! Abrindo sua área... 🎀","ok");
+      await new Promise(r => setTimeout(r, 1500));
+      window.location.href = "cliente.html";
+      return;
+    }
+
+    // Caso 2: sem usuário autenticado — criar conta COM a senha escolhida direto
+    const cred = await createUserWithEmailAndPassword(auth, emailFinal, nova).catch(()=>null);
+    if (cred) {
+      const d2 = window._solDadosCliente || {};
+      // Conta criada com senha certa direto — sem senha temporária
+      await setDoc(doc(db,"usuarios",cred.user.uid), {
+        nome: d2.nome || "", email: emailFinal,
+        tel: d2.tel || "", perfil:"cliente", ativo:true, criadoEm: serverTimestamp()
+      });
+      await setDoc(doc(db,"clientes_portal",cred.user.uid), {
+        nome:   d2.nome   || "",
+        email:  emailFinal,
+        tel:    d2.tel    || "",
+        cpf:    d2.cpf    || "",
+        nasc:   d2.nasc   || "",
+        cep:    d2.cep    || "",
+        rua:    d2.rua    || "",
+        num:    d2.num    || "",
+        bairro: d2.bairro || "",
+        cidade: d2.cidade || "",
+        uf:     d2.uf     || "",
+        comp:   d2.comp   || "",
+        uid:    cred.user.uid,
+        criadoEm: serverTimestamp()
+      });
+      showM("Conta criada! Abrindo sua área... 🎀","ok");
+      await new Promise(r => setTimeout(r, 1500));
+      window.location.href = "cliente.html";
+    } else {
+      // Conta já existe: não sabemos a senha atual
+      // Pedir para o cliente usar "Esqueceu a senha?" para redefinir
+      showM("Este e-mail já tem cadastro. Use 'Esqueceu a senha?' na área do cliente para criar uma nova senha.","err");
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ti ti-arrow-right"></i> Salvar senha e entrar na minha área';
+      // Mostrar botão de ir para área mesmo assim
+      setTimeout(() => {
+        localStorage.setItem("k_cli_email", emailFinal);
+        window.location.href = "cliente.html";
+      }, 3000);
+    }
+
+  } catch(e) {
+    showM("Erro: " + (e.code || e.message),"err");
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-arrow-right"></i> Salvar senha e entrar na minha área';
+  }
+};
+
+// ─── Entrega ────────────────────────────────────────────────────────────────── // 'cadastrado' | 'evento' | 'outro'
+
+// ─── Local do evento ────────────────────────────────────────────────────────
+let _localEventoTipo = "";
+
+function montarEndCadastrado() {
+  const rua = gv("s-rua"); const num = gv("s-num");
+  const bairro = gv("s-bairro"); const cidade = gv("s-cidade"); const uf = gv("s-uf");
+  return [rua && num ? rua+", "+num : rua, bairro, cidade && uf ? cidade+"/"+uf : cidade].filter(Boolean).join(" — ");
+}
+
+window.setLocalEvento = function(tipo) {
+  _localEventoTipo = tipo;
+  // Map tipo to id suffix
+  const tipoMap = { cadastrado: "cad", outro: "outro" };
+  ["cad","outro"].forEach(t => {
+    const el_ = el("opt-loc-" + t);
+    if (el_) el_.classList.toggle("sel", tipoMap[tipo] === t);
+  });
+  const outroForm = el("outro-local-form");
+  if (outroForm) outroForm.style.display = tipo === "outro" ? "" : "none";
+  // Atualizar hidden input s-local
+  if (tipo === "cadastrado") {
+    const end = montarEndCadastrado();
+    el("s-local") && (el("s-local").value = end);
+  } else {
+    el("s-local") && (el("s-local").value = "");
+  }
+};
+
+window.buscarCepLocal = async function() {
+  const cep = gv("s-local-cep").replace(/\D/g,"");
+  if (cep.length !== 8) return;
+  const st = el("s-local-cep-status");
+  if (st) { st.textContent = "Buscando..."; st.style.color = "var(--txt3)"; }
+  try {
+    const r = await fetch("https://viacep.com.br/ws/" + cep + "/json/");
+    const d = await r.json();
+    if (!d.erro) {
+      const ru = el("s-local-rua");    if (ru) ru.value = d.logradouro || "";
+      const ba = el("s-local-bairro"); if (ba) ba.value = d.bairro     || "";
+      const ci = el("s-local-cidade"); if (ci) ci.value = (d.localidade||"") + (d.uf ? "/"+d.uf : "");
+      if (st) { st.textContent = "✓ " + (d.localidade||"") + "/" + (d.uf||""); st.style.color = "#15803d"; }
+    } else { if (st) { st.textContent = "CEP não encontrado"; st.style.color = "#ef4444"; } }
+  } catch { if (st) st.textContent = "Erro ao buscar"; }
+};
+
+function montarLocalOutro() {
+  const rua    = gv("s-local-rua");
+  const num    = gv("s-local-num");
+  const bairro = gv("s-local-bairro");
+  const cidade = gv("s-local-cidade");
+  const compl  = gv("s-local-compl");
+  const cep    = gv("s-local-cep");
+  return [rua && num ? rua+", "+num : rua, compl, bairro, cidade, cep ? "CEP: "+cep : ""].filter(Boolean).join(" — ");
+}
+
+function obterLocalEvento() {
+  if (_localEventoTipo === "cadastrado") return montarEndCadastrado();
+  if (_localEventoTipo === "outro") return montarLocalOutro();
+  return "";
+}
+
+// Inicializar local do evento ao entrar no step 3
+function initLocalEvento() {
+  const end = montarEndCadastrado();
+  const txt = el("loc-cad-texto");
+  if (txt) txt.textContent = end || "Preencha seu endereço no step 1";
+  if (end) setLocalEvento("cadastrado");
+}
+
+// ─── Entrega ──────────────────────────────────────────────────────────────────
+let _endEntregaTipo = "";
+
+window.toggleEntregaSol = function(ativo) {
+  const info = el("s-entrega-info");
+  if (info) info.style.display = ativo ? "" : "none";
+  if (ativo) {
+    const end = montarEndCadastrado();
+    const txt = el("end-cad-texto");
+    if (txt) txt.textContent = end || "Preencha seu endereço no step 1";
+    if (end) setEndEntrega("cadastrado");
+    else setEndEntrega("evento");
+  } else {
+    _endEntregaTipo = "";
+  }
+};
+
+window.setEndEntrega = function(tipo) {
+  _endEntregaTipo = tipo;
+  // Map full names to id suffixes
+  const idMap = { cadastrado:"cad", evento:"evento", outro:"outro" };
+  ["cadastrado","evento","outro"].forEach(t => {
+    const el_ = el("opt-end-" + (idMap[t] || t));
+    if (el_) el_.classList.toggle("sel", t === tipo);
+  });
+  const outroForm = el("outro-end-form");
+  if (outroForm) outroForm.style.display = tipo === "outro" ? "" : "none";
+};
+
+window.buscarCepEntrega = async function() {
+  const cep = gv("s-entrega-cep").replace(/\D/g,"");
+  if (cep.length !== 8) return;
+  const st = el("s-entrega-cep-status");
+  if (st) { st.textContent = "Buscando..."; st.style.color = "var(--txt3)"; }
+  try {
+    const r = await fetch("https://viacep.com.br/ws/" + cep + "/json/");
+    const d = await r.json();
+    if (!d.erro) {
+      const rua = el("s-entrega-rua"); if (rua) rua.value = d.logradouro || "";
+      if (st) { st.textContent = "✓ " + (d.logradouro||"") + " — " + (d.localidade||"") + "/" + (d.uf||""); st.style.color = "#15803d"; }
+    } else {
+      if (st) { st.textContent = "CEP não encontrado"; st.style.color = "#ef4444"; }
+    }
+  } catch { if (st) st.textContent = "Erro ao buscar"; }
+};
+
+// Montar endereço de entrega para salvar
+function montarEndEntrega() {
+  if (_endEntregaTipo === "cadastrado") {
+    const rua = gv("s-rua"); const num = gv("s-num"); const bairro = gv("s-bairro");
+    const cidade = gv("s-cidade"); const uf = gv("s-uf"); const cep = gv("s-cep");
+    return [rua && num ? rua+", "+num : rua, bairro, cidade && uf ? cidade+"/"+uf : cidade, cep ? "CEP: "+cep : ""].filter(Boolean).join(" — ");
+  }
+  if (_endEntregaTipo === "evento") return obterLocalEvento() || gv("s-local") || "Local do evento";
+  if (_endEntregaTipo === "outro") {
+    const rua = gv("s-entrega-rua"); const num = gv("s-entrega-num");
+    const compl = gv("s-entrega-compl"); const cep = gv("s-entrega-cep");
+    return [rua && num ? rua+", "+num : rua, compl, cep ? "CEP: "+cep : ""].filter(Boolean).join(" — ");
+  }
+  return "";
+}
+
+// ─── Comprovante de residência ──────────────────────────────────────────────
+window.carregarComp = function(input) {
+  const file = input.files[0]; if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { alert("Arquivo muito grande! Máx. 5MB."); input.value=""; return; }
+  const r = new FileReader();
+  r.onload = e => {
+    el("s-comprovante").value      = e.target.result;
+    el("s-comprovante-tipo").value = file.type;
+    el("comp-nome").textContent    = file.name;
+    el("comp-tam").textContent     = (file.size / 1024).toFixed(0) + " KB";
+    el("comp-preview").style.display = "";
+  };
+  r.readAsDataURL(file);
+};
+
+window.removerComp = function() {
+  el("s-comprovante").value      = "";
+  el("s-comprovante-tipo").value = "";
+  el("comp-preview").style.display = "none";
+  el("comp-file").value = "";
+};
+
+window.abrirWpp = function() {
+  const tel = (_cfg.wppEmpresa||_cfg.rodAluguel||"").replace(/\D/g,"").slice(-11);
+  if (!tel) return;
+  const s = window._wppFinal || {};
+  const msg = `Olá, ${_cfg.nome||"Katreseli"}! 🎀 Acabei de enviar uma solicitação de locação pelo site.\n\n👤 *${s.nomeCliente}*\n🎉 Evento: ${s.tipoEvento}\n${s.kitNome?`🎀 Kit: ${s.kitNome}\n`:""}📤 Retirada: ${fmtD(s.retirada)}\n📥 Devolução: ${fmtD(s.devolucao)}`;
+  window.open(`https://wa.me/55${tel}?text=${encodeURIComponent(msg)}`, "_blank");
+};
+</script>
+</body>
+</html>

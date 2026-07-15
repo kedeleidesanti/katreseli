@@ -1,0 +1,94 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Admins autorizados ─────────────────────────────────────────────────────
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email in [
+        "ksanti16@gmail.com",
+        "loislene.cristine05@gmail.com"
+      ];
+    }
+
+    // ── Usuário autenticado (cliente logado) ───────────────────────────────────
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    // ── Locações — admin tem acesso total; cliente lê as próprias ─────────────
+    match /locacoes/{id} {
+      allow read: if isAdmin() ||
+        (isAuth() && (
+          resource.data.emailCliente == request.auth.token.email ||
+          resource.data.email        == request.auth.token.email
+        ));
+      allow write: if isAdmin();
+    }
+
+    // ── Clientes — admins têm acesso total; cliente lê seu próprio doc por e-mail ──
+    match /clientes/{id} {
+      allow read:  if isAdmin() ||
+        (isAuth() && resource.data.email == request.auth.token.email);
+      allow write: if isAdmin();
+    }
+
+    // ── Itens — admins escrevem, PÚBLICO lê (catálogo e disponibilidade) ──────
+    match /itens/{id}             { allow read: if true; write: if isAdmin(); }
+    match /config/clausulas       { allow read, write: if isAdmin(); }
+    match /config/modelos_contrato { allow read, write: if isAdmin(); }
+    match /config/metas           { allow read, write: if isAdmin(); }
+    match /logs/{id}              { allow read, write: if isAdmin(); }
+
+    // ── Decorações — admins escrevem, PÚBLICO lê (catálogo sem login) ──────────
+    match /decoracoes/{id}        { allow read: if true; write: if isAdmin(); }
+    match /disponibilidade/{id}   { allow read: if true; allow write: if isAdmin(); }
+
+    // ── Config app (nome, cor, logo) — PÚBLICO lê ─────────────────────────────
+    match /config/app              { allow read: if true; allow write: if isAdmin(); }
+    match /config/pagamento_privado { allow read: if isAuth(); allow write: if isAdmin(); }
+
+    // ── Solicitações — qualquer um cria; admin e dono lêem/editam ─────────────
+    match /solicitacoes/{id} {
+      allow create: if true;
+      allow read:   if isAdmin() ||
+        (isAuth() && resource.data.email == request.auth.token.email);
+      allow update, delete: if isAdmin();
+    }
+
+    // ── Cupons — público lê (validação no catálogo), admin escreve ───────────
+    match /cupons/{id}            { allow read: if true; write: if isAdmin(); }
+
+    // ── Caixa e Custos — só admins ────────────────────────────────────────────
+    match /caixa/{id}             { allow read, write: if isAdmin(); }
+    match /custos/{id}            { allow read, write: if isAdmin(); }
+
+    // ── Manutenções — só admins ───────────────────────────────────────────────
+    match /manutencoes/{id}       { allow read, write: if isAdmin(); }
+
+    match /transacoes/{id} {
+      allow create: if isAuth();
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ── Usuários (área do cliente) — cliente lê/escreve os próprios dados ─────
+    match /usuarios/{uid}         { allow read, write: if isAdmin() || (isAuth() && request.auth.uid == uid); }
+
+    // ── Portal do cliente — cliente lê/escreve os próprios dados ──────────────
+    match /clientes_portal/{uid}  { allow read, write: if isAdmin() || (isAuth() && request.auth.uid == uid); }
+
+    // ── Notificações — cliente autenticado CRIA (aviso de pagamento); admin gerencia ──
+    match /notificacoes/{id} {
+      allow create: if isAuth();
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ── Comprovantes de pagamento — cliente envia, admin gerencia ─────────────
+    match /comprovantes_pag/{id} {
+      allow create: if isAuth();
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ── Nega tudo o mais ───────────────────────────────────────────────────────
+    match /{document=**}          { allow read, write: if false; }
+  }
+}

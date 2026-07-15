@@ -1,0 +1,9 @@
+{
+  "name": "katreseli",
+  "version": "1.0.0",
+  "description": "Sistema de gestão de locações de decoração infantil",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "private": true
+}
