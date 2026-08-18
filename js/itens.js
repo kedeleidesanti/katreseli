@@ -1,6 +1,6 @@
 import { db, doc, addDoc, updateDoc, deleteDoc, collection, getDoc, setDoc, serverTimestamp }
   from "./firebase.js";
-import { el, gv, sv, notif, fmtR, esc } from "./helpers.js";
+import { el, gv, sv, notif, fmtR, esc, comprimirImagem } from "./helpers.js";
 import { itens, categorias, filtros, setCategorias } from "./state.js";
 import { closeModal }               from "./navigation.js";
 
@@ -338,18 +338,19 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ─── Foto do item ─────────────────────────────────────────────────────────────
-window.uploadFotoItem = function(input) {
+window.uploadFotoItem = async function(input) {
   const file = input.files[0]; if (!file) return;
-  if (file.size > 3 * 1024 * 1024) { notif("Foto muito grande! Máx. 3MB.", true); return; }
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const b64 = e.target.result;
+  if (file.size > 12 * 1024 * 1024) { notif("Foto muito grande! Máx. 12MB.", true); return; }
+  try {
+    // Comprimida para evitar estourar o limite de 1MB por documento no Firestore
+    const b64 = await comprimirImagem(file, { maxDim: 1000, maxBytes: 250 * 1024 });
     const campo = document.getElementById("item-foto"); if (campo) campo.value = b64;
     const prev  = document.getElementById("item-foto-prev");
     if (prev) prev.innerHTML = `<img src="${b64}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`;
     notif("Foto carregada!");
-  };
-  reader.readAsDataURL(file);
+  } catch (err) {
+    notif("Erro ao processar foto: " + err.message, true);
+  }
 };
 
 window.limparFotoItem = function() {

@@ -1,6 +1,6 @@
 import { db, doc, addDoc, updateDoc, deleteDoc, collection, serverTimestamp }
   from "./firebase.js";
-import { el, gv, sv, notif, fmtR } from "./helpers.js";
+import { el, gv, sv, notif, fmtR, comprimirImagem } from "./helpers.js";
 import { itens, decoracoes }        from "./state.js";
 import { closeModal, openModal }    from "./navigation.js";
 
@@ -586,28 +586,36 @@ window.renderDecs = function() {
 };
 
 // ─── Upload de múltiplas fotos ────────────────────────────────────────────────
-window.uploadFotosDec = window.uploadFotoDec = function(input) {
+// As fotos do kit ficam salvas juntas no mesmo documento do Firestore, que tem
+// limite de 1MB. Por isso cada foto é comprimida (redimensionada + reduzida a
+// qualidade) antes de entrar na lista — evita o erro "document ... exceeds the
+// maximum allowed size".
+window.uploadFotosDec = window.uploadFotoDec = async function(input) {
   if (!input.files.length) return;
   const jEl   = el("dec-fotos-json");
   const fotos = jEl ? JSON.parse(jEl.value || "[]") : [];
   const MAX   = 6;
   const pendentes = Math.min(input.files.length, MAX - fotos.length);
   if (pendentes <= 0) { notif("Máximo de 6 fotos atingido!", true); return; }
+
+  const arquivos = Array.from(input.files).slice(0, pendentes);
+  input.value = "";
+
   let carregadas = 0;
-  Array.from(input.files).slice(0, pendentes).forEach(file => {
-    if (file.size > 3 * 1024 * 1024) { notif("Foto muito grande! Máx. 3MB.", true); return; }
-    const r = new FileReader();
-    r.onload = e => {
-      fotos.push(e.target.result);
+  for (const file of arquivos) {
+    if (file.size > 12 * 1024 * 1024) { notif("Foto muito grande! Máx. 12MB.", true); continue; }
+    try {
+      const b64 = await comprimirImagem(file, { maxDim: 900, maxBytes: 110 * 1024 });
+      fotos.push(b64);
       if (jEl) jEl.value = JSON.stringify(fotos);
       const cf = el("dec-foto"); if (cf && fotos.length === 1) cf.value = fotos[0];
       carregadas++;
       renderDecFotosGrid(fotos);
-      if (carregadas === Math.min(input.files.length, pendentes)) notif(`${carregadas} foto(s) adicionada(s)!`);
-    };
-    r.readAsDataURL(file);
-  });
-  input.value = "";
+    } catch (err) {
+      notif("Erro ao processar foto: " + err.message, true);
+    }
+  }
+  if (carregadas) notif(`${carregadas} foto(s) adicionada(s)!`);
 };
 
 function renderDecFotosGrid(fotos) {
