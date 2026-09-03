@@ -57,45 +57,6 @@ export function dl(nome, conteudo) {
   URL.revokeObjectURL(url);
 }
 
-/**
- * Comprimir uma imagem (File) para base64 JPEG, redimensionando e reduzindo
- * a qualidade progressivamente até caber no limite de bytes desejado.
- * Evita estourar o limite de 1MB por documento do Firestore quando
- * várias fotos são salvas no mesmo documento (ex: fotos de um kit).
- */
-export function comprimirImagem(file, { maxDim = 1000, maxBytes = 150 * 1024, qualidadeInicial = 0.82 } = {}) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = () => reject(new Error("Falha ao ler o arquivo"));
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onerror = () => reject(new Error("Falha ao carregar a imagem"));
-      img.onload = () => {
-        let { width, height } = img;
-        if (width > maxDim || height > maxDim) {
-          if (width >= height) { height = Math.round(height * (maxDim / width)); width = maxDim; }
-          else { width = Math.round(width * (maxDim / height)); height = maxDim; }
-        }
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-        canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-
-        let qualidade = qualidadeInicial;
-        let b64 = canvas.toDataURL("image/jpeg", qualidade);
-        // Reduz qualidade (e depois dimensão) até caber no limite de bytes
-        while (b64.length * 0.75 > maxBytes && qualidade > 0.35) {
-          qualidade -= 0.1;
-          b64 = canvas.toDataURL("image/jpeg", qualidade);
-        }
-        resolve(b64);
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
 // Expor globalmente para uso em onclick inline do HTML
 window.el    = el;
 window.gv    = gv;
