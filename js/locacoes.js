@@ -782,52 +782,6 @@ window.devolverLocForcar = async function(id) {
   }
 };
 window.confirmarLoc = async function (id) {
-
-// ─── Assinar manualmente pelo admin ──────────────────────────────────────────
-window.assinarManualAdmin = async function(id) {
-  const l = locacoes.find(x => x.id === id); if (!l) return;
-  const c = clientes.find(x => x.id === l.clienteId) || {};
-  const nome = c.nome || l.nomeCliente || prompt("Nome do assinante:") || "Assinatura manual";
-  if (!nome) return;
-  const ok = await window.confirmar({
-    titulo: "Registrar assinatura manual",
-    msg: `Registrar assinatura de "${nome}" manualmente? Isso equivale à assinatura digital do cliente.`,
-    tipo: "warning", labelOk: "Registrar"
-  });
-  if (!ok) return;
-  try {
-    const payload = {
-      assinadoEm:     new Date().toISOString(),
-      assinadoPor:    nome,
-      assinadoEmail:  c.email || "",
-      assinadoIP:     "Admin — assinatura manual",
-      assinadoDevice: "Registrado pelo administrador"
-    };
-    await updateDoc(doc(db, "locacoes", id), payload);
-    notif("✅ Assinatura registrada manualmente!");
-  } catch(e) { notif("Erro: " + e.message, true); }
-};
-window.confirmarRetirada = async function(id) {
-  const l = locacoes.find(x => x.id === id); if (!l) return;
-  if (!l.assinadoEm) {
-    const ok = await window.confirmar({ titulo:"Liberar sem assinatura?", msg:"O contrato ainda não foi assinado pelo cliente. Deseja liberar para retirada mesmo assim?", tipo:"warning", labelOk:"Liberar assim mesmo" });
-    if (!ok) return;
-  }
-  try {
-    await updateDoc(doc(db, "locacoes", id), { status: "ativo", liberadoEm: new Date().toISOString() });
-    notif("✅ Locação liberada para retirada!");
-    const c = clientes.find(x => x.id === l.clienteId);
-    if (c?.tel) {
-      const tel = c.tel.replace(/\D/g,"");
-      const nome = c.nome ? c.nome.split(" ")[0] : "Cliente";
-      const msgWpp = encodeURIComponent(`🎉 *${cfg.nome||"Katreseli"}* — Sua locação está liberada para retirada!\n\nOlá, *${nome}*! Tudo pronto! Você pode retirar os itens.\n\n📅 Retirada: *${fmtD(l.retirada)}*\n🎉 Evento: ${l.evento||"—"}\n\nQualquer dúvida, estamos à disposição! 😊`);
-      setTimeout(() => {
-        if (confirm("Enviar aviso de retirada via WhatsApp?")) window.open(`https://wa.me/55${tel}?text=${msgWpp}`,"_blank");
-      }, 300);
-    }
-  } catch(e) { notif("Erro: " + e.message, true); }
-};
-
   try {
     await updateDoc(doc(db, "locacoes", id), { status: "aceito", aceitoEm: new Date().toISOString() });
     const l = locacoes.find(x => x.id === id);
@@ -850,6 +804,66 @@ window.confirmarRetirada = async function(id) {
     }
   } catch(e) { notif("Erro: " + e.message, true); }
 };
+
+// ─── Assinar manual (impressão física) ───────────────────────────────────────
+// 1) Abre o contrato com o nome do cliente preenchido e a linha de assinatura em
+//    branco, para impressão/conferência — o sistema NÃO assina sozinho aqui.
+// 2) Depois de o admin fechar essa janela (já com o papel assinado à mão pelo
+//    cliente), pede confirmação e só então registra a assinatura, seguindo o
+//    mesmo fluxo/efeitos de quando o cliente assinava digitalmente (grava em
+//    Firestore, aparece o selo "Assinado" e libera "Liberar retirada").
+window.assinarManualAdmin = async function(id) {
+  const l = locacoes.find(x => x.id === id); if (!l) return;
+  const c = clientes.find(x => x.id === l.clienteId) || {};
+  const nome = c.nome || l.nomeCliente || "";
+  if (!nome) return notif("Cliente sem nome cadastrado.", true);
+
+  // Abrir o contrato para conferência/impressão (assinatura ainda em branco,
+  // sem o aviso de "aguardando assinatura digital")
+  await window.verContrato(id, { ocultarAvisoAssinatura: true });
+
+  // Após imprimir e colher a assinatura física, confirmar o registro
+  const ok = await window.confirmar({
+    titulo: "Confirmar assinatura",
+    msg: `O(a) cliente "${nome}" assinou o contrato fisicamente? Isso vai registrar a assinatura e seguir o fluxo normal, como na assinatura digital.`,
+    tipo: "warning", labelOk: "Sim, assinatura confirmada"
+  });
+  if (!ok) return;
+
+  try {
+    const payload = {
+      assinadoEm:     new Date().toISOString(),
+      assinadoPor:    nome,
+      assinadoEmail:  c.email || "",
+      assinadoIP:     "Admin — assinatura manual (física)",
+      assinadoDevice: "Registrado pelo administrador"
+    };
+    await updateDoc(doc(db, "locacoes", id), payload);
+    notif("✅ Assinatura registrada!");
+  } catch(e) { notif("Erro: " + e.message, true); }
+};
+
+window.confirmarRetirada = async function(id) {
+  const l = locacoes.find(x => x.id === id); if (!l) return;
+  if (!l.assinadoEm) {
+    const ok = await window.confirmar({ titulo:"Liberar sem assinatura?", msg:"O contrato ainda não foi assinado pelo cliente. Deseja liberar para retirada mesmo assim?", tipo:"warning", labelOk:"Liberar assim mesmo" });
+    if (!ok) return;
+  }
+  try {
+    await updateDoc(doc(db, "locacoes", id), { status: "ativo", liberadoEm: new Date().toISOString() });
+    notif("✅ Locação liberada para retirada!");
+    const c = clientes.find(x => x.id === l.clienteId);
+    if (c?.tel) {
+      const tel = c.tel.replace(/\D/g,"");
+      const nome = c.nome ? c.nome.split(" ")[0] : "Cliente";
+      const msgWpp = encodeURIComponent(`🎉 *${cfg.nome||"Katreseli"}* — Sua locação está liberada para retirada!\n\nOlá, *${nome}*! Tudo pronto! Você pode retirar os itens.\n\n📅 Retirada: *${fmtD(l.retirada)}*\n🎉 Evento: ${l.evento||"—"}\n\nQualquer dúvida, estamos à disposição! 😊`);
+      setTimeout(() => {
+        if (confirm("Enviar aviso de retirada via WhatsApp?")) window.open(`https://wa.me/55${tel}?text=${msgWpp}`,"_blank");
+      }, 300);
+    }
+  } catch(e) { notif("Erro: " + e.message, true); }
+};
+
 window.delLoc = async function (id) {
   const loc = locacoes.find(x => x.id === id);
   const c   = clientes.find(x => x.id === loc?.clienteId);
@@ -860,20 +874,20 @@ window.delLoc = async function (id) {
     notif("Locação removida.");
   } catch(e) { notif("Erro: " + e.message, true); }
 };
-window.verContrato = async function (id) {
+window.verContrato = async function (id, opts) {
   try {
     const snap = await getDoc(doc(db, "locacoes", id));
     if (!snap.exists()) return notif("Locação não encontrada.", true);
     const data = snap.data();
     // Debug: verificar se assinatura está no Firestore
     console.log("[verContrato] assinadoEm:", data.assinadoEm, "| assinadoPor:", data.assinadoPor);
-    await gerarContrato({ id, ...data });
+    await gerarContrato({ id, ...data }, false, opts);
   } catch(e) {
     console.error("[verContrato]", e);
     const l = locacoes.find(x => x.id === id);
     if (l) {
       console.log("[verContrato fallback] assinadoEm:", l.assinadoEm);
-      gerarContrato({ ...l });
+      gerarContrato({ ...l }, false, opts);
     } else notif("Erro ao abrir contrato: " + e.message, true);
   }
 };
@@ -1548,7 +1562,7 @@ window.renderLoc = function () {
             <button class="lac" onclick="confirmarRetirada('${l.id}')" title="Liberar para retirada" style="background:#f0fdf4;color:#15803d;border-color:#86efac">
               <i class="ti ti-package" style="font-size:14px"></i><span>Liberar retirada</span>
             </button>` : `
-            <button class="lac" onclick="assinarManualAdmin('${l.id}')" title="Registrar assinatura manualmente" style="background:#fefce8;color:#92400e;border-color:#fde68a">
+            <button class="lac" onclick="assinarManualAdmin('${l.id}')" title="Imprimir contrato para assinatura física e registrar" style="background:#fefce8;color:#92400e;border-color:#fde68a">
               <i class="ti ti-pen" style="font-size:12px"></i><span>Assinar manual</span>
             </button>`}` : ""}
 

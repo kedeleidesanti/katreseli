@@ -100,7 +100,9 @@ const PAD_MONT = [
 
 // ─── GERAÇÃO ─────────────────────────────────────────────────────────────────
 // silent=true → só salva no Firestore, não abre janela
-export async function gerarContrato(loc, silent) {
+// opts.ocultarAvisoAssinatura=true → não mostra o aviso "Aguardando assinatura
+//   digital" (usado no fluxo de assinatura manual/impressão física)
+export async function gerarContrato(loc, silent, opts) {
   // Buscar cláusulas e modelo SEMPRE do Firestore
   let cAlug = [], cMont = [], mAlug = "", mMont = "";
   try {
@@ -118,10 +120,11 @@ export async function gerarContrato(loc, silent) {
     }
   } catch(e) { console.warn("[contrato] config:", e); }
 
-  _gerar(loc, cAlug, cMont, mAlug, mMont, silent);
+  _gerar(loc, cAlug, cMont, mAlug, mMont, silent, opts);
 }
 
-function _gerar(loc, cAlug, cMont, mAlug, mMont, silent) {
+function _gerar(loc, cAlug, cMont, mAlug, mMont, silent, opts) {
+  opts = opts || {};
   const l   = loc;
   console.log("[_gerar] assinadoEm:", l.assinadoEm, "| assinadoPor:", l.assinadoPor);
   const cli = clientes.find(x => x.id === l.clienteId) || {};
@@ -228,11 +231,12 @@ function _gerar(loc, cAlug, cMont, mAlug, mMont, silent) {
       +'IP: '+(l.assinadoIP||"—")+'<br>'
       +'<span style="font-size:8pt;color:#16a34a">Validade jurídica conforme Lei 14.063/2020</span>'
       +'</div>'
-    : '<div style="margin:28px auto;max-width:700px;padding:14px 18px;background:#fefce8;border:2px solid #fde68a;border-radius:10px;font-size:10pt;color:#92400e;line-height:1.8">'
+    : (opts.ocultarAvisoAssinatura ? '' :
+      '<div style="margin:28px auto;max-width:700px;padding:14px 18px;background:#fefce8;border:2px solid #fde68a;border-radius:10px;font-size:10pt;color:#92400e;line-height:1.8">'
       +'<strong>&#9888; Aguardando assinatura digital do LOCATÁRIO(A)</strong><br>'
       +'Este documento ainda não foi assinado pelo cliente.<br>'
       +'<span style="font-size:8pt;color:#a16207">O cliente deve acessar a área do cliente e clicar em "Assinar contrato".</span>'
-      +'</div>';
+      +'</div>');
 
   // ── CSS ──────────────────────────────────────────────────────────────────
   const css = "*{box-sizing:border-box;margin:0;padding:0}"
